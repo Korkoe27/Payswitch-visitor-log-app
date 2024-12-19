@@ -1,7 +1,7 @@
 <x-layout>
 
     <x-slot:heading>
-        Dashhboard
+        Dashboard
     </x-slot:heading>
 
 </x-layout>
