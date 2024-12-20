@@ -1,14 +1,7 @@
 <x-layout>
 
     <x-slot:heading>
-        Dashboard
+        Settings
     </x-slot:heading>
-
-    
-
-
-
-
-
 
 </x-layout>
