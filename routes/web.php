@@ -17,6 +17,14 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('about', function () {
-    return view('about');
+Route::get('records', function () {
+    return view('records');
+});
+
+Route::get('settings', function () {
+    return view('settings');
+});
+
+Route::get('visitors', function () {
+    return view('visitors');
 });

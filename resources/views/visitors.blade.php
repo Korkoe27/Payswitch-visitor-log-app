@@ -1,14 +1,7 @@
 <x-layout>
 
     <x-slot:heading>
-        Dashboard
+        Visitors
     </x-slot:heading>
-
-    
-
-
-
-
-
 
 </x-layout>
