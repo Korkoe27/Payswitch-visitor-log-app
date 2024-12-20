@@ -7,7 +7,7 @@
     @vite('resources/css/app.css')
     <title>Visitor's Log</title>
 </head>
-<body class="flex gap-4">
+<body class="flex gap-4 bg-gray-100">
 
 
     
