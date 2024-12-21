@@ -14,7 +14,34 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('index',    [
+        'visitors'  =>  [
+                [
+                    'name'  =>  'Korkoe Dumashie',
+                    'visiting' =>  'Joe Boateng',
+                    'purpose'   =>  'personal',
+                    'time_in'   =>  '09:15am'
+                ],
+                [
+                    'name'  =>  'Brian Elorm',
+                    'visiting' =>  "Clarence 'Gabe' Ahiabor",
+                    'purpose'   =>  'interview',
+                    'time_in'   =>  '09:15am'
+                ],
+                [
+                    'name'  =>  'Bismark Amo',
+                    'visiting' =>  'Joe Boateng',
+                    'purpose'   =>  'official',
+                    'time_in'   =>  '09:15am'
+                ],
+                [
+                    'name'  =>  'Secured Mantse',
+                    'visiting' =>  'Design Mantse',
+                    'purpose'   =>  'other',
+                    'time_in'   =>  '09:15am'
+                ],
+        ]
+    ]);
 });
 
 Route::get('records', function () {
@@ -23,6 +50,10 @@ Route::get('records', function () {
 
 Route::get('settings', function () {
     return view('settings');
+});
+
+Route::get('keys', function () {
+    return view('keys');
 });
 
 Route::get('visitors', function () {

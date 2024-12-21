@@ -1,7 +1,7 @@
 <x-layout>
 
     <x-slot:heading>
-        Records
+        Keys
     </x-slot:heading>
 
 </x-layout>
