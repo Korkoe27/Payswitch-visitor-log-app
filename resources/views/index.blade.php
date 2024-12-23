@@ -8,7 +8,7 @@
     
 
 <div class=" overflow-x-auto shadow-md sm:rounded-lg">
-    <h2 class="">Visitors</h2>
+    <h2 class="font-bold p-4">Visitors</h2>
     <table class="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
@@ -39,7 +39,7 @@
                 <td class="px-6 py-4">
                     {{ $visitor['visiting'] }}
                 </td>
-                <td class="px-6 py-4">
+                <td class="px-6 py-4 capitalize">
                     {{ $visitor['purpose'] }}
                 </td>
                 <td class="px-6 py-4">
