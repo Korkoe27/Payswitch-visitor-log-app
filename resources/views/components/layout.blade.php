@@ -11,28 +11,37 @@
 
 <body class="flex flex-col bg-[#f9fafb]">
 
-    <header  class="md:grid md:grid-cols-10 items-center w-full px-4 py-4 bg-white ">
+    <header  class="md:grid md:grid-cols-10 gap-2 items-center w-full px-4 py-4 bg-white ">
 
 
-                    <div class="col-span-1 lg:p-4">
+                    <div class=" lg:p-4 col-start-1">
                         <img src="{{ asset('logo.png') }}" alt="">
                     </div>
-                                    <div class="md:flex col-start-3 hidden col-span-2 justify-start">
+                                    <div class="md:flex hidden col-start-2 md:px-4 md:col-span-2  justify-start">
                                         <h1 class="font-bold text-xl text-blue-900">{{ $heading }}</h1>
                                     </div>
             
-                                    <div class="border col-start-6">
+                                    <div class="border border-black flex col-start-5 col-span-2">
                                         <input type="search" class="">
                                     </div>
-                                    <div class="justify-center hidden pr-16 col-start-10 col-span-3 gap-4 sm:flex lg:pr-0">
+                                    <div class="justify-center hidden md:col-start-8 md:col-span-2 pr-16 gap-4 sm:flex md:pr-0">
                                         <a href="javascript:void(0)"
-                                            class="py-3 md:text-base font-medium md:px-3 lg:px-7 rounded-lg order text-white bg-blue-500 hover:text-primary">
+                                            class="py-3 md:text-base font-medium  md:px-2 lg:px-7 rounded-lg order text-white bg-blue-500 hover:text-primary">
                                             Log Visitor
                                         </a>
                                         <a href="javascript:void(0)"
-                                            class="py-3 text-base font-medium rounded-lg text-green-600 border border-green-600  bg-primary lg:px-7 md:px-3 hover:bg-primary/90">
+                                            class="py-3 text-base font-medium rounded-lg text-green-600 border border-green-600  bg-primary lg:px-7 md:px-2 hover:bg-primary/90">
                                             Log Key
                                         </a>
+                                    </div>
+                                                        
+                                <div class="  flex items-center p-4 col-start-10 col-span-2 gap-4  rounded-lg">
+                                    <span class="rounded-full bg-blue-200  p-5"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                       <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                     </svg></span>
+                                    <span class="text-sm font-bold hidden lg:flex text-blue-900">User</span>
+                                    <span class="">
+                                     </span>
                                     </div>
                     </header>
 
@@ -100,21 +109,13 @@
                     
                     
                     
-                    
-                                <div class="  flex items-center md:absolute lg:mx-auto md:bottom-10 lg:right-1/4 p-4 gap-4 rounded-lg h-fit w-fit ">
-                                   <span class="rounded-full bg-blue-200  p-5"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                                    </svg></span>
-                                   <span class="text-sm font-bold hidden lg:flex text-blue-900">User</span>
-                                   <span class="">
-                                    </span>
-                                   </div>
+
                             </nav>
                     
 
                     
                         {{-- <main class="w-11/12 lg:ml-[11%] md:2/12"> --}}
-                    <section class="col-span-9">
+                    <section class="md:col-span-9">
                             <!-- ====== Navbar Section Start -->
                     
                                             {{-- <div>

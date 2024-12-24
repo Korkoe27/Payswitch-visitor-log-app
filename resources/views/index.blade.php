@@ -9,7 +9,6 @@
 
     <div class=" overflow-x-auto shadow-md sm:rounded-lg m-4">
         <table class="w-full text-sm text-left text-gray-500">
-        <h2 class="font-bold p-4">Visitors</h2>
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
                     <th scope="col" class="px-6 py-3">
