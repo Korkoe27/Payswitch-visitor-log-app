@@ -21,8 +21,11 @@
                                         <h1 class="font-bold text-xl text-blue-900">{{ $heading }}</h1>
                                     </div>
             
-                                    <div class="border border-black flex col-start-5 col-span-2">
-                                        <input type="search" class="">
+                                    <div class="border border-gray-300 flex col-start-5 col-span-2 p-1 text-gray-400 rounded items-center ">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                                        </svg>
+                                        <input type="search" class="outline-none md:p-3 w-full rounded">
                                     </div>
                                     <div class="justify-center hidden md:col-start-8 md:col-span-2 pr-16 gap-4 sm:flex md:pr-0">
                                         <a href="javascript:void(0)"
@@ -37,18 +40,18 @@
                                                         
                                 <div class="  flex items-center p-4 col-start-10 col-span-2 gap-4  rounded-lg">
                                     <span class="rounded-full bg-blue-200  p-5"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                       <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                                     </svg></span>
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                    </svg></span>
                                     <span class="text-sm font-bold hidden lg:flex text-blue-900">User</span>
                                     <span class="">
-                                     </span>
+                                    </span>
                                     </div>
                     </header>
 
 
-                    <main class="md:grid md:grid-cols-10">
+                    <main class="md:grid md:grid-cols-10 lg:grid-cols-12">
 
-                            <nav class="flex col-span-1 bg-white h-screen flex-col gap-2">
+                            <nav class="flex lg:col-span-1 md:col-span-2 bg-white fixed h-screen flex-col gap-2">
                                 <ul class="flex flex-col gap-4">
                                     <li class="">
                                         <x-nav-link href="{{ url('/') }}" :active="request()->is('/')">
@@ -61,25 +64,19 @@
                                             <span class="hidden lg:flex">Dashboard</span>
                                         </x-nav-link>
                                     </li>
-                                    <li class="">
+                                    {{-- <li class="">
                                         <x-nav-link href="{{ url('visitors') }}" :active="request()->is('visitors')">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                                stroke="currentColor" class="size-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                                            </svg>
+
                                             <span class="hidden lg:flex">Visitors</span>
                                         </x-nav-link>
-                                    </li>
-                                    <li class="">
+                                    </li> --}}
+                                    {{-- <li class="">
                                         <x-nav-link href="{{ url('keys') }}" :active="request()->is('keys')">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" />
-                                          </svg>
-                                          
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" /></svg>
                                             <span class="hidden lg:flex">Keys</span>
                                         </x-nav-link>
-                                    </li>
+                                    </li> --}}
                                     <li class="">
                                         <x-nav-link href="{{ url('records') }}" :active="request()->is('records')">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -115,13 +112,13 @@
 
                     
                         {{-- <main class="w-11/12 lg:ml-[11%] md:2/12"> --}}
-                    <section class="md:col-span-9">
+                    <section class="md:col-span-10 md:col-start-2 w-full lg:col-start-2 lg:col-span-11">
                             <!-- ====== Navbar Section Start -->
                     
                                             {{-- <div>
                                 <button
-                                   @click="navbarOpen = !navbarOpen"
-                                   :class="navbarOpen && 'navbarTogglerActive' "
+                                @click="navbarOpen = !navbarOpen"
+                                :class="navbarOpen && 'navbarTogglerActive' "
                                    id="navbarToggler"
                                    class="absolute right-4 top-1/2 block -translate-y-1/2 rounded-lg px-3 py-[6px] ring-primary focus:ring-2 lg:hidden"
                                    >
