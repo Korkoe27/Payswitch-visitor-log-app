@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string('company_name')->nullable();
             $table->json('access_card_number');
             $table->string('vehicle_number')->nullable();
+            $table->string('purpose')->nullable();
+            $table->longText('comment')->nullable();
+            $table->boolean('marketing_consent')->nullable();
             $table->string('devices')->nullable();
             $table->json('dependents')->nullable();
 

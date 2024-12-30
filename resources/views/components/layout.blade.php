@@ -25,7 +25,7 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                         </svg>
-                                        <input type="search" class="outline-none md:p-3 w-full rounded">
+                                        <input type="search" placeholder="Search" class="outline-none md:p-3 w-full rounded">
                                     </div>
                                     <div class="justify-center hidden md:col-start-8 md:col-span-2 pr-16 gap-4 sm:flex md:pr-0">
                                         <a href="javascript:void(0)"
