@@ -11,20 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('visitors', function (Blueprint $table) {
+        Schema::create('visitor', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('phone_number');
             $table->string('employee');
             $table->string('company_name')->nullable();
-            $table->json('access_card_number');
+            $table->integer('access_card_number');
             $table->string('vehicle_number')->nullable();
             $table->string('purpose')->nullable();
             $table->longText('comment')->nullable();
             $table->boolean('marketing_consent')->nullable();
             $table->string('devices')->nullable();
-            $table->json('dependents')->nullable();
+            $table->string('dependents')->nullable();
 
             $table->timestamps();
             
@@ -38,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('visitors');
+        Schema::dropIfExists('visitor');
     }
 };

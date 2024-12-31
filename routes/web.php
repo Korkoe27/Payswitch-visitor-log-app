@@ -18,7 +18,7 @@ Route::get('/', function () {
 
 
     return view('index',[
-        'visitors'  => Visitor::all()
+        'visitor'  => Visitor::all()
     ]);
 
 

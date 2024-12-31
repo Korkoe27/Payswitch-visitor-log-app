@@ -32,23 +32,23 @@
                 </tr>
             </thead>
             <tbody class="text-base">
-                @foreach ($visitors as $visitor)
+                @foreach ($visitor as $person)
                     <tr class="odd:bg-white even:bg-gray-50 border-b">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $visitor['name'] }}</th>
-                        <td class="px-6 py-4">{{ $visitor['employee'] }}</td>
+                        <td class="px-6 py-4">{{ $person['employee'] }}</td>
                         <td class="px-6 py-4 capitalize">
-                            @switch($visitor['purpose'])
+                            @switch($person['purpose'])
                                 @case('personal')
-                                    <span class="text-green-500">{{ $visitor['purpose'] }}</span>
+                                    <span class="text-green-500">{{ $person['purpose'] }}</span>
                                     @break
                                 @case('interview')
-                                    <span class="text-yellow-500">{{ $visitor['purpose'] }}</span>
+                                    <span class="text-yellow-500">{{ $person['purpose'] }}</span>
                                     @break
                                 @case('official')
-                                    <span class="text-red-600">{{ $visitor['purpose'] }}</span>
+                                    <span class="text-red-600">{{ $person['purpose'] }}</span>
                                     @break
                                 @default
-                                    <span class="text-blue-600">{{ $visitor['purpose'] }}</span>
+                                    <span class="text-blue-600">{{ $person['purpose'] }}</span>
                             @endswitch
                         </td>
                         <td class="px-6 py-4">{{ $visitor['created_at'] }}</td>
