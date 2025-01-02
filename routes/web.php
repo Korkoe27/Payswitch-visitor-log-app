@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Visitor;
+use App\Models\Employee;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,11 +34,11 @@ Route::get('settings', function () {
     return view('settings');
 });
 
-// Route::get('keys', function () {
-//     return view('keys', [
-        
-//     ]);
-// });
+Route::get('staff', function () {
+    return view('staff', [
+        'employees' => Employee::all()
+    ]);
+});
 
 // Route::get('visitors', function () {
 //     return view('visitors',    [

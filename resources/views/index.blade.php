@@ -34,7 +34,7 @@
             <tbody class="text-base">
                 @foreach ($visitor as $person)
                     <tr class="odd:bg-white even:bg-gray-50 border-b">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $visitor['name'] }}</th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $person['name'] }}</th>
                         <td class="px-6 py-4">{{ $person['employee'] }}</td>
                         <td class="px-6 py-4 capitalize">
                             @switch($person['purpose'])
@@ -51,7 +51,7 @@
                                     <span class="text-blue-600">{{ $person['purpose'] }}</span>
                             @endswitch
                         </td>
-                        <td class="px-6 py-4">{{ $visitor['created_at'] }}</td>
+                        <td class="px-6 py-4">{{ $person['created_at'] }}</td>
                         <td class="px-6 py-4">
                             <a href="#" class="font-medium text-blue-600 text-lg hover:underline">View</a>
                         </td>
