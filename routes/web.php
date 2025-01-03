@@ -40,6 +40,12 @@ Route::get('staff', function () {
     ]);
 });
 
+Route::get('staff/{id}', function ($id) {
+    return view('view-staff', [
+        'employees' => Employee::where('id', $id)->get()
+    ]);
+});
+
 // Route::get('visitors', function () {
 //     return view('visitors',    [
 

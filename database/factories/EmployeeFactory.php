@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Department;
+use App\Models\Employee;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -10,6 +11,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class EmployeeFactory extends Factory
 {
+
+    protected $model = Employee::class;
     /**
      * Define the model's default state.
      *
@@ -23,8 +26,9 @@ class EmployeeFactory extends Factory
             'email' => fake()->safeEmail(),
             'phone_number' => fake()->phoneNumber(),
             'department_id' => Department::factory(),
+            // 'department'    => fake()->randomElement(['tech', 'business', 'hr', 'finance','audit']),
             'job_title' => fake()->jobTitle(),
-            'gender' => fake()->randomElements(['male', 'female']),
+            'gender' => fake()->randomElement(['male', 'female']),
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Department;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class DepartmentFactory extends Factory
 {
+    protected $model = Department::class;
     /**
      * Define the model's default state.
      *
@@ -17,7 +19,8 @@ class DepartmentFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'  => fake()->department(),
+            'name'  => fake()->randomElement(['tech', 'business', 'hr', 'finance','audit']),
+            // 'department_id' => fake()->unique()->randomNumber(5),
             'key_id' => fake()->unique()->randomNumber(5),
         ];
     }

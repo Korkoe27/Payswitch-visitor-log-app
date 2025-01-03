@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string(column: 'name');
             $table->string(column: 'key_id');
+            // $table->string(column: 'department_id');
             $table->timestamps();
         });
     }
