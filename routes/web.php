@@ -41,7 +41,7 @@ Route::get('staff', function () {
 });
 
 Route::get('staff/{id}', function ($id) {
-    return view('view-staff', [
+    return view('components/modals/view-staff', [
         'employees' => Employee::where('id', $id)->get()
     ]);
 });

@@ -10,4 +10,9 @@ class Employee extends Model
 
     protected $table = 'employees';
     use HasFactory;
+
+
+    public function department(){
+        return $this->belongsTo(Department::class);
+    }
 }

@@ -41,13 +41,21 @@
                         {{ $staff['last_name'] }}
                     </th>
                     <td class="px-6 py-4 uppercase">
-                        {{ $staff['department_id'] }}
+                        {{ $staff->department->name }}
                     </td>
                     <td class="px-6 py-4">
                         {{ $staff['job_title'] }}
                     </td>
                     <td class="px-6 py-4">
-                        <a href="{{url('staff/{$id}')}}" class="font-medium  text-blue-600  text-lg hover:underline ">View</a>
+                        <a
+                        class="font-medium text-blue-600 text-lg hover:underline" 
+                        {{-- onclick="openModal({{ json_encode($staff) }})"
+                         --}}
+                        href="{{ url('staff/{id}') }}"
+                        >
+                        View
+                     </a>
+
                     </td>
                     <td class="px-3 py-4">
                         <a href="#" class="font-medium text-red-500 p-[5px] rounded-lg  border border-red-400">Assign Role</a>
@@ -59,6 +67,21 @@
             </tbody>
         </table>
     </div>
-`
+
+    {{-- <div id="staffModal" class="hidden flex fixed inset-0 bg-black bg-opacity-50 backdrop-blur-[2px]  items-center justify-center">
+        <dialog class="flex flex-col gap-4 rounded-lg bg-white m-auto w-1/2 p-6">
+            <section class="flex flex-col m-auto gap-4">
+                <h2 class="text-black font-normal">Name: <span id="modalName"   class="font-bold text-blue-600"></span></h2>
+                <h2>Email: <span id="modalEmail"   class="font-bold text-blue-600"></span></h2>
+                <h2>Department: <span id="modalDepartment"   class="font-bold text-blue-600"></span></h2>
+                <h2>Role: <span id="modalRole"   class="font-bold text-blue-600"></span></h2>
+                <h2>Phone: <span id="modalPhone"   class="font-bold text-blue-600"></span></h2>
+            </section>
+            <button onclick="closeModal()" class="m-auto  w-1/4 bg-blue-300 text-white px-4 py-2 rounded hover:bg-blue-600">
+                Close
+            </button>
+        </dialog>
+    </div> --}}
+
 
 </x-layout>
