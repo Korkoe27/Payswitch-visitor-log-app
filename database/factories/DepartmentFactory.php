@@ -18,10 +18,19 @@ class DepartmentFactory extends Factory
      */
     public function definition(): array
     {
+        // Use a static array for predefined unique names
+        static $names = ['tech', 'business', 'hr', 'finance', 'audit'];
+
+        // Dynamically generate unique names if the array is exhausted
+        $name = count($names) > 0
+            ? array_shift($names) // Shift ensures names are consumed uniquely
+            : 'generated-' . fake()->unique()->word(); // Ensure uniqueness dynamically
+
         return [
-            'name'  => fake()->randomElement(['tech', 'business', 'hr', 'finance','audit']),
-            // 'department_id' => fake()->unique()->randomNumber(5),
-            'key_id' => fake()->unique()->randomNumber(5),
+            'name' => $name,
+
+            // Ensure unique 5-digit random numbers for 'key_id'
+            'key_id' => fake()->unique()->numberBetween(10000, 99999),
         ];
     }
 }

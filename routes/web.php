@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmployeeController;
 use App\Models\Visitor;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +20,7 @@ Route::get('/', function () {
 
 
     return view('index',[
-        'visitor'  => Visitor::all()
+        'visitor'  => Visitor::simplePaginate(10)
     ]);
 
 
@@ -36,18 +37,26 @@ Route::get('settings', function () {
 
 Route::get('staff', function () {
     return view('staff', [
-        'employees' => Employee::all()
+        'employees' => Employee::with('department')->simplePaginate(10)
     ]);
 });
 
-Route::get('staff/{id}', function ($id) {
-    return view('components/modals/view-staff', [
-        'employees' => Employee::where('id', $id)->get()
-    ]);
-});
+// Route::get('staff/{id}', function ($id) {
+//     return view('view-staff', [
+//         'employees' => Employee::where('id', $id)->get()
+//     ]);
+// });
 
 // Route::get('visitors', function () {
 //     return view('visitors',    [
 
 //     ]);
 // });
+
+
+Route::get('staff/{id}', function ($id) {
+    $employees = Employee::findOrFail($id); // This will throw a 404 error if the record is not found
+    return view('view-staff', compact('employees'));
+});
+
+// Route::get('staff/{id}', [EmployeeController::class, 'show']);

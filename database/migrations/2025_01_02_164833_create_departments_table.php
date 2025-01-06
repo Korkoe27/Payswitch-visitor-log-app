@@ -6,25 +6,21 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->string(column: 'name');
-            $table->string(column: 'key_id');
-            // $table->string(column: 'department_id');
+            $table->string('name')->unique(); // Enforce unique constraint for 'name'
+            $table->string('key_id')->unique(); // Add unique constraint for 'key_id'
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+
     public function down(): void
     {
         Schema::dropIfExists('departments');
     }
 };
+
