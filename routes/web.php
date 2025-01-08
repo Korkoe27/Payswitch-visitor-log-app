@@ -3,6 +3,7 @@
 use App\Http\Controllers\EmployeeController;
 use App\Models\Visitor;
 use App\Models\Employee;
+use App\Models\Key;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,12 +19,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    // return view('/',[
-    //     'dept'  => Visitor::simplePaginate(10)
-    // ]);
+
 
     return view('index',[
-        'visitor'  => Visitor::simplePaginate(10)
+        'visitor'  => Visitor::simplePaginate(10),
+        'key' => Key::simplePaginate(10)
     ]);
 
 
@@ -95,10 +95,16 @@ Route::get('staff/{id}', function ($id) {
 
 
 
+Route::get('pick-key',function(){
+
+    $employees = Employee::get();
+    return view('keys.create', compact('employees'));
+});
 
 
+Route::post('log-key', function(){
 
-
+});
 
 
 
