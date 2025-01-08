@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('visitor', function (Blueprint $table) {
             $table->id();
-            $table->string('name');//done
+            $table->string('first_name');//done
+            $table->string('last_name');//done
             $table->string('email')->nullable();//done
             $table->string('phone_number');//done
             $table->string('employee');//done

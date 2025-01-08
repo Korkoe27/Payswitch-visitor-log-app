@@ -20,7 +20,8 @@ class VisitorFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'first_name' => fake()->name(),
+            'last_name' => fake()->name(),
             'email' => fake()->safeEmail(),
             'phone_number' => fake()->phoneNumber(),
             'employee' => fake()->name(),
@@ -29,7 +30,7 @@ class VisitorFactory extends Factory
             'vehicle_number' => fake()->randomNumber(),
             'purpose' => fake()->randomElement(['interview', 'personal', 'official', 'other']),
             'comment' => fake()->sentence(),
-            'marketing_consent' => fake()->boolean(),
+            // 'marketing_consent' => fake()->boolean(),
             'devices' => fake()->randomElement(['laptop', 'mobile', 'tablet', 'other']),
             'dependents' => fake()->name(),
         ];

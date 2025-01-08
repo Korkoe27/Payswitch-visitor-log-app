@@ -70,11 +70,11 @@
                 @endforeach
             </tbody>
         </table>
-
-    </div>
         <div class="px-6 py-4">
             {{ $employees->links() }}
           </div>
+
+    </div>
 {{-- 
 <div class="bg-white text-center">
     <div

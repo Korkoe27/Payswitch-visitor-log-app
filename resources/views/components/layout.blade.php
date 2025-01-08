@@ -34,7 +34,7 @@
                                         </a>
                                         <a href="javascript:void(0)"
                                             class="py-3 text-base font-medium rounded-lg text-green-600 border border-green-600  bg-primary lg:px-7 md:px-2 hover:bg-primary/90">
-                                            Log Key
+                                            Pick Key
                                         </a>
                                     </div>
                                                         
@@ -49,10 +49,11 @@
                     </header>
 
 
-                    <main class="md:grid md:grid-cols-10 lg:grid-cols-12">
+                    <main class="md:grid md:grid-cols-10 lg:grid lg:grid-cols-12">
 
-                            <nav class="flex lg:col-span-1 md:col-span-2 bg-white fixed h-screen flex-col gap-2">
-                                <ul class="flex flex-col gap-4">
+                            <nav class="flex lg:col-span-1 md:col-span-1 bg-white max-w-full fixed h-screen flex-col gap-2">
+                            {{-- <nav class="hidden"> --}}
+                                <ul class="flex flex-col gap-4 max-w-full">
                                     <li class="">
                                         <x-nav-link href="{{ url('/') }}" :active="request()->is('/')">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -115,7 +116,7 @@
 
                     
                         {{-- <main class="w-11/12 lg:ml-[11%] md:2/12"> --}}
-                    <section class="md:col-span-10 md:col-start-2 w-full lg:col-start-2 lg:col-span-11">
+                    <section class="md:col-span-10 md:col-start-2 w-full lg:ml-[1.8vw] lg:col-start-2 lg:col-span-11">
                             <!-- ====== Navbar Section Start -->
                     
                                             {{-- <div>
