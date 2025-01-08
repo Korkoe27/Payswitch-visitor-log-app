@@ -28,7 +28,7 @@
                                         <input type="search" placeholder="Search" class="outline-none md:p-3 w-full rounded">
                                     </div>
                                     <div class="justify-center hidden md:col-start-8 md:col-span-2 pr-16 gap-4 sm:flex md:pr-0">
-                                        <a href="javascript:void(0)"
+                                        <a href="{{ url('create-visit') }}"
                                             class="py-3 md:text-base font-medium  md:px-2 lg:px-7 rounded-lg order text-white bg-blue-500 hover:text-primary">
                                             Log Visitor
                                         </a>

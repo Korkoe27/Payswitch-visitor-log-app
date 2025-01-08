@@ -36,27 +36,23 @@ Route::get('settings', function () {
 });
 
 Route::get('staff', function () {
-    return view('staff', [
+    return view('staff.index', [
         'employees' => Employee::with('department')->simplePaginate(10)
     ]);
 });
 
-// Route::get('staff/{id}', function ($id) {
-//     return view('view-staff', [
-//         'employees' => Employee::where('id', $id)->get()
-//     ]);
-// });
+Route::get('create-visit', function(){
+    return view('visitor.entry');
+});
 
-// Route::get('visitors', function () {
-//     return view('visitors',    [
-
-//     ]);
-// });
+Route::post('/visit',function(){
+    dd(request()->all());
+});
 
 
 Route::get('staff/{id}', function ($id) {
     $employees = Employee::findOrFail($id); // This will throw a 404 error if the record is not found
-    return view('view-staff', compact('employees'));
+    return view('staff.show', compact('employees'));
 });
 
 // Route::get('staff/{id}', [EmployeeController::class, 'show']);

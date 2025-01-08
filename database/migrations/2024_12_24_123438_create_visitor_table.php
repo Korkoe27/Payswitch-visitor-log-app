@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('visitor', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->nullable();
-            $table->string('phone_number');
-            $table->string('employee');
-            $table->string('company_name')->nullable();
-            $table->integer('access_card_number');
-            $table->string('vehicle_number')->nullable();
-            $table->string('purpose')->nullable();
+            $table->string('name');//done
+            $table->string('email')->nullable();//done
+            $table->string('phone_number');//done
+            $table->string('employee');//done
+            $table->string('company_name')->nullable();//done
+            $table->integer('access_card_number');//done
+            $table->string('vehicle_number')->nullable();//done
+            $table->string('purpose')->nullable();//done
             $table->longText('comment')->nullable();
-            $table->boolean('marketing_consent')->nullable();
-            $table->string('devices')->nullable();
+            // $table->boolean('marketing_consent')->nullable();
+            $table->string('devices')->nullable();//done
             $table->string('dependents')->nullable();
 
             $table->timestamps();

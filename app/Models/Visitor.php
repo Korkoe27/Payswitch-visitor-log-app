@@ -9,5 +9,7 @@ class Visitor extends Model
 {
 
     protected $table = 'visitor';
+
+    protected $guarded = [];
     use HasFactory;
 }
