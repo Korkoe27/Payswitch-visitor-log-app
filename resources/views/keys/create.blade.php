@@ -6,21 +6,29 @@
 
 
     <aside class="">
-        <form action="{{url('log-key')}}" class="">
-            <div class="w-full px-4 md:w-1/2 lg:w-1/3">
+        <form action="{{url('log-key')}}" class="" method="POST">
+
+            @csrf
+            <div class="w-full md:w-1/2 lg:w-1/3">
                 <div class="mb-12">
-                   <label for="" class="mb-[10px] block text-base font-medium text-dark dark:text-white">
+                   <label for="" class="mb-[10px] block text-base font-medium text-black">
                    Who are you?
                    </label>
-                   <div class="relative z-20">
-                      <select class="relative z-20 w-full appearance-none rounded-lg border border-stroke dark:border-dark-3 bg-transparent py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2" >
-                         <option value="" class="dark:bg-dark-2">Option</option>
-                         <option value="" class="dark:bg-dark-2">Option</option>
-                         <option value="" class="dark:bg-dark-2">Option</option>
+                   <div class="">
+                      <select class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-1/2" name="picked_by" required >
+                            <option value="" selected disabled class="">Find your name.</option>
+                        @foreach ($employees as $employee)
+                         <option value="{{$employee->id}}" class="dark:bg-dark-2">{{$employee->first_name}} {{$employee->last_name}}</option>
+                        @endforeach
                       </select>
-                      <span class="absolute right-4 top-1/2 z-10 mt-[-2px] h-[10px] w-[10px] -translate-y-1/2 rotate-45 border-r-2 border-b-2 border-body-color">
-                      </span>
                    </div>
+                </div>
+
+                <div class="">
+                    <button type="submit"
+                        class="bg-blue-400 rounded-md inline-flex items-center justify-center py-3 px-7 text-center text-base font-medium text-white hover:bg-[#1B44C8] hover:border-[#1B44C8] disabled:bg-gray-3 disabled:border-gray-3 disabled:text-dark-5 active:bg-[#1B44C8] active:border-[#1B44C8]">
+                        Pick Key
+                        </button>
                 </div>
              </div>
         </form>

@@ -14,7 +14,7 @@
     <header  class="md:grid md:grid-cols-10 gap-2 items-center w-full px-4 py-4 bg-white ">
 
 
-                    <div class=" lg:p-4 col-start-1">
+                    <div class=" lg:p-4 col-start-1 lg:min-w-64">
                         <img src="{{ asset('logo.png') }}" alt="">
                     </div>
                                     <div class="md:flex hidden col-start-2 md:px-4 md:col-span-2  justify-start">
@@ -32,7 +32,7 @@
                                             class="py-3 md:text-base font-medium  md:px-2 lg:px-7 rounded-lg order text-white bg-blue-500 hover:text-primary">
                                             Log Visitor
                                         </a>
-                                        <a href="javascript:void(0)"
+                                        <a href="{{url('pick-key')}}"
                                             class="py-3 text-base font-medium rounded-lg text-green-600 border border-green-600  bg-primary lg:px-7 md:px-2 hover:bg-primary/90">
                                             Pick Key
                                         </a>
@@ -49,11 +49,11 @@
                     </header>
 
 
-                    <main class="md:grid md:grid-cols-10 lg:grid lg:grid-cols-12">
+                    <main class="lg:grid lg:grid-cols-8">
 
-                            <nav class="flex lg:col-span-1 md:col-span-1 bg-white max-w-full fixed h-screen flex-col gap-2">
+                            <nav class="fixed h-screen lg:relative bg-white col-span-1 lg:min-w-64">
                             {{-- <nav class="hidden"> --}}
-                                <ul class="flex flex-col gap-4 max-w-full">
+                                <ul class="flex flex-col gap-4">
                                     <li class="">
                                         <x-nav-link href="{{ url('/') }}" :active="request()->is('/')">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -116,7 +116,7 @@
 
                     
                         {{-- <main class="w-11/12 lg:ml-[11%] md:2/12"> --}}
-                    <section class="md:col-span-10 md:col-start-2 w-full lg:ml-[1.8vw] lg:col-start-2 lg:col-span-11">
+                    <section class="md:col-span-10 md:col-start-2 lg:min-w-96 lg:col-start-2 lg:col-span-10">
                             <!-- ====== Navbar Section Start -->
                     
                                             {{-- <div>

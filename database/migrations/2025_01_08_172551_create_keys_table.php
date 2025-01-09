@@ -15,11 +15,19 @@ return new class extends Migration
     {
         Schema::create('keys', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Employee::class, column: 'employee_id');
-            $table->foreignIdFor(Department::class, column: 'department_id');
-
-
-            //Work on this
+            $table->foreignIdFor(Department::class)
+                ->constrained()
+                ->onDelete('cascade');
+            $table->foreignIdFor(Employee::class, 'picked_by')
+                ->constrained('employees')
+                ->onDelete('cascade');
+            $table->foreignIdFor(Employee::class, 'returned_by')
+                ->nullable()
+                ->constrained('employees')
+                ->onDelete('cascade');
+            $table->timestamp('picked_at');
+            $table->timestamp('returned_at')->nullable();
+            $table->enum('status', ['picked', 'returned'])->default('picked');
             $table->timestamps();
         });
     }

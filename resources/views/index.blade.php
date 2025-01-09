@@ -73,18 +73,19 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
                     <th scope="col" class="px-6 py-3">Key ID</th>
-                    <th scope="col" class="px-6 py-3">Staff</th>
+                    <th scope="col" class="px-6 py-3">Picked By</th>
                     <th scope="col" class="px-6 py-3">Dept</th>
                     <th scope="col" class="px-6 py-3">Time In</th>
                     <th class="px-6 py-6" scope="col"></th>
                 </tr>
             </thead>
             <tbody class="text-base">
-                {{-- @foreach ($keys as $key)
+                @foreach ($keys as $key)
                     <tr class="odd:bg-white even:bg-gray-50 border-b">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $key['staff'] }}</th>
-                        <td class="px-6 py-4 uppercase">{{ $key['department'] }}</td>
-                        <td class="px-6 py-4">{{ $key['time in'] }}</td>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $key->department->key_id }}</th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $key->pickedByEmployee->first_name }} {{$key->pickedByEmployee->last_name}}</th>
+                        <td class="px-6 py-4 uppercase">{{ $key->department->name }}</td>
+                        <td class="px-6 py-4">{{ $key->picked_at}}</td>
                         <td class="px-6 py-4">
                             <a href="#" class="font-medium text-blue-600 text-lg hover:underline">View</a>
                         </td>
@@ -92,11 +93,11 @@
                             <a href="#" class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">Submit Key</a>
                         </td>
                     </tr>
-                @endforeach --}}
+                @endforeach
             </tbody>
         </table>
- 
-     
+{{--  
+        {{ $key->pickedByEmployee ? $key->pickedByEmployee->first_name . ' ' . $key->pickedByEmployee->last_name : 'N/A' }} --}}
     </div> 
 
 </x-layout>

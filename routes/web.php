@@ -4,6 +4,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Models\Visitor;
 use App\Models\Employee;
 use App\Models\Key;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +24,8 @@ Route::get('/', function () {
 
     return view('index',[
         'visitor'  => Visitor::simplePaginate(10),
-        'key' => Key::simplePaginate(10)
+        'keys' => Key::with('department')->simplePaginate(10),
+        // 'keys' => Key::with('employee')->simplePaginate(10)
     ]);
 
 
@@ -103,7 +105,38 @@ Route::get('pick-key',function(){
 
 
 Route::post('log-key', function(){
+    // dd(request()->all());
+    request()->validate([
+        'picked_by' => 'required|exists:employees,id',
+    ]);
 
+    $employee = Employee::findOrFail(request('picked_by'));
+    $department = $employee->department;
+
+
+    $activeKeyEvent = Key::where('status', 'picked')
+    ->where('status', 'picked')
+    ->whereNull('returned_at')
+    ->first();
+
+
+    if ($activeKeyEvent) {
+        $pickedByEmployee = Employee::find($activeKeyEvent->picked_by);
+        return redirect()->back()->with('error', 
+            "Key has already been picked."
+        );
+    }
+
+
+    Key::create([
+        'department_id' => $department->id,
+        'picked_by' => $employee->id,
+        'picked_at' => Carbon::now(),
+        'status' => 'picked'
+    ]);
+
+    
+    return redirect('/');
 });
 
 
