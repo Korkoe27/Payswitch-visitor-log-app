@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EmployeeController;
+use App\Models\Department;
 use App\Models\Visitor;
 use App\Models\Employee;
 use App\Models\Key;
@@ -104,6 +105,11 @@ Route::get('pick-key',function(){
 });
 
 
+Route::get('create-staff', function(){
+    $departments = Department::get();
+    return view('staff.create', compact('departments'));
+});
+
 Route::post('log-key', function(){
     // dd(request()->all());
     request()->validate([
@@ -139,6 +145,40 @@ Route::post('log-key', function(){
     return redirect('/');
 });
 
+
+
+Route::post('store-staff',function(){
+    request()->validate([
+        'first_name' => 'required',
+        'last_name' => 'required',
+        'email' => 'required',
+        'employee_number' => 'required',
+        'phone_number' => 'required',
+        'department' => 'required|exists:departments,id',
+        'position' => 'required',
+        'access_card_number' => 'required',
+        'vehicle_number' => '',
+        'comment' => '',
+        'devices' => ''
+    ]);
+
+    $department = Department::findOrFail(request('department'));
+    
+
+    Employee::create([
+        'first_name' => request('first_name'),
+        'last_name' => request('last_name'),
+        'email' => request('email'),
+        'employee_number' => request('employee_number'),
+        'phone_number' => request('phone_number'),
+        'department_id' => $department->id,
+        'position' => request('position'),
+        'access_card_number' => request('access_card_number'),
+        'vehicle_number' => request('vehicle_number'),
+        'comment' => request('comment'),
+        'devices' => request('devices')
+    ]);
+});
 
 
 
