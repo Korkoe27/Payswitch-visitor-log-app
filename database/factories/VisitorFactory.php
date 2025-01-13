@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Employee;
 use App\Models\Visitor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,7 +25,7 @@ class VisitorFactory extends Factory
             'last_name' => fake()->name(),
             'email' => fake()->safeEmail(),
             'phone_number' => fake()->phoneNumber(),
-            'employee' => fake()->name(),
+            'employee' => Employee::inRandomOrder()->first()->id,
             'company_name' => fake()->company(),
             'access_card_number' => fake()->randomNumber(8),
             'vehicle_number' => fake()->randomNumber(),

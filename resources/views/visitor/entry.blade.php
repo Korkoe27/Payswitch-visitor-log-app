@@ -106,7 +106,12 @@
                        <label for="employee" class="mb-[10px] block text-base font-medium text-black">
                        Who are you visiting?
                        </label>
-                       <input type="text" placeholder="Visitee" required name="employee" id="employee" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                       <select name="employee" id="employee" class=" w-full appearance-none rounded-lg border border-slate-400 bg-transparent py-5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2">
+                        <option value="" selected disabled class="">Visitee</option>
+                        @foreach ($employees as $employee)
+                         <option value="{{$employee->id}}" class="dark:bg-dark-2">{{$employee->first_name}} {{$employee->last_name}}</option>
+                        @endforeach
+                       </select>
                     </div>
                     @error('employee')
                     <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>

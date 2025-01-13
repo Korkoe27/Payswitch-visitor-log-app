@@ -33,7 +33,7 @@ Route::get('/', function () {
        
 });
 
-Route::post('/visit',function(){
+Route::post('visit',function(){
 
     request()->validate([
         'first_name' => 'required',
@@ -70,7 +70,9 @@ Route::post('/visit',function(){
 
 
 Route::get('create-visit', function(){
-    return view('visitor.entry');
+    
+    $employees = Employee::get();
+    return view('visitor.entry', compact('employees'));
 });
 
 

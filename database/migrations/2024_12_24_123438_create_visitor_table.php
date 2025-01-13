@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Employee;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +18,7 @@ return new class extends Migration
             $table->string('last_name');//done
             $table->string('email')->nullable();//done
             $table->string('phone_number');//done
-            $table->string('employee');//done
+            $table->foreignIdFor(Employee::class, 'employeeId');//done
             $table->string('company_name')->nullable();//done
             $table->integer('access_card_number');//done
             $table->string('vehicle_number')->nullable();//done

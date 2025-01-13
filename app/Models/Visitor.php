@@ -13,3 +13,5 @@ class Visitor extends Model
     protected $guarded = [];
     use HasFactory;
 }
+
+
