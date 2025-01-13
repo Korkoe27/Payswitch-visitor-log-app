@@ -39,7 +39,7 @@
                         <td class="px-6 py-4 capitalize">
                             @switch($person['purpose'])
                                 @case('personal')
-                                    <span class="text-green-500">{{ $person['purpose'] }}</span>
+                                    <span class="text-green-500 ">{{ $person['purpose'] }}</span>
                                     @break
                                 @case('interview')
                                     <span class="text-yellow-500">{{ $person['purpose'] }}</span>
@@ -85,7 +85,7 @@
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $key->department->key_id }}</th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $key->pickedByEmployee->first_name }} {{$key->pickedByEmployee->last_name}}</th>
                         <td class="px-6 py-4 uppercase">{{ $key->department->name }}</td>
-                        <td class="px-6 py-4">{{ $key->picked_at}}</td>
+                        <td class="px-6 py-4">{{ $key->created_at->format('H:i')}}</td>
                         <td class="px-6 py-4">
                             <a href="#" class="font-medium text-blue-600 text-lg hover:underline">View</a>
                         </td>

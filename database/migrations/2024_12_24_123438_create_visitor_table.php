@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('last_name');//done
             $table->string('email')->nullable();//done
             $table->string('phone_number');//done
-            $table->foreignIdFor(Employee::class, 'employeeId');//done
+            $table->foreignIdFor(Employee::class, 'employee_Id');//done
             $table->string('company_name')->nullable();//done
             $table->integer('access_card_number');//done
             $table->string('vehicle_number')->nullable();//done

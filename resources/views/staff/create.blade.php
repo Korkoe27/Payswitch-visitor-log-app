@@ -4,19 +4,96 @@
 
 
     <x-slot:heading>
-        Create a new Staff.
+        Register a new Staff.
     </x-slot:heading>
 
-    <aside class="">
-        <form action="{{url('store-staff')}}" method="POST">
+    {{-- <aside class=""> --}}
+        <form action="{{url('store-staff')}}" method="POST" class="flex p-5 w-full overflow-hidden">
             @csrf
 
+
+            <aside class="w-1/2">
+                <div class="w-full px-4 md:w-1/2 lg:w-1/2">
+                    <div class="mb-12">
+                       <label for="first_name" class="mb-[10px] block text-base font-medium text-black">
+                       First Name
+                       </label>
+                       <input type="text" placeholder="John" id="first_name" name="first_name" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                    </div>
+                    {{-- @error('vehicle_number')
+                    <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
+                    @enderror --}}
+                 </div>
+                <div class="w-full px-4 md:w-1/2 lg:w-1/2">
+                    <div class="mb-12">
+                       <label for="last_name" class="mb-[10px] block text-base font-medium text-black">
+                       Last Name
+                       </label>
+                       <input type="text" placeholder="Doe" id="last_name" name="last_name" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                    </div>
+                    {{-- @error('vehicle_number')
+                    <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
+                    @enderror --}}
+                 </div>
+                <div class="w-full px-4 md:w-1/2 lg:w-1/2">
+                    <div class="mb-12">
+                       <label for="employee_number" class="mb-[10px] block text-base font-medium text-black">
+                       Employee Number
+                       </label>
+                       <input type="text" placeholder="GR 1000 25" id="employee_number" name="employee_number" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                    </div>
+                    {{-- @error('vehicle_number')
+                    <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
+                    @enderror --}}
+                 </div>
+                <div class="w-full px-4 md:w-1/2 lg:w-1/2">
+                    <div class="mb-12">
+                       <label for="email" class="mb-[10px] block text-base font-medium text-black">
+                       Email
+                       </label>
+                       <input type="text" placeholder="janedoe@payswitch.com.gh" id="email" name="email" required class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                    </div>
+                    {{-- @error('vehicle_number')
+                    <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
+                    @enderror --}}
+                 </div>
+                <div class="w-full px-4 md:w-1/2 lg:w-1/2">
+                    <div class="mb-12">
+                       <label for="phone_number" class="mb-[10px] block text-base font-medium text-black">
+                       Phone Number
+                       </label>
+                       <input type="text" placeholder="0241234567" id="phone_number" name="phone_number" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                    </div>
+                    {{-- @error('vehicle_number')
+                    <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
+                    @enderror --}}
+                 </div>
+
+                 
+
+            </aside>
+
+
+            <aside class="w-1/2">
+                             <div class="w-full px-4 md:w-1/2 lg:w-1/2">
+                <div class="mb-12">
+                   <label for="purpose" class="mb-[10px] block text-base font-medium text-black">
+                   Department <span class="text-red-400">*</span>
+                   </label>
+                <select class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-1/2" name="department_id" required >
+                      <option value="" selected disabled class="">Choose Department</option>
+                  @foreach ($departments as $deparment)
+                   <option value="{{$deparment->id}}" class="dark:bg-dark-2 uppercase">{{$deparment->name}}</option>
+                  @endforeach
+                </select>
+             </div>
+             </div>
             <div class="w-full px-4 md:w-1/2 lg:w-1/2">
                 <div class="mb-12">
-                   <label for="first_name" class="mb-[10px] block text-base font-medium text-black">
-                   First Name
+                   <label for="vehicle_number" class="mb-[10px] block text-base font-medium text-black">
+                   Vehicle Number
                    </label>
-                   <input type="text" placeholder="John" id="first_name" name="first_name" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                   <input type="text" placeholder="GR 123 25" id="vehicle_number" name="vehicle_number" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
                 </div>
                 {{-- @error('vehicle_number')
                 <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
@@ -24,10 +101,10 @@
              </div>
             <div class="w-full px-4 md:w-1/2 lg:w-1/2">
                 <div class="mb-12">
-                   <label for="last_name" class="mb-[10px] block text-base font-medium text-black">
-                   Last Name
+                   <label for="job_title" class="mb-[10px] block text-base font-medium text-black">
+                   Job Title
                    </label>
-                   <input type="text" placeholder="Doe" id="last_name" name="last_name" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                   <input type="text" placeholder="Software Engineer" id="job_title" name="job_title" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
                 </div>
                 {{-- @error('vehicle_number')
                 <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
@@ -35,39 +112,41 @@
              </div>
             <div class="w-full px-4 md:w-1/2 lg:w-1/2">
                 <div class="mb-12">
-                   <label for="employee_number" class="mb-[10px] block text-base font-medium text-black">
-                   Employee Number
+                   <label for="access_card_number" class="mb-[10px] block text-base font-medium text-black">
+                   Access Card Number
                    </label>
-                   <input type="text" placeholder="GR 1000 25" id="employee_number" name="employee_number" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                   <input type="text" placeholder="EMP9283" id="access_card_number" name="access_card_number" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
                 </div>
                 {{-- @error('vehicle_number')
                 <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
                 @enderror --}}
              </div>
-            <div class="w-full px-4 md:w-1/2 lg:w-1/2">
-                <div class="mb-12">
-                   <label for="employee_number" class="mb-[10px] block text-base font-medium text-black">
-                   Employee Number
-                   </label>
-                   <input type="text" placeholder="GR 1000 25" id="employee_number" name="employee_number" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+             <div class="w-full px-4 md:w-1/2 lg:w-1/2">
+                <h3 class="mb-4 font-semibold text-gray-900">Gender</h3>
+             <div class="flex w-full px-4 md:w-1/2 lg:w-1/2">
+                <div class="flex items-center me-4">
+                    <input id="inline-radio" type="radio" value="female" name="gender" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <label for="inline-radio" class="ms-2 text-sm font-medium text-gray-900 ">Female</label>
                 </div>
-                {{-- @error('vehicle_number')
-                <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
-                @enderror --}}
-             </div>
-            <div class="w-full px-4 md:w-1/2 lg:w-1/2">
-                <div class="mb-12">
-                   <label for="phone_number" class="mb-[10px] block text-base font-medium text-black">
-                   Employee Number
-                   </label>
-                   <input type="text" placeholder="GR 1000 25" id="employee_number" name="employee_number" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                <div class="flex items-center me-4">
+                    <input id="inline-2-radio" type="radio" value="male" name="gender" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <label for="inline-2-radio" class="ms-2 text-sm font-medium text-gray-900">Male</label>
                 </div>
-                {{-- @error('vehicle_number')
-                <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
-                @enderror --}}
+             </div>             
+             <div class="flex items-baseline justify-end">
+                <button type="submit"
+                    class="bg-blue-400 rounded-md inline-flex items-center justify-center py-3 px-7 text-center text-base font-medium text-white hover:bg-[#1B44C8] hover:border-[#1B44C8] disabled:bg-gray-3 disabled:border-gray-3 disabled:text-dark-5 active:bg-[#1B44C8] active:border-[#1B44C8]">
+                    Submit
+                    </button>
+            </div>
              </div>
+
+             
+
+            </aside>
+
         </form>
-    </aside>
+    {{-- </aside> --}}
 
 
 

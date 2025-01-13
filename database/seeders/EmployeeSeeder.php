@@ -13,6 +13,6 @@ class EmployeeSeeder extends Seeder
      */    public function run(): void
     {
         // Generate 50 employees assigned to the 5 pre-created departments
-        Employee::factory()->count(30)->create();
+        Employee::factory()->count(10)->create();
     }
 }

@@ -37,7 +37,7 @@
                     </div>
                     <div class="w-1/2">
                         <label for="purpose" class="font-bold">Purpose</label>
-                        <div class="">
+                        <div class="capitalize">
                             @switch($visitor['purpose'])
                             @case('personal')
                                 <span class="text-green-500">{{ $visitor['purpose'] }}</span>

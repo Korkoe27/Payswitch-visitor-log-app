@@ -156,12 +156,11 @@ Route::post('store-staff',function(){
         'email' => 'required',
         'employee_number' => 'required',
         'phone_number' => 'required',
-        'department' => 'required|exists:departments,id',
+        'department_id' => 'required|exists:departments,id',
         'position' => 'required',
         'access_card_number' => 'required',
         'vehicle_number' => '',
-        'comment' => '',
-        'devices' => ''
+        'gender' => 'required'
     ]);
 
     $department = Department::findOrFail(request('department'));
@@ -174,12 +173,12 @@ Route::post('store-staff',function(){
         'employee_number' => request('employee_number'),
         'phone_number' => request('phone_number'),
         'department_id' => $department->id,
-        'position' => request('position'),
+        'pojob_titleition' => request('job_title'),
         'access_card_number' => request('access_card_number'),
-        'vehicle_number' => request('vehicle_number'),
-        'comment' => request('comment'),
-        'devices' => request('devices')
+        'vehicle_number' => request('vehicle_number')
     ]);
+
+    return redirect('/');
 });
 
 

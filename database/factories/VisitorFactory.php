@@ -25,7 +25,7 @@ class VisitorFactory extends Factory
             'last_name' => fake()->name(),
             'email' => fake()->safeEmail(),
             'phone_number' => fake()->phoneNumber(),
-            'employee' => Employee::inRandomOrder()->first()->id,
+            'employee_Id' => Employee::inRandomOrder()->first()->id,
             'company_name' => fake()->company(),
             'access_card_number' => fake()->randomNumber(8),
             'vehicle_number' => fake()->randomNumber(),

@@ -109,7 +109,7 @@
                        <select name="employee" id="employee" class=" w-full appearance-none rounded-lg border border-slate-400 bg-transparent py-5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2">
                         <option value="" selected disabled class="">Visitee</option>
                         @foreach ($employees as $employee)
-                         <option value="{{$employee->id}}" class="dark:bg-dark-2">{{$employee->first_name}} {{$employee->last_name}}</option>
+                         <option value="{{$employee->first_name}} {{$employee->last_name}}" class="dark:bg-dark-2">{{$employee->first_name}} {{$employee->last_name}}</option>
                         @endforeach
                        </select>
                     </div>

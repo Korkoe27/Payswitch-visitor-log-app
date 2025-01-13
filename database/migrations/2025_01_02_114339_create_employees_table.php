@@ -17,11 +17,12 @@ return new class extends Migration
             $table->string(column: 'employee_number')->unique();
             $table->string(column: 'first_name');
             $table->string(column: 'last_name');
-            $table->string(column: 'email')->nullable();
+            $table->string(column: 'email');
             $table->string(column: 'phone_number');
             $table->foreignIdFor(Department::class, column: 'department_id');
             $table->string(column: 'vehicle_number');
             $table->string(column: 'job_title');
+            $table->string(column: 'access_card_number');
             $table->string(column: 'gender');
             $table->timestamps();
         });
