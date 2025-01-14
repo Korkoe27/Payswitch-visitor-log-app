@@ -9,7 +9,7 @@
     <title>Visitor Log</title>
 </head>
 
-<body class="flex flex-col bg-[#f9fafb] overflow-hidden">
+<body class="flex flex-col bg-[#f9fafb]">
 
     <header  class="md:grid md:grid-cols-10 gap-2 items-center w-full px-4 py-4 bg-white ">
 

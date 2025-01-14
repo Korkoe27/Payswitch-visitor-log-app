@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('visitor', function (Blueprint $table) {
             $table->id();
             $table->string('first_name');//done
+            $table->string('other_name')->nullable();//done
             $table->string('last_name');//done
             $table->string('email')->nullable();//done
             $table->string('phone_number');//done
@@ -25,7 +26,7 @@ return new class extends Migration
             $table->string('purpose')->nullable();//done
             $table->longText('comment')->nullable();
             // $table->boolean('marketing_consent')->nullable();
-            $table->string('devices')->nullable();//done
+            $table->json('devices')->nullable();//done
             $table->string('dependents')->nullable();
 
             $table->timestamps();

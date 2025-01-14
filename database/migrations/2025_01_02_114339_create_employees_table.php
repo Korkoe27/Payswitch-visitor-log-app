@@ -16,13 +16,14 @@ return new class extends Migration
             $table->id();
             $table->string(column: 'employee_number')->unique();
             $table->string(column: 'first_name');
+            $table->string(column: 'other_name');
             $table->string(column: 'last_name');
-            $table->string(column: 'email');
+            $table->string(column: 'email')->nullable();
             $table->string(column: 'phone_number');
             $table->foreignIdFor(Department::class, column: 'department_id');
-            $table->string(column: 'vehicle_number');
+            $table->string(column: 'vehicle_number')->nullable();
             $table->string(column: 'job_title');
-            $table->string(column: 'access_card_number');
+            $table->string(column: 'access_card_number')->nullable();
             $table->string(column: 'gender');
             $table->timestamps();
         });

@@ -35,7 +35,7 @@
                 @foreach ($visitor as $person)
                     <tr class="odd:bg-white even:bg-gray-50 border-b">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $person['first_name'] }} {{ $person['last_name'] }}</th>
-                        <td class="px-6 py-4">{{ $person['employee'] }}</td>
+                        <td class="px-6 py-4">{{ $person->visitee ? $person->visitee->first_name . ' ' . $person->visitee->last_name : 'N/A' }}</td>
                         <td class="px-6 py-4 capitalize">
                             @switch($person['purpose'])
                                 @case('personal')

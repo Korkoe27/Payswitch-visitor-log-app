@@ -23,30 +23,33 @@
                 </div>
              </div>
                     <div class="px-10">
-            <form action="{{ url('visit') }}" method="POST" class="flex flex-wrap pr-6 lg:grid lg:grid-cols-2">
+            <form action="{{ url('visit') }}" method="POST" class="flex flex-col pr-6 lg:grid lg:grid-cols-2">
 
                 @csrf
 
-                {{-- @if($errors->any())
-                    <div class="w-full px-4">
-                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                            <ul class="">
-                                @foreach ($errors->all() as $error)
-                                    <li class="">{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div> --}}
 
-                <div class="w-full px-4 md:w-1/2 lg:w-1/2">
+                <aside class="flex flex-col gap-4">
+                                  <div class="w-full px-4 md:w-1/2 lg:w-1/2">
                     <div class="mb-12">
                        <label for="first_name" class="mb-[10px] block text-base font-medium text-black">
                         First Name <span class="text-red-400">*</span>
                        </label>
-                       <input type="text" name="first_name" id="first_name" placeholder="eg..Jane" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                       <input type="text" name="first_name" required id="first_name" placeholder="eg..Jane" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
                     </div>
 
                     @error('first_name')
+                        <div class="text-red-500">{{ $message }}</div>
+                    @enderror
+                 </div>
+                <div class="w-full px-4 md:w-1/2 lg:w-1/2">
+                    <div class="mb-12">
+                       <label for="other_name" class="mb-[10px] block text-base font-medium text-black">
+                        Other Names
+                       </label>
+                       <input type="text" name="other_name" id="other_name" placeholder="eg..Jane" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                    </div>
+
+                    @error('other_name')
                         <div class="text-red-500">{{ $message }}</div>
                     @enderror
                  </div>
@@ -106,7 +109,7 @@
                        <label for="employee" class="mb-[10px] block text-base font-medium text-black">
                        Who are you visiting?
                        </label>
-                       <select name="employee" id="employee" class=" w-full appearance-none rounded-lg border border-slate-400 bg-transparent py-5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2">
+                       <select name="employee" id="employee" class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-full"  required >
                         <option value="" selected disabled class="">Visitee</option>
                         @foreach ($employees as $employee)
                          <option value="{{$employee->first_name}} {{$employee->last_name}}" class="dark:bg-dark-2">{{$employee->first_name}} {{$employee->last_name}}</option>
@@ -117,13 +120,18 @@
                     <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
                     @enderror
                  </div>
-                 <div class="w-full px-4 md:w-1/2 lg:w-1/2">
+                </aside>
+
+
+
+                <aside class="flex flex-col gap-4">
+                   <div class="w-full px-4 md:w-1/2 lg:w-1/2">
                     <div class="mb-12">
                        <label for="purpose" class="mb-[10px] block text-base font-medium text-black">
                        Purpose of Visit <span class="text-red-400">*</span>
                        </label>
                        <div class="">
-                          <select  name="purpose" id="purpose" class=" w-full appearance-none rounded-lg border border-slate-400 bg-transparent py-5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2">
+                          <select  name="purpose" id="purpose" class='p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-full' required>
                              <option value="" selected disabled class="dark:bg-dark-2">Purpose</option>
                              <option value="official" class="">Official</option>
                              <option value="interview" class="">Interview</option>
@@ -152,6 +160,27 @@
                     @enderror
                  </div>
 
+                 <div class="w-full px-4 md:w-1/2 lg:w-1/2 flex flex-col gap-1">
+
+                  <label for="hasDevice" class="mb-[10px] block text-base font-medium text-black">Do you have an electronic Device?</label>
+                     <div class="flex items-center gap-4 py-4" >
+
+                        <label for="default-radio-1" class="flex items-center gap-2 text-base font-medium text-gray-900">
+                           <input id="device-radio-1" type="radio" value="yes" required name="hasDevice" class="relative size-4 appearance-none rounded-full border border-gray-400 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white checked:border-blue-400 checked:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden">
+                           Yes
+                        </label>
+    
+
+                        <label for="device-radio-2" class="flex items-center gap-2 text-base font-medium text-gray-900">
+                           <input id="default-radio-2" type="radio" value="no" name="hasDevice" class="relative size-4 appearance-none rounded-full border border-gray-400 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white checked:border-blue-400 checked:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden">
+                           No
+                        </label>
+                     </div>
+
+                 </div>
+
+
+
                  <div class="w-full px-4 md:w-1/2 lg:w-1/2">
                     <div class="mb-12">
                        <label for="devices" class="mb-[10px] block text-base font-medium text-black">
@@ -162,6 +191,26 @@
                     @error('devices')
                     <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
                     @enderror
+                 </div>
+
+
+                 <div class="w-full px-4 md:w-1/2 lg:w-1/2 flex flex-col gap-1">
+
+                  <label for="hasDevice" class="mb-[10px] block text-base font-medium text-black">Did you come with companions</label>
+                     <div class="flex items-center gap-4 py-4" >
+
+                        <label for="dependents-radio-1" class="flex items-center gap-2 text-base font-medium text-gray-900">
+                           <input id="dependents-radio-1" type="radio" value="yes" required name="hasCompany" class="relative size-4 appearance-none rounded-full border border-gray-400 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white checked:border-blue-400 checked:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden">
+                           Yes
+                        </label>
+    
+
+                        <label for="dependents-radio-2" class="flex items-center gap-2 text-base font-medium text-gray-900">
+                           <input id="dependents-radio-2" type="radio" value="no" name="hasCompany" class="relative size-4 appearance-none rounded-full border border-gray-400 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white checked:border-blue-400 checked:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden">
+                           No
+                        </label>
+                     </div>
+
                  </div>
 
                  <div class="w-full px-4 md:w-1/2 lg:w-1/2">
@@ -188,6 +237,8 @@
                     <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
                     @enderror
                  </div>
+                </aside>
+                
                 
 
 <div class="w-full px-4 lg:hidden">

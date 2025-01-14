@@ -26,7 +26,6 @@ Route::get('/', function () {
     return view('index',[
         'visitor'  => Visitor::simplePaginate(10),
         'keys' => Key::with('department')->simplePaginate(10),
-        // 'keys' => Key::with('employee')->simplePaginate(10)
     ]);
 
 
@@ -150,35 +149,40 @@ Route::post('log-key', function(){
 
 
 Route::post('store-staff',function(){
+
+
+    // dd(request()->all());
     request()->validate([
         'first_name' => 'required',
         'last_name' => 'required',
-        'email' => 'required',
         'employee_number' => 'required',
+        'email' => 'required|email',
         'phone_number' => 'required',
         'department_id' => 'required|exists:departments,id',
-        'position' => 'required',
-        'access_card_number' => 'required',
         'vehicle_number' => '',
-        'gender' => 'required'
+        'job_title' => 'required',
+        'access_card_number' => 'required',
+        'gender'=> 'required',
+
     ]);
 
-    $department = Department::findOrFail(request('department'));
-    
 
     Employee::create([
         'first_name' => request('first_name'),
         'last_name' => request('last_name'),
-        'email' => request('email'),
         'employee_number' => request('employee_number'),
+        'email' => request('email'),
         'phone_number' => request('phone_number'),
-        'department_id' => $department->id,
-        'pojob_titleition' => request('job_title'),
+        'department_id' => request('department_id'),
+        'vehicle_number' => request('vehicle_number'),
+        'job_title' => request('job_title'),
         'access_card_number' => request('access_card_number'),
-        'vehicle_number' => request('vehicle_number')
+        'gender' => request('gender')
     ]);
 
-    return redirect('/');
+
+    
+    return redirect('staff');
 });
 
 

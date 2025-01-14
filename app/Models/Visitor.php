@@ -12,6 +12,18 @@ class Visitor extends Model
 
     protected $guarded = [];
     use HasFactory;
+
+
+
+
+    public function visitee()
+    {
+        return $this->belongsTo(Employee::class, 'employee_Id', 'id');
+    }
+
+    protected $casts = [
+        'devices' => 'array', // Automatically cast the JSON column to an array
+    ];
 }
 
 

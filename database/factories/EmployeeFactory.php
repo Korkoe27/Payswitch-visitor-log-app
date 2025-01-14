@@ -24,6 +24,7 @@ class EmployeeFactory extends Factory
             'employee_number' => fake()->unique()->numerify('EMP###'),
             'access_card_number' => fake()->unique()->numerify('AC###'),
             'first_name' => fake()->firstName(),
+            'other_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
             'phone_number' => fake()->phoneNumber(),

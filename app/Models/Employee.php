@@ -18,4 +18,10 @@ class Employee extends Model
     }
 
 
+    public function visitors()
+    {
+        return $this->hasMany(Visitor::class, 'employee_Id', 'id');
+    }
+
+
 }
