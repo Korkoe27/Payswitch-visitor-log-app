@@ -162,7 +162,7 @@
 
                  <div class="w-full px-4 md:w-1/2 lg:w-1/2 flex flex-col gap-1">
 
-                  <label for="hasDevice" class="mb-[10px] block text-base font-medium text-black">Do you have an electronic Device?</label>
+                  <label for="hasDevice" class="block text-base font-medium text-black">Do you have an electronic Device?</label>
                      <div class="flex items-center gap-4 py-4" >
 
                         <label for="default-radio-1" class="flex items-center gap-2 text-base font-medium text-gray-900">
@@ -181,13 +181,27 @@
 
 
 
-                 <div class="w-full px-4 md:w-1/2 lg:w-1/2">
-                    <div class="mb-12">
-                       <label for="devices" class="mb-[10px] block text-base font-medium text-black">
-                       Serial Number of Device
-                       </label>
-                       <input type="text" placeholder="HP12345" id="devices" name="devices" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                 <div id="deviceInputsSection" class="w-full px-4 md:w-1/2 lg:w-1/2" style="display: none;">
+                    <div id="deviceInputsContainer" class="mb-5">
+
+                       <div class="device-block flex gap-2">
+
+                        <div class="flex flex-col gap-2">
+                           <label for="deviceName" class="">Device Name</label>
+                       <input type="text" placeholder="Hp" id="devices" name="devices" class="devices w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+
+                        </div>
+                        <div class="flex flex-col gap-2">
+                           <label for="deviceSerialNumber" class="">Serial Number</label>
+                       <input type="text" placeholder="8RUIO4283U" id="devices" name="" class="devices w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+
+                        </div>
+                        <button type="button" class="remove-device-button text-red-500">Remove</button>
+
+                       </div>
+
                     </div>
+                    <button id="addDeviceButton"  class="text-blue-400"  type="button"><span class="text-xl">+</span> Add another device</button>
                     @error('devices')
                     <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
                     @enderror
@@ -196,7 +210,7 @@
 
                  <div class="w-full px-4 md:w-1/2 lg:w-1/2 flex flex-col gap-1">
 
-                  <label for="hasDevice" class="mb-[10px] block text-base font-medium text-black">Did you come with companions</label>
+                  <label for="hasDevice" class="block text-base font-medium text-black">Did you come with companions</label>
                      <div class="flex items-center gap-4 py-4" >
 
                         <label for="dependents-radio-1" class="flex items-center gap-2 text-base font-medium text-gray-900">
@@ -213,17 +227,34 @@
 
                  </div>
 
-                 <div class="w-full px-4 md:w-1/2 lg:w-1/2">
-                    <div class="mb-12">
-                       <label for="dependents" class="mb-[10px] block text-base font-medium text-black">
-                       Who did you come with?
-                       </label>
-                       <input type="text" placeholder="John Doe" name="dependents" id="dependents" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                 <div id="companionsInputsSection" style="display: none;" class="w-full px-4 md:w-1/2 lg:w-1/2">
+                  <div id="companionsInputsContainer">
+
+
+                     <div class="companion-block flex gap-2 mb-5">
+                     <div class="flex flex-col gap-2">
+                        <label for="deviceName" class="">Full Name</label>
+                    <input type="text" placeholder="Hp" id="devices" name="devices" class="companions w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+
+                     </div>
+                     <div class="flex flex-col gap-2">
+                        <label for="deviceSerialNumber" class="">Phone Number</label>
+                    <input type="text" placeholder="0250987654" id="devices" name="" class="companions w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-slate-600 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+
+                     </div>
+
+                     </div>
+
+
                     </div>
-                    @error('dependents')
-                    <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
-                    @enderror
+
+                    <button id="addPersonButton" class="text-blue-400" type="button"><span class="text-xl">+</span> Add another person</button>
                  </div>
+                    @error('dependents')
+                    <div class="text-red-500 italic font-normal text-sm">{{ $message }}                    
+                     </div>
+                        @enderror  
+
                  <div class="w-full px-4 md:w-1/2 lg:w-1/2">
                     <div class="mb-12">
                        <label class="mb-[10px] block text-base font-medium text-black" id="comment">
@@ -261,3 +292,68 @@
 
 
 </x-layout>
+
+
+<script>
+$(document).ready(function() {
+
+   let lastRemovedDeviceBlock = null;
+   let lastRemovedCompanionBlock = null;
+
+
+   $('input[type=radio][name=hasDevice]').change(function() {
+      if (this.value == 'yes') {
+         $('#deviceInputsSection').show();
+
+         $('#addDeviceButton').off('click').on('click', function() {
+            const newDeviceBlock = $('#deviceInputsContainer .device-block').first().clone(); 
+            newDeviceBlock.find('input').val(''); 
+            $('#deviceInputsContainer').append(newDeviceBlock); 
+         });
+      } else {
+         $('#deviceInputsSection').hide();
+         $('#deviceInputsContainer .device-block:gt(0)').remove(); // Remove all but the first block
+         $('#deviceInputsContainer .device-block input').val('');
+      }
+   });
+
+
+
+   $('input[type=radio][name=hasCompany]').change(function() {
+      if (this.value == 'yes') {
+         $('#companionsInputsSection').show();
+
+         $('#addPersonButton').off('click').on('click', function() {
+            const newCompanionBlock = $('#companionsInputsContainer .companion-block').first().clone();
+            newCompanionBlock.find('input').val('');
+            $('#companionsInputsContainer').append(newCompanionBlock); 
+
+
+
+         });
+      } else {
+         $('#companionsInputsSection').hide();
+         $('#companionsInputsContainer .companion-block:gt(0)').remove();
+         $('#companionsInputsContainer .companion-block input').val(''); 
+
+         
+      }
+   });
+
+
+      $('#deviceInputsContainer').on('click', '.remove-device-button', function () {
+      const blockToRemove = $(this).closest('.device-block'); 
+      lastRemovedDeviceBlock = blockToRemove.clone();
+      blockToRemove.remove();
+   });
+
+   $('#companionsInputsContainer').on('click', '.remove-companion-button', function () {
+      const blockToRemove = $(this).closest('.companion-block'); // Find the closest block to remove
+      lastRemovedCompanionBlock = blockToRemove.clone();
+      blockToRemove.remove();
+   });
+});
+
+
+
+</script>
