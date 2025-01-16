@@ -23,5 +23,10 @@ class Employee extends Model
         return $this->hasMany(Visitor::class, 'employee_Id', 'id');
     }
 
+    
+    public function ownDeviec(){
+        return $this->hasMany(Device::class);
+    }
+
 
 }

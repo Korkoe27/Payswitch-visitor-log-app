@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EmployeeController;
 use App\Models\Department;
+use App\Models\Device;
 use App\Models\Visitor;
 use App\Models\Employee;
 use App\Models\Key;
@@ -186,6 +187,34 @@ Route::post('store-staff',function(){
 });
 
 
+
+Route::get('create-device-log', function () {
+    $employees = Employee::get();
+    return view('devices.create', compact('employees'));
+});
+
+
+Route::post('log-device', function () {
+    // dd(request()->all());
+
+    $validatedData = request()->validate([
+        'device_brand' => 'required|string|max:255',
+        'serial_number' => 'required|string|max:255',
+        'employee_id' => 'required|exists:employees,id',
+        'action' => 'required|string',
+        'logged_at' => 'nullable|date', // Optional if provided by user
+    ]);
+
+    // Create the device
+    $device = Device::create([
+        'device_brand' => $validatedData['device_brand'],
+        'serial_number' => $validatedData['serial_number'],
+        'employee_id' => $validatedData['employee_id'],
+        'action' => $validatedData['action'],
+        'logged_at' => $validatedData['logged_at'] ?? Carbon::now(),
+    ]);
+
+});
 
 
 

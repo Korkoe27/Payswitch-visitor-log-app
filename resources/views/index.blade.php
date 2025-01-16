@@ -17,6 +17,12 @@
             </svg>
             Keys
         </button>
+        <button id="device-btn" class="text-black lg:w-32 text-sm bg-white  lg:px-5 lg:py-2 border border-t-0 rounded-t-none rounded-r-none rounded-b rounded-br flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" />
+              </svg>
+            Devices
+        </button>
     </div>
 
     <div id="visitors-table" class="sm:rounded-lg m-4">
@@ -76,6 +82,44 @@
                     <th scope="col" class="px-6 py-3">Picked By</th>
                     <th scope="col" class="px-6 py-3">Dept</th>
                     <th scope="col" class="px-6 py-3">Time In</th>
+                    <th class="px-6 py-6" scope="col"></th>
+                </tr>
+            </thead>
+            <tbody class="text-base">
+                @foreach ($keys as $key)
+                    <tr class="odd:bg-white even:bg-gray-50 border-b">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $key->department->key_id }}</th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $key->pickedByEmployee->first_name }} {{$key->pickedByEmployee->last_name}}</th>
+                        <td class="px-6 py-4 uppercase">{{ $key->department->name }}</td>
+                        <td class="px-6 py-4">{{ $key->created_at->format('H:i')}}</td>
+                        <td class="px-6 py-4">
+                            <a href="#" class="font-medium text-blue-600 text-lg hover:underline">View</a>
+                        </td>
+                        <td class="px-3 py-4">
+                            <a href="#" class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">Submit Key</a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+{{--  
+        {{ $key->pickedByEmployee ? $key->pickedByEmployee->first_name . ' ' . $key->pickedByEmployee->last_name : 'N/A' }} --}}
+    </div> 
+    <div id="device-table" class="w-full hidden sm:rounded-lg m-4">
+        <table class="w-full text-sm text-left text-gray-500">
+            <div class="flex justify-between px-8 w-full m-auto">
+            <h2 class="font-bold">Devices</h2>
+
+                <a class="border p-4 rounded-lg" href='{{url('create-device-log')}}'>Log Device</a>
+
+            </div>
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3">Serial Number</th>
+                    <th scope="col" class="px-6 py-3">Brand</th>
+                    <th scope="col" class="px-6 py-3">Staff</th>
+                    <th scope="col" class="px-6 py-3">Date</th>
+                    <th scope="col" class="px-6 py-3">Time</th>
                     <th class="px-6 py-6" scope="col"></th>
                 </tr>
             </thead>
