@@ -19,7 +19,7 @@
             <div class="">
                 <label for="brand" class="block text-sm font-medium text-slate-500">Brand</label>
                 <div class="mt-1">
-                    <input type="text" name="brand" placeholder="MacBook" id="brand" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" required>
+                    <input type="text" name="device_brand" placeholder="MacBook" id="brand" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" required>
                 </div>
             </div>
             <div class="">
@@ -28,8 +28,8 @@
                 <select name="staff" id="">
                     <option value="" selected disabled class="">Visitee</option>
                     @foreach ($employees as $employee)
-                     <option value="{{$employee->first_name}} {{$employee->last_name}}" class="dark:bg-dark-2">{{$employee->first_name}} {{$employee->last_name}}</option>
-                    @endforeach
+                    <option value="{{$employee->emloyee_id}}" class="dark:bg-dark-2">{{$employee->first_name}} {{$employee->last_name}}</option>
+                   @endforeach
                 </select>
                 </div>
             </div>

@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Device extends Model
 {
+
+
+    protected $guarded = [];
     use HasFactory;
 
 
-    public function hasDevices(){
+    public function devices(){
         return $this->belongsTo(Employee::class);
     }
 }

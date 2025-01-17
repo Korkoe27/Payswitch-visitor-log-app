@@ -24,7 +24,7 @@ class Employee extends Model
     }
 
     
-    public function ownDeviec(){
+    public function ownDevice(){
         return $this->hasMany(Device::class);
     }
 

@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('devices', function (Blueprint $table) {
             $table->id();
             $table->string(column: 'device_brand');
-            $table->string(column: 'serial_number')->unique();
+            $table->string(column: 'serial_number');
             $table->foreignIdFor(Employee::class, column: 'employee_id');
             $table->string(column: 'action');
             $table->timestamp('logged_at');

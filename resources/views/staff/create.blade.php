@@ -91,10 +91,10 @@
                    <label for="purpose" class="mb-[10px] block text-base font-medium text-black">
                    Department <span class="text-red-400">*</span>
                    </label>
-                <select class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-1/2" name="department_id" required >
+                <select class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border uppercase border-gray-400 w-1/2" name="department_id" required >
                       <option value="" selected disabled class="">Choose Department</option>
                   @foreach ($departments as $deparment)
-                   <option value="{{$deparment->id}}" class="dark:bg-dark-2 uppercase">{{$deparment->name}}</option>
+                   <option value="{{$deparment->id}}" class="uppercase">{{$deparment->name}}</option>
                   @endforeach
                 </select>
              </div>

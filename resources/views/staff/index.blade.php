@@ -37,7 +37,7 @@
                     <tr class="odd:bg-white even:bg-gray-50 border-b">
                         <!-- Full Name -->
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                            {{ $staff->first_name }} {{ $staff->last_name }}
+                            {{ $staff?->first_name }} {{ $staff?->last_name }}
                         </th>
             
                         <!-- Department -->

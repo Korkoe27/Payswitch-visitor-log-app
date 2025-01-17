@@ -124,14 +124,14 @@
                 </tr>
             </thead>
             <tbody class="text-base">
-                @foreach ($keys as $key)
+                @foreach ($devices as $device)
                     <tr class="odd:bg-white even:bg-gray-50 border-b">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $key->department->key_id }}</th>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $key->pickedByEmployee->first_name }} {{$key->pickedByEmployee->last_name}}</th>
-                        <td class="px-6 py-4 uppercase">{{ $key->department->name }}</td>
-                        <td class="px-6 py-4">{{ $key->created_at->format('H:i')}}</td>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $device->serial_number }}</th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $device->device_brand }} </th>
+                        <td class="px-6 py-4 uppercase">{{ $device->hasDevice?->employee_id }} {{ $device->hasDevice?->last_name }}</td>
+                        <td class="px-6 py-4">{{ $device->created_at?->format('d, M Y')}}</td>
                         <td class="px-6 py-4">
-                            <a href="#" class="font-medium text-blue-600 text-lg hover:underline">View</a>
+                            {{ $device->created_at?->format('H:i')}}
                         </td>
                         <td class="px-3 py-4">
                             <a href="#" class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">Submit Key</a>
