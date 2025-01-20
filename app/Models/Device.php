@@ -12,8 +12,12 @@ class Device extends Model
     protected $guarded = [];
     use HasFactory;
 
+    public function setDevicesAttribute($value)
+    {
+        $this->attributes['devices'] = json_encode(is_array($value) ? $value : [$value]);
+    }
 
-    public function devices(){
-        return $this->belongsTo(Employee::class);
+    public function employee(){
+        return $this->belongsTo(Employee::class, 'employee_id');
     }
 }

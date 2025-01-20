@@ -112,7 +112,7 @@
                        <select name="employee" id="employee" class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-full"  required >
                         <option value="" selected disabled class="">Visitee</option>
                         @foreach ($employees as $employee)
-                         <option value="{{$employee->first_name}} {{$employee->last_name}}" class="dark:bg-dark-2">{{$employee->first_name}} {{$employee->last_name}}</option>
+                         <option value="{{$employee->id}}" class="dark:bg-dark-2">{{$employee->first_name}} {{$employee->last_name}}</option>
                         @endforeach
                        </select>
                     </div>
@@ -159,6 +159,17 @@
                     <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
                     @enderror
                  </div>
+                 <div class="w-full px-4 md:w-1/2 lg:w-1/2">
+                    <div class="mb-12">
+                       <label for="company_name" class="mb-[10px] block text-base font-medium text-black">
+                       Company Name
+                       </label>
+                       <input type="text" placeholder="Company you represent." id="company_name" name="company_name" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                    </div>
+                    @error('company_name')
+                    <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
+                    @enderror
+                 </div>
 
                  <div class="w-full px-4 md:w-1/2 lg:w-1/2 flex flex-col gap-1">
 
@@ -188,12 +199,12 @@
 
                         <div class="flex flex-col gap-2">
                            <label for="deviceName" class="">Device Name</label>
-                       <input type="text" placeholder="Hp" id="devices" name="devices" class="devices w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                       <input type="text" placeholder="Hp" id="devices" name="devices[0][name]" class="devices w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
 
                         </div>
                         <div class="flex flex-col gap-2">
                            <label for="deviceSerialNumber" class="">Serial Number</label>
-                       <input type="text" placeholder="8RUIO4283U" id="devices" name="" class="devices w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                       <input type="text" placeholder="8RUIO4283U" id="devices" name="devices[0][serial]" class="devices w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
 
                         </div>
                         <button type="button" class="remove-device-button text-red-500">Remove</button>
@@ -234,12 +245,12 @@
                      <div class="companion-block flex gap-2 mb-5">
                      <div class="flex flex-col gap-2">
                         <label for="deviceName" class="">Full Name</label>
-                    <input type="text" placeholder="Hp" id="devices" name="devices" class="companions w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                    <input type="text" placeholder="Hp" id="dependents" name="dependents[0][name]" class="companions w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
 
                      </div>
                      <div class="flex flex-col gap-2">
                         <label for="deviceSerialNumber" class="">Phone Number</label>
-                    <input type="text" placeholder="0250987654" id="devices" name="" class="companions w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-slate-600 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                    <input type="text" placeholder="0250987654" id="dependents" name="dependents[0][phone_number]" class="companions w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-slate-600 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
 
                      </div>
 
@@ -261,7 +272,7 @@
                        Comment
                        </label>
                        <div class="">
-                          <textarea type="textarea" rows="6" placeholder="Any other information" class="w-full bg-transparent rounded-md lg:h-20 md:h-30 resize-none border border-slate-400 p-3 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2"></textarea>
+                          <textarea type="textarea" name="comment" rows="6" placeholder="Any other information" class="w-full bg-transparent rounded-md lg:h-20 md:h-30 resize-none border border-slate-400 p-3 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2"></textarea>
                        </div>
                     </div>
                     @error('comment')
@@ -295,64 +306,86 @@
 
 
 <script>
-$(document).ready(function() {
+  $(document).ready(function() {
 
-   let lastRemovedDeviceBlock = null;
-   let lastRemovedCompanionBlock = null;
+let lastRemovedDeviceBlock = null;
+let lastRemovedCompanionBlock = null;
 
-
-   $('input[type=radio][name=hasDevice]').change(function() {
-      if (this.value == 'yes') {
-         $('#deviceInputsSection').show();
-
-         $('#addDeviceButton').off('click').on('click', function() {
-            const newDeviceBlock = $('#deviceInputsContainer .device-block').first().clone(); 
-            newDeviceBlock.find('input').val(''); 
-            $('#deviceInputsContainer').append(newDeviceBlock); 
-         });
-      } else {
-         $('#deviceInputsSection').hide();
-         $('#deviceInputsContainer .device-block:gt(0)').remove(); // Remove all but the first block
-         $('#deviceInputsContainer .device-block input').val('');
-      }
+function updateDeviceIndices() {
+   $('#deviceInputsContainer .device-block').each(function(index) {
+      $(this).find('input').each(function() {
+         const name = $(this).attr('name');
+         if (name) {
+            const updatedName = name.replace(/devices\[\d+\]/, `devices[${index}]`);
+            $(this).attr('name', updatedName);
+         }
+      });
    });
+}
 
-
-
-   $('input[type=radio][name=hasCompany]').change(function() {
-      if (this.value == 'yes') {
-         $('#companionsInputsSection').show();
-
-         $('#addPersonButton').off('click').on('click', function() {
-            const newCompanionBlock = $('#companionsInputsContainer .companion-block').first().clone();
-            newCompanionBlock.find('input').val('');
-            $('#companionsInputsContainer').append(newCompanionBlock); 
-
-
-
-         });
-      } else {
-         $('#companionsInputsSection').hide();
-         $('#companionsInputsContainer .companion-block:gt(0)').remove();
-         $('#companionsInputsContainer .companion-block input').val(''); 
-
-         
-      }
+function updateCompanionIndices() {
+   $('#companionsInputsContainer .companion-block').each(function(index) {
+      $(this).find('input').each(function() {
+         const name = $(this).attr('name');
+         if (name) {
+            const updatedName = name.replace(/companions\[\d+\]/, `companions[${index}]`);
+            $(this).attr('name', updatedName);
+         }
+      });
    });
+}
 
+$('input[type=radio][name=hasDevice]').change(function() {
+   if (this.value == 'yes') {
+      $('#deviceInputsSection').show();
 
-      $('#deviceInputsContainer').on('click', '.remove-device-button', function () {
-      const blockToRemove = $(this).closest('.device-block'); 
-      lastRemovedDeviceBlock = blockToRemove.clone();
-      blockToRemove.remove();
-   });
-
-   $('#companionsInputsContainer').on('click', '.remove-companion-button', function () {
-      const blockToRemove = $(this).closest('.companion-block'); // Find the closest block to remove
-      lastRemovedCompanionBlock = blockToRemove.clone();
-      blockToRemove.remove();
-   });
+      $('#addDeviceButton').off('click').on('click', function() {
+         const newDeviceBlock = $('#deviceInputsContainer .device-block').first().clone(); 
+         newDeviceBlock.find('input').val(''); 
+         $('#deviceInputsContainer').append(newDeviceBlock);
+         updateDeviceIndices(); // Update indices after adding a new block
+      });
+   } else {
+      $('#deviceInputsSection').hide();
+      $('#deviceInputsContainer .device-block:gt(0)').remove(); // Remove all but the first block
+      $('#deviceInputsContainer .device-block input').val('');
+      updateDeviceIndices(); // Update indices after resetting blocks
+   }
 });
+
+$('input[type=radio][name=hasCompany]').change(function() {
+   if (this.value == 'yes') {
+      $('#companionsInputsSection').show();
+
+      $('#addPersonButton').off('click').on('click', function() {
+         const newCompanionBlock = $('#companionsInputsContainer .companion-block').first().clone();
+         newCompanionBlock.find('input').val('');
+         $('#companionsInputsContainer').append(newCompanionBlock);
+         updateCompanionIndices(); // Update indices after adding a new block
+      });
+   } else {
+      $('#companionsInputsSection').hide();
+      $('#companionsInputsContainer .companion-block:gt(0)').remove();
+      $('#companionsInputsContainer .companion-block input').val(''); 
+      updateCompanionIndices(); // Update indices after resetting blocks
+   }
+});
+
+$('#deviceInputsContainer').on('click', '.remove-device-button', function () {
+   const blockToRemove = $(this).closest('.device-block'); 
+   lastRemovedDeviceBlock = blockToRemove.clone();
+   blockToRemove.remove();
+   updateDeviceIndices(); // Update indices after removing a block
+});
+
+$('#companionsInputsContainer').on('click', '.remove-companion-button', function () {
+   const blockToRemove = $(this).closest('.companion-block'); // Find the closest block to remove
+   lastRemovedCompanionBlock = blockToRemove.clone();
+   blockToRemove.remove();
+   updateCompanionIndices(); // Update indices after removing a block
+});
+});
+
 
 
 

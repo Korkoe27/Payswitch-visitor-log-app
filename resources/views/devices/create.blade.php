@@ -23,12 +23,12 @@
                 </div>
             </div>
             <div class="">
-                <label for="staff" class="block text-sm font-medium text-slate-500">Who are you?</label>
+                <label for="employee_id" class="block text-sm font-medium text-slate-500">Who are you?</label>
                 <div class="mt-1">
-                <select name="staff" id="">
+                <select name="employee_id" id="">
                     <option value="" selected disabled class="">Visitee</option>
                     @foreach ($employees as $employee)
-                    <option value="{{$employee->emloyee_id}}" class="dark:bg-dark-2">{{$employee->first_name}} {{$employee->last_name}}</option>
+                    <option value="{{$employee->id}}" class="dark:bg-dark-2">{{$employee->first_name}} {{$employee->last_name}}</option>
                    @endforeach
                 </select>
                 </div>

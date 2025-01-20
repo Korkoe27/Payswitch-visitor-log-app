@@ -4,15 +4,10 @@ use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\KeyController;
 use App\Http\Controllers\VisitorController;
-use App\Models\Department;
 use App\Models\Device;
 use App\Models\Visitor;
-use App\Models\Employee;
 use App\Models\Key;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,12 +22,12 @@ use Illuminate\Support\Facades\DB;
 Route::get('/', function () {
 
 
-
+    $devices = Device::with('employee')->get();
     return view('index',[
         'visitor'  => Visitor::simplePaginate(10),
         'keys' => Key::with('department')->simplePaginate(10),
-        'devices' => Device::with('devices')->get()
-    ]);
+        
+    ],compact('devices'));
 
 
        
@@ -70,7 +65,7 @@ Route::post('log-key', [KeyController::class, 'logKey']);
 
 //device
 
-Route::get('create-device-log', [DeviceController::class, 'create']);
+Route::get('device-logs/create', [DeviceController::class, 'create']);
 
 
 Route::post('log-device', [DeviceController::class, 'store']);

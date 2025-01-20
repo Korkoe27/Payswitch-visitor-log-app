@@ -14,6 +14,18 @@ class Visitor extends Model
     use HasFactory;
 
 
+    // public function setDevicesAttribute($value)
+    // {
+    //     $this->attributes['devices'] = json_encode(is_array($value) ? $value : [$value]);
+    // }
+
+    // /**
+    //  * Mutator to ensure dependents are stored as JSON.
+    //  */
+    // public function setDependentsAttribute($value)
+    // {
+    //     $this->attributes['dependents'] = json_encode(is_array($value) ? $value : [$value]);
+    // }
 
 
     public function visitee()
@@ -22,7 +34,8 @@ class Visitor extends Model
     }
 
     protected $casts = [
-        'devices' => 'array', // Automatically cast the JSON column to an array
+        'devices' => 'array',
+        'dependents' => 'array'// Automatically cast the JSON column to an array
     ];
 }
 

@@ -33,8 +33,14 @@ class VisitorFactory extends Factory
             'purpose' => fake()->randomElement(['interview', 'personal', 'official', 'other']),
             'comment' => fake()->sentence(),
             // 'marketing_consent' => fake()->boolean(),
-            'devices' => fake()->randomElement(['laptop', 'mobile', 'tablet', 'other']),
-            'dependents' => fake()->name(),
+            'devices' => [
+                'name'=>fake()->randomElement(['HP','Dell','Toshiba']),
+                'serial'=>fake()->numerify('ICUU#######')
+            ],
+            'dependents' => [
+                'name'=>fake()->name(),
+                'phone_number'=>fake()->phoneNumber()
+            ],
         ];
     }
 }

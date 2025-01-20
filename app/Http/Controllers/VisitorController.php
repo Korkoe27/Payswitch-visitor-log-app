@@ -19,7 +19,9 @@ class VisitorController extends Controller
 
     public function store(){
         
-    request()->validate([
+// dd(request());
+
+    $validatedData = request()->validate([
         'first_name' => 'required',
         'last_name' => 'required',
         'email' => '',
@@ -30,26 +32,52 @@ class VisitorController extends Controller
         'vehicle_number' => '',
         'purpose' => 'required',
         'comment' => '',
-        'devices' => '',
-        'dependents' => ''
+        'devices' => 'nullable|array',
+        'devices.*.name'=>'required_with:devices|string',
+        'devices.*.serial'=>'required_with:devices|string',
+        'dependents' => 'nullable|array',
+        'dependents.*.name'=>'required_with:dependents|string',
+        'dependents.*.phone_number'=>'required_with:dependents|string'
     ]);
+
+    $devicesJson = request()->has('devices') ? json_encode($validatedData['devices']) : null;
+
+    $dependedntsJson = request()->has('dependents') ? json_encode($validatedData['dependents']):null;
+
+    // Visitor::create([
+    //     'first_name' => request('first_name'),
+    //     'last_name' => request('last_name'),
+    //     'email' => request('email'),
+    //     'phone_number' => request('phone_number'),
+    //     'employee' => request('employee'),
+    //     'company_name' => request('company_name'),
+    //     'access_card_number' => request('access_card_number'),
+    //     'vehicle_number' => request('vehicle_number'),
+    //     'purpose' => request('purpose'),
+    //     'comment' => request('comment'),
+    //     'devices' => request('devices'),
+    //     'dependents' => request('dependents')
+    // ]);
+
 
     Visitor::create([
-        'first_name' => request('first_name'),
-        'last_name' => request('last_name'),
-        'email' => request('email'),
-        'phone_number' => request('phone_number'),
-        'employee' => request('employee'),
-        'company_name' => request('company_name'),
-        'access_card_number' => request('access_card_number'),
-        'vehicle_number' => request('vehicle_number'),
-        'purpose' => request('purpose'),
-        'comment' => request('comment'),
-        'devices' => request('devices'),
-        'dependents' => request('dependents')
+        'first_name' => $validatedData['first_name'],
+        'last_name' => $validatedData['last_name'],
+        'email' => $validatedData['email'],
+        'phone_number' => $validatedData['phone_number'],
+        'employee_Id' => $validatedData['employee'],
+        'company_name' => $validatedData['company_name'],
+        'access_card_number' => $validatedData['access_card_number'],
+        'vehicle_number' => $validatedData['vehicle_number'],
+        'purpose' => $validatedData['purpose'],
+        'comment' => $validatedData['comment'],
+        'devices' => $devicesJson,
+        'dependents' => $dependedntsJson,
     ]);
 
-    return redirect('/');
+    return redirect('/')->with('success', 'Visitor record created successfully!');
+
+    // return redirect('/');
     }
 
 

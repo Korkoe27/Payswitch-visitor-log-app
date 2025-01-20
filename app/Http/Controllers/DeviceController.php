@@ -1,43 +1,48 @@
 <?php
 
-namespace App\Http\Controllers;
+    namespace App\Http\Controllers;
 
-use App\Models\Device;
-use App\Models\Employee;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
+    use App\Models\Device;
+    use App\Models\Employee;
+    use Carbon\Carbon;
+    use Illuminate\Support\Facades\Log;
+    use Illuminate\Http\Request;
+    use Illuminate\Support\Facades\DB;
 
-class DeviceController extends Controller
-{
-    //
-    public function create(){
-        $employees = Employee::get();
-        return view('devices.create', compact('employees'));
+    class DeviceController extends Controller
+    {
+        //
+        public function create(){
+            $employees = Employee::get();
+            return view('devices.create', compact('employees'));
 
-    }
+        }
 
-    public function store(){
+        public function store(Request $request) {
+            try {
+                request()->validate([
+                    'serial_number' => 'required',
+                    'device_brand' => 'required',
+                    'employee_id' => 'required|exists:employees,id',
+                    'action' => 'required',
+                ]);
         
-        // dd(request()->all());
+                $staff = Employee::findOrFail(request('employee_id'));
+        
+                Device::create([
+                    'serial_number' => request('serial_number'),
+                    'device_brand' => request('device_brand'),
+                    'employee_id' => $staff->id,
+                    'action' => request('action'),
+                    'logged_at' => Carbon::now(),
+                ]);
+        
+                return redirect()->back()->with('success', 'Device logged successfully.');
+            } catch (\Exception $e) {
+                Log::error($e->getMessage());
+                return redirect()->back()->withErrors(['error' => 'An error occurred while logging the device.']);
+            }
+        }
+        
 
-    request()->validate([
-        'staff' => 'required|exists:employees,id',
-        'device_brand' => 'required',
-        'serial_number' => 'required',
-        'action' => 'required',
-        // 'logged_at' => Carbon::now()
-    ]);
-    
-
-    Device::create([
-        'employee_id' => request('staff'),
-        'device_brand' => request('device_brand'),
-        'serial_number' => request('serial_number'),
-        'action' => request('action'),
-        'logged_at' => Carbon::now()
-    ]);
-
-    
     }
-
-}

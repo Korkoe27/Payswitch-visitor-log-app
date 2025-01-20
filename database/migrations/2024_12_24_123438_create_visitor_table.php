@@ -27,7 +27,7 @@ return new class extends Migration
             $table->longText('comment')->nullable();
             // $table->boolean('marketing_consent')->nullable();
             $table->json('devices')->nullable();//done
-            $table->string('dependents')->nullable();
+            $table->json('dependents')->nullable();
 
             $table->timestamps();
             

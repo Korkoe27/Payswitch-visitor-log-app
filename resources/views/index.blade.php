@@ -110,7 +110,7 @@
             <div class="flex justify-between px-8 w-full m-auto">
             <h2 class="font-bold">Devices</h2>
 
-                <a class="border p-4 rounded-lg" href='{{url('create-device-log')}}'>Log Device</a>
+                <a class="border p-4 rounded-lg" href='{{url('device-logs/create')}}'>Log Device</a>
 
             </div>
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -125,19 +125,26 @@
             </thead>
             <tbody class="text-base">
                 @foreach ($devices as $device)
-                    <tr class="odd:bg-white even:bg-gray-50 border-b">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $device->serial_number }}</th>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $device->device_brand }} </th>
-                        <td class="px-6 py-4 uppercase">{{ $device->hasDevice?->employee_id }} {{ $device->hasDevice?->last_name }}</td>
-                        <td class="px-6 py-4">{{ $device->created_at?->format('d, M Y')}}</td>
-                        <td class="px-6 py-4">
-                            {{ $device->created_at?->format('H:i')}}
-                        </td>
-                        <td class="px-3 py-4">
-                            <a href="#" class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">Submit Key</a>
-                        </td>
-                    </tr>
-                @endforeach
+                <tr class="odd:bg-white even:bg-gray-50 border-b">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $device->serial_number }}</th>
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $device->device_brand }} </th>
+                    <td class="px-6 py-4 uppercase">
+                        {{ $device->employee?->first_name }} {{ $device->employee?->last_name }}
+                    </td>
+                    <td class="px-6 py-4">{{ $device->created_at?->format('d, M Y') }}</td>
+                    <td class="px-6 py-4">
+                        {{ $device->created_at?->format('H:i') }}
+                    </td>
+                    <td class="px-3 py-4">
+                        @if ($device->action === 'log')
+                            <a href="#" class="font-medium text-blue-500 p-[5px] rounded-lg border border-blue-400">Sign Out</a>
+                        @elseif ($device->action === 'return')
+                            <a href="#" class="font-medium text-green-500 p-[5px] rounded-lg border border-green-400">Return Device</a>
+                        @endif
+                    </td>
+                </tr> 
+            @endforeach
+            
             </tbody>
         </table>
 {{--  

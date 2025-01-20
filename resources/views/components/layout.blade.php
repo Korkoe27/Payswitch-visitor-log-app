@@ -37,6 +37,10 @@
                                             class="py-3 text-base font-medium rounded-lg text-green-600 border border-green-600  bg-primary lg:px-7 md:px-2 hover:bg-primary/90">
                                             Pick Key
                                         </a>
+                                        <a href="{{url('device-logs/create')}}"
+                                            class="py-3 text-base font-medium rounded-lg text-green-600 border border-green-600  bg-primary lg:px-7 md:px-2 hover:bg-primary/90">
+                                            Log Device
+                                        </a>
                                     </div>
                                                         
                                 <div class="  flex items-center p-4 col-start-10 col-span-2 gap-4  rounded-lg">

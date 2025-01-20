@@ -17,7 +17,7 @@
                     </div>
                     <div class="w-1/2">
                         <label for="employee" class="font-bold">Visiting</label>
-                        <p>{{ $visitor->employee }}</p>
+                        <p>{{ $visitor->visitee->first_name }} {{ $visitor->visitee->last_name }}</p>
                     </div>
                 </div>
                 <div class="flex gap-4">
@@ -53,7 +53,22 @@
                         @endswitch
                         </div>
                     </div>
+
+                </div>  
+                <div class="flex gap-4">
+                    <div class="w-1/2">
+                        <label for="company" class="font-bold">Comments</label>
+                        <p>{{ $visitor->comment ?? 'N/A' }}</p>
+                    </div>
+                    <div class="w-1/2">
+                        <label for="company" class="font-bold">Devices</label>
+                        @foreach (json_decode($visitor->devices) as $device )
+                            
+                        <p>{{ $device }}</p>
+                        @endforeach
+                    </div>
                 </div>
+
                 <div class="flex gap-4">
                     <div class="w-1/2">
                         <label for="time_in" class="font-bold">Time In</label>
