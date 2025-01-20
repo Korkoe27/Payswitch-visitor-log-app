@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class VisitorController extends Controller
 {
@@ -21,6 +22,9 @@ class VisitorController extends Controller
         
 // dd(request());
 
+        Log::debug('data',request()->all());
+
+        try{
     $validatedData = request()->validate([
         'first_name' => 'required',
         'last_name' => 'required',
@@ -33,32 +37,22 @@ class VisitorController extends Controller
         'purpose' => 'required',
         'comment' => '',
         'devices' => 'nullable|array',
-        'devices.*.name'=>'required_with:devices|string',
-        'devices.*.serial'=>'required_with:devices|string',
+        // 'devices.*.name'=>'required_with:devices|string|nullable',
+        // 'devices.*.serial'=>'required_with:devices|string|nullable',
         'dependents' => 'nullable|array',
-        'dependents.*.name'=>'required_with:dependents|string',
-        'dependents.*.phone_number'=>'required_with:dependents|string'
+        // 'dependents.*.name'=>'required_with:dependents|string|nullable',
+        // 'dependents.*.phone_number'=>'required_with:dependents|string|nullable'
     ]);
 
-    $devicesJson = request()->has('devices') ? json_encode($validatedData['devices']) : null;
+    $devicesJson = request()->has('devices') ? ($validatedData['devices']) : null;
 
-    $dependedntsJson = request()->has('dependents') ? json_encode($validatedData['dependents']):null;
+    $dependedntsJson = request()->has('dependents') ? ($validatedData['dependents']):null;
 
-    // Visitor::create([
-    //     'first_name' => request('first_name'),
-    //     'last_name' => request('last_name'),
-    //     'email' => request('email'),
-    //     'phone_number' => request('phone_number'),
-    //     'employee' => request('employee'),
-    //     'company_name' => request('company_name'),
-    //     'access_card_number' => request('access_card_number'),
-    //     'vehicle_number' => request('vehicle_number'),
-    //     'purpose' => request('purpose'),
-    //     'comment' => request('comment'),
-    //     'devices' => request('devices'),
-    //     'dependents' => request('dependents')
-    // ]);
+    // $devicesJson = '{"name": "Dell", "serial": "ICUU7110474"}';
+    // $dependedntsJson = '{"name": "Sherwood Berge", "phone_number": "603.732.3964"}';
 
+    Log::debug($devicesJson);
+    Log::debug($dependedntsJson);
 
     Visitor::create([
         'first_name' => $validatedData['first_name'],
@@ -77,7 +71,10 @@ class VisitorController extends Controller
 
     return redirect('/')->with('success', 'Visitor record created successfully!');
 
-    // return redirect('/');
+        }   catch(\Exception $e){
+            return redirect()->back()->withErrors(['error' => 'An error occurred while creating the visitor record.']);
+
+        }
     }
 
 

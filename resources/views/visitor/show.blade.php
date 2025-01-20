@@ -62,9 +62,12 @@
                     </div>
                     <div class="w-1/2">
                         <label for="company" class="font-bold">Devices</label>
-                        @foreach (json_decode($visitor->devices) as $device )
-                            
-                        <p>{{ $device }}</p>
+
+                        {{-- @dd($visitor); --}}
+                        @foreach(($visitor->devices) as $row)
+                            @foreach ($row as $device => $values)
+                            <p class="uppercase">{{$device}} {{ $values }}</p>
+                            @endforeach
                         @endforeach
                     </div>
                 </div>

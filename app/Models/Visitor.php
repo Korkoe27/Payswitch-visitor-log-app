@@ -19,9 +19,9 @@ class Visitor extends Model
     //     $this->attributes['devices'] = json_encode(is_array($value) ? $value : [$value]);
     // }
 
-    // /**
-    //  * Mutator to ensure dependents are stored as JSON.
-    //  */
+    // // /**
+    // //  * Mutator to ensure dependents are stored as JSON.
+    // //  */
     // public function setDependentsAttribute($value)
     // {
     //     $this->attributes['dependents'] = json_encode(is_array($value) ? $value : [$value]);
