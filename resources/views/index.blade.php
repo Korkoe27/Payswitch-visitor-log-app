@@ -136,9 +136,9 @@
                         {{ $device->created_at?->format('H:i') }}
                     </td>
                     <td class="px-3 py-4">
-                        @if ($device->action === 'log')
+                        @if ($device->action === 'bringDevice')
                             <a href="#" class="font-medium text-blue-500 p-[5px] rounded-lg border border-blue-400">Sign Out</a>
-                        @elseif ($device->action === 'return')
+                        @elseif ($device->action === 'log')
                             <a href="#" class="font-medium text-green-500 p-[5px] rounded-lg border border-green-400">Return Device</a>
                         @endif
                     </td>

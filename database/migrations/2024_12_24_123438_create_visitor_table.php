@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('vehicle_number')->nullable();//done
             $table->string('purpose')->nullable();//done
             $table->longText('comment')->nullable();
-            // $table->boolean('marketing_consent')->nullable();
+            $table->enum('status', ['ongoing', 'departed'])->default('ongoing');
             $table->json('devices')->nullable();//done
             $table->json('dependents')->nullable();
 

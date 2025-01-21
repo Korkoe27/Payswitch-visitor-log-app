@@ -66,6 +66,7 @@ class VisitorController extends Controller
         'purpose' => $validatedData['purpose'],
         'comment' => $validatedData['comment'],
         'devices' => $devicesJson,
+        'status' => 'ongoing',
         'dependents' => $dependedntsJson,
     ]);
 

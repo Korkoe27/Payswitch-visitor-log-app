@@ -32,6 +32,7 @@ class VisitorFactory extends Factory
             'vehicle_number' => fake()->randomNumber(),
             'purpose' => fake()->randomElement(['interview', 'personal', 'official', 'other']),
             'comment' => fake()->sentence(),
+            'status' => fake()->randomElement(['ongoing', 'departed']),
             // 'marketing_consent' => fake()->boolean(),
             'devices' => [
                 'name'=>fake()->randomElement(['HP','Dell','Toshiba']),
