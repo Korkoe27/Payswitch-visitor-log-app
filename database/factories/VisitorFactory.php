@@ -22,7 +22,7 @@ class VisitorFactory extends Factory
     {
         return [
             'first_name' => fake()->firstName(),
-            'other_name' => fake()->firstName(),
+            // 'other_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'email' => fake()->safeEmail(),
             'phone_number' => fake()->phoneNumber(),

@@ -14,9 +14,10 @@ return new class extends Migration
     {
         Schema::create('visitor', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name');//done
-            $table->string('other_name')->nullable();//done
-            $table->string('last_name');//done
+            $table->string('first_name');
+            // $table->string('other_name')->nullable();
+            $table->string('last_name');
+            // $table->string('full_name');
             $table->string('email')->nullable();//done
             $table->string('phone_number');//done
             $table->foreignIdFor(Employee::class, 'employee_Id');//done

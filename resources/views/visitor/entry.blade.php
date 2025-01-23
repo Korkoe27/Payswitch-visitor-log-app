@@ -32,16 +32,16 @@
                                   <div class="w-full px-4 md:w-1/2 lg:w-1/2">
                     <div class="mb-12">
                        <label for="first_name" class="mb-[10px] block text-base font-medium text-black">
-                        First Name <span class="text-red-400">*</span>
+                        Full Name <span class="text-red-400">*</span>
                        </label>
-                       <input type="text" name="first_name" required id="first_name" placeholder="eg..Jane" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                       <input type="text" name="full_name" required id="full_name" placeholder="Jane Doe" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
                     </div>
 
                     @error('first_name')
                         <div class="text-red-500">{{ $message }}</div>
                     @enderror
                  </div>
-                <div class="w-full px-4 md:w-1/2 lg:w-1/2">
+                {{-- <div class="w-full px-4 md:w-1/2 lg:w-1/2">
                     <div class="mb-12">
                        <label for="other_name" class="mb-[10px] block text-base font-medium text-black">
                         Other Names
@@ -64,7 +64,7 @@
                     @error('last_name')
                     <div class="text-red-500">{{ $message }}</div>
                     @enderror
-                 </div>
+                 </div> --}}
 
 
                 <div class="w-full px-4 md:w-1/2 lg:w-1/2">

@@ -26,8 +26,9 @@ class VisitorController extends Controller
 
         try{
     $validatedData = request()->validate([
-        'first_name' => 'required',
-        'last_name' => 'required',
+        // 'first_name' => 'required',
+        // 'last_name' => 'required',
+        'full_name' => 'required',
         'email' => '',
         'phone_number' => 'required',
         'employee' => 'required',
@@ -44,6 +45,12 @@ class VisitorController extends Controller
         // 'dependents.*.phone_number'=>'required_with:dependents|string|nullable'
     ]);
 
+
+    $name = explode(' ', $validatedData['full_name']);
+
+    $firstName = $name[0];
+    $lastName = $name[1];
+
     $devicesJson = request()->has('devices') ? ($validatedData['devices']) : null;
 
     $dependedntsJson = request()->has('dependents') ? ($validatedData['dependents']):null;
@@ -55,8 +62,8 @@ class VisitorController extends Controller
     Log::debug($dependedntsJson);
 
     Visitor::create([
-        'first_name' => $validatedData['first_name'],
-        'last_name' => $validatedData['last_name'],
+        'first_name' => $firstName,
+        'last_name' => $lastName,
         'email' => $validatedData['email'],
         'phone_number' => $validatedData['phone_number'],
         'employee_Id' => $validatedData['employee'],
