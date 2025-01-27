@@ -11,9 +11,7 @@ return new class extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique(); // Enforce unique constraint for 'name'
-            $table->string('key_id')->unique(); // Add unique constraint for 'key_id'
-            $table->timestamps();
+            $table->string('name')->unique();
         });
     }
 

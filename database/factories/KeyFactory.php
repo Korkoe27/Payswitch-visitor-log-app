@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Key;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class KeyFactory extends Factory
 {
+
+    protected $model = Key::class;
     /**
      * Define the model's default state.
      *
@@ -18,6 +21,8 @@ class KeyFactory extends Factory
     {
         return [
             //
+            'key_number'=>fake()->numerify('ICUU#######'),
+            'key_name'=>fake()->randomElement(['Office','Store','Main Door','Audit','Data Center','Business','Sales','Marketing']),
         ];
     }
 }

@@ -26,8 +26,6 @@ class VisitorController extends Controller
 
         try{
     $validatedData = request()->validate([
-        // 'first_name' => 'required',
-        // 'last_name' => 'required',
         'full_name' => 'required',
         'email' => '',
         'phone_number' => 'required',
@@ -38,11 +36,7 @@ class VisitorController extends Controller
         'purpose' => 'required',
         'comment' => '',
         'devices' => 'nullable|array',
-        // 'devices.*.name'=>'required_with:devices|string|nullable',
-        // 'devices.*.serial'=>'required_with:devices|string|nullable',
         'dependents' => 'nullable|array',
-        // 'dependents.*.name'=>'required_with:dependents|string|nullable',
-        // 'dependents.*.phone_number'=>'required_with:dependents|string|nullable'
     ]);
 
 
@@ -55,8 +49,6 @@ class VisitorController extends Controller
 
     $dependedntsJson = request()->has('dependents') ? ($validatedData['dependents']):null;
 
-    // $devicesJson = '{"name": "Dell", "serial": "ICUU7110474"}';
-    // $dependedntsJson = '{"name": "Sherwood Berge", "phone_number": "603.732.3964"}';
 
     Log::debug($devicesJson);
     Log::debug($dependedntsJson);

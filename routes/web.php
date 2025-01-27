@@ -6,7 +6,7 @@ use App\Http\Controllers\KeyController;
 use App\Http\Controllers\VisitorController;
 use App\Models\Device;
 use App\Models\Visitor;
-use App\Models\Key;
+use App\Models\KeyEvent;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ Route::get('/', function () {
     return view('index',[
         'visitor' => Visitor::where('status', 'ongoing')->simplePaginate(10),
 
-        'keys' => Key::with('department')->simplePaginate(10),
+        'keys' => KeyEvent::with('department')->simplePaginate(10),
         
     ],compact('devices'));
 
