@@ -28,5 +28,9 @@ class Employee extends Model
         return $this->hasMany(Device::class);
     }
 
+    public function key(){
+        return $this->hasMany(KeyEvent::class, 'picked_by');
+    }
+
 
 }

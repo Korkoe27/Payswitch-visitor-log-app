@@ -21,10 +21,10 @@
                          <option value="{{$employee->id}}" class="dark:bg-dark-2">{{$employee->first_name}} {{$employee->last_name}}</option>
                         @endforeach
                       </select>
-                      <select class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-1/2" name="picked_by" required >
+                      <select class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-1/2" name="key_name" required >
                             <option value="" selected disabled class="">What Key are you picking?</option>
                         @foreach ($keys as $key)
-                         <option value="{{$key->id}}" class="dark:bg-dark-2">{{$key->name}}</option>
+                         <option value="{{$key->key_name}}" class="text-black">{{$key->key_name}}</option>
                         @endforeach
                       </select>
 

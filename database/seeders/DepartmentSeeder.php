@@ -17,9 +17,7 @@ class DepartmentSeeder extends Seeder
         $departments = ['tech', 'business', 'hr', 'finance', 'audit'];
 
         foreach ($departments as $departmentName) {
-            Department::firstOrCreate(['name' => $departmentName], [
-                'key_id' => fake()->unique()->numberBetween(10000, 99999),
-            ]);
+            Department::firstOrCreate(['name' => $departmentName]);
         }
     }
 }

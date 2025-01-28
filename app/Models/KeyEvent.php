@@ -8,12 +8,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class KeyEvent extends Model
 {
+
+    protected $table = 'key_events';
+    protected $guarded = [];
     use HasFactory;
 
-
-    public function department(){
-        return $this->belongsTo(Department::class);
-    }
 
     public function pickedByEmployee(): BelongsTo
     {

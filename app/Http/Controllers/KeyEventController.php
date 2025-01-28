@@ -18,12 +18,14 @@ class KeyEventController extends Controller
         }
     
         public function logKey(){
+
+            // dd(request()->all());
             request()->validate([
                 'picked_by' => 'required|exists:employees,id',
+                'key_name' => 'required',
             ]);
         
             $employee = Employee::findOrFail(request('picked_by'));
-            $department = $employee->department;
         
         
             $activeKeyEvent = KeyEvent::where('status', 'picked')
@@ -41,7 +43,7 @@ class KeyEventController extends Controller
         
         
             KeyEvent::create([
-                'department_id' => $department->id,
+                'key_name' => request('key_name'),
                 'picked_by' => $employee->id,
                 'picked_at' => Carbon::now(),
                 'status' => 'picked'

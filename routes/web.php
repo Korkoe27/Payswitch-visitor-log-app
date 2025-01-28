@@ -3,6 +3,7 @@
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\KeyController;
+use App\Http\Controllers\KeyEventController;
 use App\Http\Controllers\VisitorController;
 use App\Models\Device;
 use App\Models\Visitor;
@@ -26,7 +27,7 @@ Route::get('/', function () {
     return view('index',[
         'visitor' => Visitor::where('status', 'ongoing')->simplePaginate(10),
 
-        'keys' => KeyEvent::with('department')->simplePaginate(10),
+        'keys' => KeyEvent::with('pickedByEmployee')->simplePaginate(10),
         
     ],compact('devices'));
 
@@ -59,9 +60,9 @@ Route::get('visit/{visitor}', [VisitorController::class, 'show']);
 
 //keys
 
-Route::get('pick-key',[KeyController::class, 'pickKey']);
+Route::get('pick-key',[KeyEventController::class, 'pickKey']);
 
-Route::post('log-key', [KeyController::class, 'logKey']);
+Route::post('log-key', [KeyEventController::class, 'logKey']);
 
 
 //device

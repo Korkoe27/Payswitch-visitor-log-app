@@ -26,8 +26,6 @@ class DepartmentFactory extends Factory
 
         return [
             'name' => $name,
-
-            'key_id' => fake()->unique()->numberBetween(10000, 99999),
         ];
     }
 }
