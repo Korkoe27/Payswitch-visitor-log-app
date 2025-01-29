@@ -85,4 +85,8 @@ class VisitorController extends Controller
 
 
 
+    public function exit(Visitor $visitor){
+        return view('visitor.exit', ['visitor' => $visitor]);
+    }
+
 }

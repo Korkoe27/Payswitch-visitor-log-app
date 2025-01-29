@@ -32,7 +32,7 @@
                 <tr>
                     <th scope="col" class="px-6 py-3">Name</th>
                     <th scope="col" class="px-6 py-3">Visiting</th>
-                    <th scope="col" class="px-6 py-3">Purpose</th>
+    <th scope="col" class="px-6 py-3">Purpose</th>
                     <th scope="col" class="px-6 py-3">Time In</th>
                     <th class="px-6 py-6" scope="col"></th>
                 </tr>
@@ -62,7 +62,7 @@
                             <a href="{{ url('visit/' . $person->id) }}" class="font-medium text-blue-600 text-lg hover:underline">View</a>
                         </td>
                         <td class="px-3 py-4">
-                            <a href="#" class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">Sign Out</a>
+                            <a href="{{url('visitor-exit/'.$person->id)}}" class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">Sign Out</a>
                         </td>
                     </tr>
                 @endforeach

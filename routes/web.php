@@ -55,6 +55,7 @@ Route::get('create-visit', [VisitorController::class, 'create']);
 
 Route::get('visit/{visitor}', [VisitorController::class, 'show']);
 
+Route::get('visitor-exit/{visitor}', [VisitorController::class, 'exit']);
 
 
 
