@@ -6,7 +6,7 @@
 
 
 
-{{-- <div> --}}
+<div class="h-[850px]  overflow-y-auto">
     <!-- Simplicity is the ultimate sophistication. - Leonardo da Vinci -->
 
 
@@ -23,7 +23,7 @@
                 </div>
              </div>
                     <div class="px-10">
-            <form action="{{ url('visit') }}" method="POST" class="flex flex-col pr-6 lg:grid lg:grid-cols-2">
+            <form action="{{ url('visit') }}" method="POST" class="flex flex-col h-full pr-6 lg:grid lg:grid-cols-2">
 
                 @csrf
 
@@ -299,7 +299,7 @@
         </div>
             </form>
 
-    {{-- </div> --}}
+    </div>
 
 
 </x-layout>
