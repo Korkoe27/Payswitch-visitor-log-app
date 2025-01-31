@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Models\Visitor;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -22,7 +23,7 @@ class VisitorController extends Controller
         
 // dd(request());
 
-        Log::debug('data',request()->all());
+        // Log::debug('data',request()->all());
 
         try{
     $validatedData = request()->validate([
@@ -50,8 +51,8 @@ class VisitorController extends Controller
     $dependedntsJson = request()->has('dependents') ? ($validatedData['dependents']):null;
 
 
-    Log::debug($devicesJson);
-    Log::debug($dependedntsJson);
+    // Log::debug($devicesJson);
+    // Log::debug($dependedntsJson);
 
     Visitor::create([
         'first_name' => $firstName,
@@ -85,15 +86,52 @@ class VisitorController extends Controller
 
 
 
-    // public function exit(Visitor $visitor){
-    //     return view('visitor.exit', ['visitor' => $visitor]);
-    // }
+    public function departure(Visitor $visitor){
 
-public function exit(Visitor $visitor){
 
-    // dd(request()->all());
+        return view('visitor.exit', ['visitor' => $visitor]);
+    }
 
-    echo 'exit';
+            public function exit(Request $request, Visitor $visitor){
+                // $visitor = Visitor::findOrFail($visitor->id);
 
-}
+                // Log::debug($request->query('visitor'));
+                
+
+                
+
+                // Log::debug('data',request()->all());
+
+                request()->validate([
+                    'rating'=> 'required',
+                    'visitor_experience' => '',
+                    'marketing_consent' => '',  
+                ]);
+
+
+//   Log::debug(base64_decode(request('masked_id')));
+
+                $visitor_id = base64_decode(request('masked_id'));
+                $visitor = Visitor::findOrFail(id: $visitor_id);
+              
+                // DB::table('visitor')->where('id', $visitor_id)->update([
+                //     'rating' => request('rating'),
+                //     'visitor_experience' => request('visitor_experience'),
+                //     'marketing_consent' => request('marketing_consent'),
+                //     'status' => 'departed',
+                // ]);
+
+            $visitor->update([
+                'rating' => request('rating'),
+                'visitor_experience' => request('visitor_experience'),
+                'marketing_consent' => request('marketing_consent'),
+                'departed_at' => now(),
+                'status' => 'departed',
+            ]);
+
+                // dd($visitor);
+
+
+                // echo 'exit';
+            }
 }

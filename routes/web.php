@@ -27,6 +27,8 @@ Route::get('/', function () {
     return view('index',[
         'visitor' => Visitor::where('status', 'ongoing')->simplePaginate(10),
 
+        'departed' => Visitor::where('status', 'departed')->simplePaginate(10),
+
         'keys' => KeyEvent::with('pickedByEmployee')->simplePaginate(10),
         
     ],compact('devices'));
@@ -55,9 +57,11 @@ Route::get('create-visit', [VisitorController::class, 'create']);
 
 Route::get('visit/{visitor}', [VisitorController::class, 'show']);
 
-Route::get('visitor-exit/{visitor}', [VisitorController::class, 'exit']);
+// Route::get('departure/{visitor}', [VisitorController::class, 'departure'])->name('departure');
+Route::get('departure', [VisitorController::class, 'departure']);
 
-Route::post('visitor-exit',[VisitorController::class, 'exit']);
+
+Route::put('exit',[VisitorController::class, 'exit']);
 
 
 

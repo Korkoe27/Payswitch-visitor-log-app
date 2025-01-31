@@ -62,7 +62,11 @@
                             <a href="{{ url('visit/' . $person->id) }}" class="font-medium text-blue-600 text-lg hover:underline">View</a>
                         </td>
                         <td class="px-3 py-4">
-                            <a href="{{url('visitor-exit/'.$person->id)}}" class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">Sign Out</a>
+                            {{-- <a href="{{ url('departure/'.$person->id) }}" 
+                                class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">
+                                Sign Out
+                             </a> --}}
+                            <a href="departure?visitor={{base64_encode($person->id)}}" class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">Sign Out</a>
                         </td>
                     </tr>
                 @endforeach

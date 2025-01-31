@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 use App\Models\Employee;
 use Illuminate\Database\Migrations\Migration;
@@ -15,7 +15,6 @@ return new class extends Migration
         Schema::create('visitor', function (Blueprint $table) {
             $table->id();
             $table->string('first_name');
-            // $table->string('other_name')->nullable();
             $table->string('last_name');
             // $table->string('full_name');
             $table->string('email')->nullable();//done
@@ -24,8 +23,13 @@ return new class extends Migration
             $table->string('company_name')->nullable();//done
             $table->integer('access_card_number');//done
             $table->string('vehicle_number')->nullable();//done
-            $table->string('purpose')->nullable();//done
+            $table->string('purpose');//done
+            $table->longText('rating')->nullable();
             $table->longText('comment')->nullable();
+            
+            $table->timestamp('departed_at')->nullable();
+            $table->boolean('marketing_consent')->default(false)->nullable();
+            $table->longText('visitor_experience')->nullable();
             $table->enum('status', ['ongoing', 'departed'])->default('ongoing');
             $table->json('devices')->nullable();//done
             $table->json('dependents')->nullable();

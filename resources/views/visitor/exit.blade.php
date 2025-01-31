@@ -14,13 +14,17 @@
                 <h2 class="font-bold text-white text-lg">{{$visitor->first_name}} {{$visitor->last_name}}</h2>
                 <h3 class="text-white font-semibold text-base">Thank you for visiting PaySwitch</h3>
             </aside> --}}
-            <form action="{{ url('visitor-exit')}}" class="flex flex-col gap-y-10 h-full gap-4 m-auto justify-center items-center w-full">
+            <form action="{{ url('exit/'.$visitor['id'])}}" method="POST" class="flex flex-col gap-y-10 h-full gap-4 m-auto justify-center items-center w-full">
+
+                @csrf
+                @method('PUT')
                 <p class="font-semibold text-xl">How was your experience visiting us? <span class="text-red-500">*</span></p>
 
 
+               <input type="hidden" name="masked_id" value="{{ request()->query('visitor')}}">
                 <div class="flex justify-evenly gap-4 w-full">
                     <label for="bad" name="rating" class="flex flex-col">
-                        <input type="radio" value="1" name="rating" id="">
+                        <input type="radio" value="1" name="rating" required id="">
                         <span class="lg:text-2xl">😡</span>
                     </label>
                     <label for="bad" name="rating" class="flex flex-col">
@@ -51,7 +55,7 @@
                 <div class="">
                     <label for="marketing_consent" class="text-sm  lg:text-base">
                         Select this box to receive updates and marketing from Payswitch.
-                        <input type="checkbox" name="marketing_consent" id="">
+                        <input type="checkbox" value="1" name="marketing_consent" id="">
                     </label>
                 </div>
 
@@ -104,36 +108,36 @@
             });
     
             // Ensure only the selected radio is submitted
-            form.addEventListener("submit", function (event) {
-                event.preventDefault(); // Prevent actual form submission for testing
-                let selectedRadio = document.querySelector('input[name="rating"]:checked');
+            // form.addEventListener("submit", function (event) {
+            //     event.preventDefault(); // Prevent actual form submission for testing
+            //     let selectedRadio = document.querySelector('input[name="rating"]:checked');
     
-                if (!selectedRadio) {
-                    alert("Please select a rating before submitting.");
-                    return;
-                }
+            //     if (!selectedRadio) {
+            //         alert("Please select a rating before submitting.");
+            //         return;
+            //     }
     
-                // Create a new FormData object to submit only selected radio
-                let formData = new FormData();
-                formData.append("rating", selectedRadio.value);
+            //     // Create a new FormData object to submit only selected radio
+            //     let formData = new FormData();
+            //     formData.append("rating", selectedRadio.value);
     
-                let textArea = document.querySelector('textarea[name="visitor_experience"]');
-                if (textArea) {
-                    formData.append("visitor_experience", textArea.value);
-                }
+            //     let textArea = document.querySelector('textarea[name="visitor_experience"]');
+            //     if (textArea) {
+            //         formData.append("visitor_experience", textArea.value);
+            //     }
     
-                let marketingConsent = document.querySelector('input[name="marketing_consent"]');
-                if (marketingConsent.checked) {
-                    formData.append("marketing_consent", "on");
-                }
+            //     let marketingConsent = document.querySelector('input[name="marketing_consent"]');
+            //     if (marketingConsent.checked) {
+            //         formData.append("marketing_consent", "on");
+            //     }
     
-                // Example: Log form data (replace this with actual form submission logic)
-                for (let pair of formData.entries()) {
-                    console.log(pair[0] + ": " + pair[1]);
-                }
+            //     // Example: Log form data (replace this with actual form submission logic)
+            //     for (let pair of formData.entries()) {
+            //         console.log(pair[0] + ": " + pair[1]);
+            //     }
     
-                alert("Form submitted successfully!");
-            });
+            //     alert("Form submitted successfully!");
+            // });
         });
     </script>
     
