@@ -23,6 +23,8 @@ class EmployeeController extends Controller
 
         public function store(){
 
+            // dd(request());
+
             request()->validate([
                 'first_name' => 'required',
                 'last_name' => 'required',
@@ -33,7 +35,7 @@ class EmployeeController extends Controller
                 'department_id' => 'required|exists:departments,id',
                 'vehicle_number' => '',
                 'job_title' => 'required',
-                'access_card_number' => 'required',
+                'access_card_number' => '',
                 'gender'=> 'required',
         
             ]);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Models\Visitor;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -41,6 +42,8 @@ class VisitorController extends Controller
     ]);
 
 
+    Log::debug($validatedData);
+
     $name = explode(' ', $validatedData['full_name']);
 
     $firstName = $name[0];
@@ -50,9 +53,10 @@ class VisitorController extends Controller
 
     $dependedntsJson = request()->has('dependents') ? ($validatedData['dependents']):null;
 
+    
 
-    // Log::debug($devicesJson);
-    // Log::debug($dependedntsJson);
+    Log::debug($devicesJson);
+    Log::debug($dependedntsJson);
 
     Visitor::create([
         'first_name' => $firstName,
@@ -125,9 +129,11 @@ class VisitorController extends Controller
                 'rating' => request('rating'),
                 'visitor_experience' => request('visitor_experience'),
                 'marketing_consent' => request('marketing_consent'),
-                'departed_at' => now(),
-                'status' => 'departed',
+                'departed_at' =>Carbon::now(),
+                'status' => 'departed'
             ]);
+
+            return redirect('/')->with('success', 'Visitor record updated successfully!');
 
                 // dd($visitor);
 

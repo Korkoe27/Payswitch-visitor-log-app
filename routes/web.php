@@ -25,9 +25,9 @@ Route::get('/', function () {
 
     $devices = Device::with('employee')->get();
     return view('index',[
-        'visitor' => Visitor::where('status', 'ongoing')->simplePaginate(10),
+        'visitor' => Visitor::where('status', 'ongoing')->simplePaginate(5),
 
-        'departed' => Visitor::where('status', 'departed')->simplePaginate(10),
+        'departed' => Visitor::where('status', 'departed')->simplePaginate(5),
 
         'keys' => KeyEvent::with('pickedByEmployee')->simplePaginate(10),
         
