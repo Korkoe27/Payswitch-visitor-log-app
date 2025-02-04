@@ -22,10 +22,10 @@ return new class extends Migration
             $table->foreignIdFor(Employee::class, 'employee_Id');//done
             $table->string('company_name')->nullable();//done
             $table->integer('access_card_number');//done
-            $table->string('vehicle_number')->nullable();//done
+            // $table->string('vehicle_number')->nullable();
             $table->string('purpose');//done
             $table->longText('rating')->nullable();
-            $table->longText('comment')->nullable();
+            // $table->longText('comment')->nullable();
             
             $table->timestamp('departed_at')->nullable();
             $table->boolean('marketing_consent')->default(false)->nullable();

@@ -150,17 +150,6 @@
 
                  <div class="w-full px-4 md:w-1/2 lg:w-1/2">
                     <div class="mb-12">
-                       <label for="vehicle_number" class="mb-[10px] block text-base font-medium text-black">
-                       Vehicle Number
-                       </label>
-                       <input type="text" placeholder="GR 1000 25" id="vehicle_number" name="vehicle_number" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
-                    </div>
-                    @error('vehicle_number')
-                    <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
-                    @enderror
-                 </div>
-                 <div class="w-full px-4 md:w-1/2 lg:w-1/2">
-                    <div class="mb-12">
                        <label for="company_name" class="mb-[10px] block text-base font-medium text-black">
                        Company Name
                        </label>
@@ -266,19 +255,6 @@
                      </div>
                         @enderror  
 
-                 <div class="w-full px-4 md:w-1/2 lg:w-1/2">
-                    <div class="mb-12">
-                       <label class="mb-[10px] block text-base font-medium text-black" id="comment">
-                       Comment
-                       </label>
-                       <div class="">
-                          <textarea type="textarea" name="comment" rows="6" placeholder="Any other information" class="w-full bg-transparent rounded-md lg:h-20 md:h-30 resize-none border border-slate-400 p-3 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2"></textarea>
-                       </div>
-                    </div>
-                    @error('comment')
-                    <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
-                    @enderror
-                 </div>
                 </aside>
                 
                 

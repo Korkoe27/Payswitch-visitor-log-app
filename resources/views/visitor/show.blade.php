@@ -57,10 +57,6 @@
                 </div>  
                 <div class="flex gap-4">
                     <div class="w-1/2">
-                        <label for="company" class="font-bold">Comments</label>
-                        <p>{{ $visitor->comment ?? 'N/A' }}</p>
-                    </div>
-                    <div class="w-1/2">
                         <label for="company" class="font-bold">Devices</label>
 
                         {{-- @dd($visitor); --}}

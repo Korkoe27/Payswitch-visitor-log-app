@@ -29,9 +29,7 @@ class VisitorFactory extends Factory
             'employee_Id' => Employee::inRandomOrder()->first()->id,
             'company_name' => fake()->company(),
             'access_card_number' => fake()->randomNumber(8),
-            'vehicle_number' => fake()->randomNumber(),
             'purpose' => fake()->randomElement(['interview', 'personal', 'official', 'other']),
-            'comment' => fake()->sentence(),
             'status' => fake()->randomElement(['ongoing', 'departed']),
             // 'marketing_consent' => fake()->boolean(),
             'devices' => [

@@ -75,6 +75,61 @@
 <div class="px-6 py-4">
     {{ $visitor->links() }}
 </div> 
+
+   
+<div id="departed-table" class="sm:rounded-lg m-4">
+    <table class="w-full text-sm text-left text-gray-500">
+        <h2 class="font-bold p-4">completed Visits</h2>
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+                <th scope="col" class="px-6 py-3">Name</th>
+                <th scope="col" class="px-6 py-3">Visiting</th>
+<th scope="col" class="px-6 py-3">Purpose</th>
+                {{-- <th scope="col" class="px-6 py-3">Time In</th> --}}
+                <th scope="col" class="px-6 py-3">Time Out</th>
+                <th class="px-6 py-6" scope="col"></th>
+            </tr>
+        </thead>
+        <tbody class="text-base">
+            @foreach ($departed as $person)
+                <tr class="odd:bg-white even:bg-gray-50 border-b">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $person['first_name'] }} {{ $person['last_name'] }}</th>
+                    <td class="px-6 py-4">{{ $person->visitee ? $person->visitee->first_name . ' ' . $person->visitee->last_name : 'N/A' }}</td>
+                    <td class="px-6 py-4 capitalize">
+                        @switch($person['purpose'])
+                            @case('personal')
+                                <span class="text-green-500 ">{{ $person['purpose'] }}</span>
+                                @break
+                            @case('interview')
+                                <span class="text-yellow-500">{{ $person['purpose'] }}</span>
+                                @break
+                            @case('official')
+                                <span class="text-red-600">{{ $person['purpose'] }}</span>
+                                @break
+                            @default
+                                <span class="text-blue-600">{{ $person['purpose'] }}</span>
+                        @endswitch
+                    </td>
+                    {{-- <td class="px-6 py-4">{{ $person?->created_at?->format('H:i') }}</td> --}}
+                    <td class="px-6 py-4">{{ date_format(date_create($person?->departed_at),'H:i') }}</td>
+                    <td class="px-6 py-4">
+                        <a href="#" class="font-medium text-blue-600 text-lg hover:underline">View</a>
+                    </td>
+                    <td class="px-3 py-4">
+                        {{-- <a href="{{ url('departure/'.$person->id) }}" 
+                            class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">
+                            Sign Out
+                         </a> --}}
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+<div class="px-6 py-4">
+{{ $visitor->links() }}
+</div> 
+</div>
+
     </div>
 
     <div id="keys-table" class="w-full hidden sm:rounded-lg m-4">
@@ -153,63 +208,8 @@
         {{ $key->pickedByEmployee ? $key->pickedByEmployee->first_name . ' ' . $key->pickedByEmployee->last_name : 'N/A' }} --}}
     </div> 
 
-    @if ($departed)
         
-   
-    <div id="departed-table" class="sm:rounded-lg m-4">
-        <table class="w-full text-sm text-left text-gray-500">
-            <h2 class="font-bold p-4">completed Visits</h2>
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                <tr>
-                    <th scope="col" class="px-6 py-3">Name</th>
-                    <th scope="col" class="px-6 py-3">Visiting</th>
-    <th scope="col" class="px-6 py-3">Purpose</th>
-                    {{-- <th scope="col" class="px-6 py-3">Time In</th> --}}
-                    <th scope="col" class="px-6 py-3">Time Out</th>
-                    <th class="px-6 py-6" scope="col"></th>
-                </tr>
-            </thead>
-            <tbody class="text-base">
-                @foreach ($departed as $person)
-                    <tr class="odd:bg-white even:bg-gray-50 border-b">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $person['first_name'] }} {{ $person['last_name'] }}</th>
-                        <td class="px-6 py-4">{{ $person->visitee ? $person->visitee->first_name . ' ' . $person->visitee->last_name : 'N/A' }}</td>
-                        <td class="px-6 py-4 capitalize">
-                            @switch($person['purpose'])
-                                @case('personal')
-                                    <span class="text-green-500 ">{{ $person['purpose'] }}</span>
-                                    @break
-                                @case('interview')
-                                    <span class="text-yellow-500">{{ $person['purpose'] }}</span>
-                                    @break
-                                @case('official')
-                                    <span class="text-red-600">{{ $person['purpose'] }}</span>
-                                    @break
-                                @default
-                                    <span class="text-blue-600">{{ $person['purpose'] }}</span>
-                            @endswitch
-                        </td>
-                        {{-- <td class="px-6 py-4">{{ $person?->created_at?->format('H:i') }}</td> --}}
-                        <td class="px-6 py-4">{{ date_format(date_create($person?->departed_at),'H:i') }}</td>
-                        <td class="px-6 py-4">
-                            <a href="#" class="font-medium text-blue-600 text-lg hover:underline">View</a>
-                        </td>
-                        <td class="px-3 py-4">
-                            {{-- <a href="{{ url('departure/'.$person->id) }}" 
-                                class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">
-                                Sign Out
-                             </a> --}}
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-<div class="px-6 py-4">
-    {{ $visitor->links() }}
-</div> 
-    </div>
 
-    @endif
 
 </x-layout>
 
