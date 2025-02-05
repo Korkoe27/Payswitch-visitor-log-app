@@ -4,6 +4,7 @@ use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\KeyController;
 use App\Http\Controllers\KeyEventController;
+use App\Http\Controllers\VisitorAccessCardController;
 use App\Http\Controllers\VisitorController;
 use App\Models\Device;
 use App\Models\Visitor;
@@ -87,6 +88,8 @@ Route::get('device-logs/create', [DeviceController::class, 'create']);
 Route::post('log-device', [DeviceController::class, 'store']);
 
 
+
+Route::get('visitor-acess-cards/create', [VisitorAccessCardController::class,    'create']);
 
 
 
