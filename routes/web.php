@@ -38,6 +38,13 @@ Route::get('/', function () {
 });
 
 
+
+//auth
+Route::get('login', function () {
+    return view('auth.login');
+});
+
+
 //staff
 
 Route::get('staff', [EmployeeController::class, 'index']);
