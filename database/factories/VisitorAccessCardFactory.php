@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\VisitorAccessCard;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class VisitorAccessCardFactory extends Factory
 {
+
+    protected $model =VisitorAccessCard::class;
     /**
      * Define the model's default state.
      *
@@ -17,7 +20,8 @@ class VisitorAccessCardFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'card_number'=>fake()->unique()->numerify('PS-VS-####'),
+            'status'=>fake()->randomElement(['available','unavailable']),
         ];
     }
 }

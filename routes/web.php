@@ -75,9 +75,16 @@ Route::put('exit',[VisitorController::class, 'exit']);
 
 //keys
 
+
+Route::get('keys', [KeyController::class, 'index']);
+
 Route::get('pick-key',[KeyEventController::class, 'pickKey']);
 
 Route::post('log-key', [KeyEventController::class, 'logKey']);
+
+Route::get('create-key', [KeyController::class, 'create']);
+
+Route::post('store-key', [KeyController::class, 'store']);
 
 
 //device
@@ -89,7 +96,11 @@ Route::post('log-device', [DeviceController::class, 'store']);
 
 
 
+
+//access card
 Route::get('visitor-acess-cards/create', [VisitorAccessCardController::class,    'create']);
+
+Route::post('store-access-card', [VisitorAccessCardController::class, 'store']);
 
 
 

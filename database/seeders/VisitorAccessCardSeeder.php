@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\VisitorAccessCard;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,5 +14,6 @@ class VisitorAccessCardSeeder extends Seeder
     public function run(): void
     {
         //
+        VisitorAccessCard::factory()->count(10)->create();
     }
 }

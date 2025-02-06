@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Models\Visitor;
+use App\Models\VisitorAccessCard;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -25,6 +26,12 @@ class VisitorController extends Controller
 // dd(request());
 
         // Log::debug('data',request()->all());
+
+
+
+        $availableCards = VisitorAccessCard::where('status', 'available')->get();
+
+    dd($availableCards);
 
         try{
     $validatedData = request()->validate([
@@ -56,7 +63,7 @@ class VisitorController extends Controller
     Log::debug($devicesJson);
     Log::debug($dependedntsJson);
 
-    Visitor::create([
+    $visitor = Visitor::create([
         'first_name' => $firstName,
         'last_name' => $lastName,
         'email' => $validatedData['email'],
@@ -69,6 +76,10 @@ class VisitorController extends Controller
         'status' => 'ongoing',
         'dependents' => $dependedntsJson,
     ]);
+
+    $lastInsertedId = $visitor->id;
+
+    dd($lastInsertedId);
 
     return redirect('/')->with('success', 'Visitor record created successfully!');
 
@@ -131,9 +142,6 @@ class VisitorController extends Controller
 
             return redirect('/')->with('success', 'Visitor record updated successfully!');
 
-                // dd($visitor);
 
-
-                // echo 'exit';
             }
 }
