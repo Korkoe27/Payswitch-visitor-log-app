@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AccessCards;
 use App\Models\Employee;
 use App\Models\Visitor;
 use App\Models\VisitorAccessCard;
@@ -24,14 +25,14 @@ class VisitorController extends Controller
     public function store(){
         
 // dd(request());
-
         // Log::debug('data',request()->all());
+
 
 
 
         $availableCards = VisitorAccessCard::where('status', 'available')->get();
 
-    dd($availableCards);
+    // dd($availableCards);
 
         try{
     $validatedData = request()->validate([
@@ -40,14 +41,14 @@ class VisitorController extends Controller
         'phone_number' => 'required',
         'employee' => 'required',
         'company_name' => '',
-        'access_card_number' => 'required',
+        // 'access_card_number' => 'required',
         'purpose' => 'required',
         'devices' => 'nullable|array',
         'dependents' => 'nullable|array',
     ]);
 
 
-    Log::debug($validatedData);
+    // Log::debug($validatedData);
 
     $name = explode(' ', $validatedData['full_name']);
 
@@ -58,10 +59,11 @@ class VisitorController extends Controller
 
     $dependedntsJson = request()->has('dependents') ? ($validatedData['dependents']):null;
 
+
     
 
-    Log::debug($devicesJson);
-    Log::debug($dependedntsJson);
+    // Log::debug($devicesJson);
+    // Log::debug($dependedntsJson);
 
     $visitor = Visitor::create([
         'first_name' => $firstName,
@@ -70,7 +72,7 @@ class VisitorController extends Controller
         'phone_number' => $validatedData['phone_number'],
         'employee_Id' => $validatedData['employee'],
         'company_name' => $validatedData['company_name'],
-        'access_card_number' => $validatedData['access_card_number'],
+        // 'access_card_number' => $validatedData['access_card_number'],
         'purpose' => $validatedData['purpose'],
         'devices' => $devicesJson,
         'status' => 'ongoing',
@@ -79,7 +81,26 @@ class VisitorController extends Controller
 
     $lastInsertedId = $visitor->id;
 
-    dd($lastInsertedId);
+        Log::debug('korkoe');
+    Log::debug($lastInsertedId);
+
+    if($availableCards->count() > 0){
+        AccessCards::create([
+            'visitor_id' => $lastInsertedId,
+            'card_number' => $availableCards[0]->card_number,
+        ]);
+        // echo 'card is available';
+        $availableCards[0]->update([
+            'status' => 'unavailable',
+            'visitor_id' => $lastInsertedId,
+        ]);
+    }   else{
+
+    }
+
+    Log::debug('Available', $availableCards);
+
+    // dd($lastInsertedId);
 
     return redirect('/')->with('success', 'Visitor record created successfully!');
 

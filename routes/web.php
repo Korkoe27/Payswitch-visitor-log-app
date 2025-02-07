@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\KeyController;
@@ -76,7 +77,7 @@ Route::put('exit',[VisitorController::class, 'exit']);
 //keys
 
 
-Route::get('keys', [KeyController::class, 'index']);
+Route::get('keys', [KeyController::class, 'keys']);
 
 Route::get('pick-key',[KeyEventController::class, 'pickKey']);
 
@@ -96,9 +97,19 @@ Route::post('log-device', [DeviceController::class, 'store']);
 
 
 
+//departments
+
+
+Route::get('departments', [DepartmentController::class, 'index']);
+
+Route::get('create-department', [DepartmentController::class, 'create']);
+
+Route::post('store-department', [DepartmentController::class, 'store']);
+
+
 
 //access card
-Route::get('visitor-acess-cards/create', [VisitorAccessCardController::class,    'create']);
+Route::get('create-access-card', [VisitorAccessCardController::class,    'create']);
 
 Route::post('store-access-card', [VisitorAccessCardController::class, 'store']);
 

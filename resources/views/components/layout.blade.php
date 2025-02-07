@@ -34,11 +34,11 @@
                                             Log Visitor
                                         </a>
                                         <a href="{{url('pick-key')}}"
-                                            class="py-3 text-base font-medium rounded-lg text-green-600 border border-green-600  bg-primary lg:px-7 md:px-2 hover:bg-primary/90">
+                                            class="py-3 text-base font-medium rounded-lg text-blue-600 border border-blue-600  bg-primary lg:px-7 md:px-2 hover:bg-primary/90">
                                             Pick Key
                                         </a>
                                         <a href="{{url('device-logs/create')}}"
-                                            class="py-3 text-base font-medium rounded-lg text-green-600 border border-green-600  bg-primary lg:px-7 md:px-2 hover:bg-primary/90">
+                                            class="py-3 text-base font-medium rounded-lg text-blue-600 border border-blue-500  bg-primary lg:px-7 md:px-2 hover:bg-primary/90">
                                             Log Device
                                         </a>
                                     </div>

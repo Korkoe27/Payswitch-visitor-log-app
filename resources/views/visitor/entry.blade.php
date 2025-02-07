@@ -91,7 +91,7 @@
                     <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
                     @enderror
                  </div>
-
+{{-- 
                  <div class="w-full px-4 md:w-1/2 lg:w-1/2">
                     <div class="mb-12">
                        <label for="access_card_number" class="mb-[10px] block text-base font-medium text-black">
@@ -102,7 +102,7 @@
                     @error('access_card_number')
                     <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
                     @enderror
-                 </div>
+                 </div> --}}
 
                  <div class="w-full px-4 md:w-1/2 lg:w-1/2">
                     <div class="mb-12">

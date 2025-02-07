@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class VisitorAccessCardController extends Controller
 {
+
+
+
+
+    //show all visitor access cards
     public function create()
     {
         return view('visitor_access_card.create');

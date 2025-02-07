@@ -1,4 +1,4 @@
-    <?php
+<?php
 
 use App\Models\Employee;
 use Illuminate\Database\Migrations\Migration;
@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('visitor', function (Blueprint $table) {
+        Schema::create('new_visitor', function (Blueprint $table) {
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
@@ -20,8 +20,7 @@ return new class extends Migration
             $table->string('email')->nullable();//done
             $table->string('phone_number');//done
             $table->foreignIdFor(Employee::class, 'employee_Id');//done
-            $table->string('company_name')->nullable();//done
-            $table->integer('access_card_number');//done
+            $table->string('company_name')->nullable();
             // $table->string('vehicle_number')->nullable();
             $table->string('purpose');//done
             $table->longText('rating')->nullable();
@@ -46,6 +45,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('visitor');
+        Schema::dropIfExists('new_visitor');
     }
 };

@@ -28,9 +28,12 @@ public function store(){
         'key_name'=>request('key_name'),
         // 'status'=>'available',
     ]);
+
+    return redirect('/keys');
 }
 
 //show all keys
+
 
 public function keys(){
     $keys = Key::get();

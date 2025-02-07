@@ -150,7 +150,7 @@
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $key->pickedByEmployee->first_name }} {{$key->pickedByEmployee->last_name}}</th>
                         <td class="px-6 py-4">{{ $key->created_at->format('H:i')}}</td>
                         <td class="px-6 py-4">
-                            <a href="#" class="font-medium text-blue-600 text-lg hover:underline">View</a>
+                            <a href="#" class="font-medium text-blue-500 text-lg hover:underline">View</a>
                         </td>
                         <td class="px-3 py-4">
                             <a href="#" class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">Submit Key</a>
