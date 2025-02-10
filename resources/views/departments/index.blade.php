@@ -1,7 +1,7 @@
 <x-layout>
 
     <x-slot:heading>
-        All Keys   
+        All Departments   
     </x-slot:heading>
 
 
@@ -21,9 +21,9 @@
                 @foreach ($departments as $department)
                     <tr class="odd:bg-white even:bg-gray-50 border-b">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap uppercase">{{ $department->name }}</th>
-                        <td class="px-6 py-4">
+                        {{-- <td class="px-6 py-4">
                             <a href="#" class="font-medium text-blue-500 text-lg hover:underline">View</a>
-                        </td>
+                        </td> --}}
                         <td class="px-3 py-4">
                             <a href="#" class="font-medium text-white p-3 rounded-lg bg-red-400">Delete</a>
                         </td>

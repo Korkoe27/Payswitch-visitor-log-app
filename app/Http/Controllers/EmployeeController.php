@@ -30,7 +30,7 @@ class EmployeeController extends Controller
                 'last_name' => 'required',
                 'other_name' => '',
                 'employee_number' => 'required',
-                'email' => 'required|email',
+                'email' => 'email',
                 'phone_number' => 'required',
                 'department_id' => 'required|exists:departments,id',
                 'vehicle_number' => '',
