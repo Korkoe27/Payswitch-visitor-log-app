@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Visitor extends Model
 {
 
-    protected $table = 'visitor';
+    protected $table = 'new_visitor';
 
     protected $guarded = [];
     use HasFactory;
