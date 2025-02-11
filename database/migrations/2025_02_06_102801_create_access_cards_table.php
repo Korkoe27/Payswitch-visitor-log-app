@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\AccessCards;
+use App\Models\Visitor;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,11 +17,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('visitor_id')->unsigned();
             $table->string('card_number')->unique();
-
-
-            $table->foreign('visitor_id')->references('id')->on('visitors')->onDelete('cascade');
-            $table->foreign('card_number')->references('card_number')->on('visitor_access_cards')->onDelete('cascade');
             $table->timestamps();
+
+
+            $table->foreignIdFor(Visitor::class,'visitor_id');
+
+            $table->foreignIdFor(AccessCards::class,'card_number');
         });
     }
 

@@ -233,8 +233,8 @@
 
                      <div class="companion-block flex gap-2 mb-5">
                      <div class="flex flex-col gap-2">
-                        <label for="deviceName" class="">Full Name</label>
-                    <input type="text" placeholder="Hp" id="dependents" name="dependents[0][name]" class="companions w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                        <label for="dependents" class="">Full Name</label>
+                    <input type="text" placeholder="Kweku Amos" id="dependents" name="dependents[0][name]" class="companions w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
 
                      </div>
                      <div class="flex flex-col gap-2">
@@ -243,6 +243,7 @@
 
                      </div>
 
+                     <button type="button" class="remove-companion-button text-red-500">Remove</button>
                      </div>
 
 
@@ -282,6 +283,8 @@
 
 
 <script>
+
+   
   $(document).ready(function() {
 
 let lastRemovedDeviceBlock = null;
@@ -361,6 +364,51 @@ $('#companionsInputsContainer').on('click', '.remove-companion-button', function
    updateCompanionIndices(); // Update indices after removing a block
 });
 });
+
+
+
+
+
+// $(document).ready(function() {
+//     let companionIndex = 0;
+
+//     $('#addPersonButton').on('click', function() {
+//         const newCompanionBlock = $('.companion-block').first().clone();
+//         companionIndex++;
+
+//         // Clear input values in the new companion block
+//         newCompanionBlock.find('input').val('');
+
+//         // Update input name attributes to maintain uniqueness
+//         newCompanionBlock.find('input').each(function() {
+//             let name = $(this).attr('name');
+//             if (name) {
+//                 let newName = name.replace(/\[\d+\]/, '[' + companionIndex + ']');
+//                 $(this).attr('name', newName);
+//             }
+//         });
+
+//         $('#companionsInputsContainer').append(newCompanionBlock);
+//         updateCompanionIndices();
+//     });
+
+//     $(document).on('click', '.remove-companion', function() {
+//         $(this).closest('.companion-block').remove();
+//         updateCompanionIndices();
+//     });
+
+//     function updateCompanionIndices() {
+//         $('#companionsInputsContainer .companion-block').each(function(index) {
+//             $(this).find('input').each(function() {
+//                 let name = $(this).attr('name');
+//                 if (name) {
+//                     let newName = name.replace(/\[\d+\]/, '[' + index + ']');
+//                     $(this).attr('name', newName);
+//                 }
+//             });
+//         });
+//     }
+// });
 
 
 

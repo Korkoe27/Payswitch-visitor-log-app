@@ -168,10 +168,10 @@ CREATE TABLE `users` (
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `visitor`;
+DROP TABLE IF EXISTS `visits`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `visitor` (
+CREATE TABLE `visits` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -179,7 +179,6 @@ CREATE TABLE `visitor` (
   `phone_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `employee_Id` bigint unsigned NOT NULL,
   `company_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `access_card_number` int DEFAULT NULL,
   `purpose` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `rating` longtext COLLATE utf8mb4_unicode_ci,
   `departed_at` timestamp NULL DEFAULT NULL,
@@ -219,7 +218,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (1,'2014_10_12_0000
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (2,'2014_10_12_100000_create_password_reset_tokens_table',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (3,'2019_08_19_000000_create_failed_jobs_table',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (4,'2019_12_14_000001_create_personal_access_tokens_table',1);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (5,'2024_12_24_123438_create_visitor_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (5,'2025_02_07_164612_create_visits_table',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (6,'2025_01_02_114339_create_employees_table',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (7,'2025_01_02_164833_create_departments_table',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (8,'2025_01_08_172551_create_keys_table',1);

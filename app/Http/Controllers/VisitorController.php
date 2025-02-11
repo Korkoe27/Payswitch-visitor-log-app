@@ -24,12 +24,8 @@ class VisitorController extends Controller
 
     public function store(){
         
-// dd(request());
-        // Log::debug('data',request()->all());
 
-
-
-
+        dd(request());
         $availableCards = VisitorAccessCard::where('status', 'available')->get();
 
     // dd($availableCards);
@@ -41,14 +37,12 @@ class VisitorController extends Controller
         'phone_number' => 'required',
         'employee' => 'required',
         'company_name' => '',
-        // 'access_card_number' => 'required',
         'purpose' => 'required',
         'devices' => 'nullable|array',
         'dependents' => 'nullable|array',
     ]);
 
 
-    // Log::debug($validatedData);
 
     $name = explode(' ', $validatedData['full_name']);
 
@@ -57,13 +51,16 @@ class VisitorController extends Controller
 
     $devicesJson = request()->has('devices') ? ($validatedData['devices']) : null;
 
-    $dependedntsJson = request()->has('dependents') ? ($validatedData['dependents']):null;
+    $companionJson = request()->has('dependents') ? ($validatedData['dependents']):null;
+
+
+    
 
 
     
 
     // Log::debug($devicesJson);
-    // Log::debug($dependedntsJson);
+    Log::debug($companionJson);
 
     $visitor = Visitor::create([
         'first_name' => $firstName,
@@ -72,35 +69,42 @@ class VisitorController extends Controller
         'phone_number' => $validatedData['phone_number'],
         'employee_Id' => $validatedData['employee'],
         'company_name' => $validatedData['company_name'],
-        // 'access_card_number' => $validatedData['access_card_number'],
         'purpose' => $validatedData['purpose'],
         'devices' => $devicesJson,
         'status' => 'ongoing',
-        'dependents' => $dependedntsJson,
+        'dependents' => $companionJson,
     ]);
 
+    
+    Log::debug('Saved Dependents:', $visitor->dependents);
     $lastInsertedId = $visitor->id;
 
-        Log::debug('korkoe');
-    Log::debug($lastInsertedId);
+    //     Log::debug('korkoe');
+    // Log::debug($lastInsertedId);
+
 
     if($availableCards->count() > 0){
-        AccessCards::create([
-            'visitor_id' => $lastInsertedId,
-            'card_number' => $availableCards[0]->card_number,
+
+        Log::debug("Card Number",["Cards"=>$availableCards[0]->card_number]);
+
+
+
+        DB::table('access_cards')->insert([
+            'visitor_id'=>$lastInsertedId,
+            'card_number'=>$availableCards[0]->card_number,
         ]);
-        // echo 'card is available';
-        $availableCards[0]->update([
-            'status' => 'unavailable',
-            'visitor_id' => $lastInsertedId,
-        ]);
+
+
+
+
+        DB::table('visitor_access_cards')
+        ->where('card_number','=',$availableCards[0]->card_number)
+        ->update(['status'=>'unavailable']);
+
     }   else{
 
     }
 
-    Log::debug('Available', $availableCards);
-
-    // dd($lastInsertedId);
 
     return redirect('/')->with('success', 'Visitor record created successfully!');
 
