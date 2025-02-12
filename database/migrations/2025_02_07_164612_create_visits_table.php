@@ -31,7 +31,7 @@ return new class extends Migration
             $table->longText('visitor_experience')->nullable();
             $table->enum('status', ['ongoing', 'departed'])->default('ongoing');
             $table->json('devices')->nullable();//done
-            $table->json('dependents')->nullable();
+            $table->json('companions')->nullable();
 
             $table->timestamps();
             

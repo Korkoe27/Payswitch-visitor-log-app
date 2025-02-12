@@ -36,7 +36,7 @@ class VisitorFactory extends Factory
                 'name'=>fake()->randomElement(['HP','Dell','Toshiba']),
                 'serial'=>fake()->numerify('ICUU#######')
             ],
-            'dependents' => [
+            'companions' => [
                 'name'=>fake()->name(),
                 'phone_number'=>fake()->phoneNumber()
             ],

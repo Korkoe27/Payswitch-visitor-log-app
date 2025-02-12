@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('access_cards', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('visitor_id')->unsigned();
-            $table->string('card_number')->unique();
+            $table->string('card_number')->nullable()->unique();
             $table->timestamps();
 
 

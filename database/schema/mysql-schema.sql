@@ -9,9 +9,13 @@ DROP TABLE IF EXISTS `access_cards`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `access_cards` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `visitor_id` bigint unsigned NOT NULL,
+  `card_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL, -- Made nullable
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `access_cards_card_number_unique` (`card_number`), -- Unique constraint still applies, but NULL values are allowed
+  CONSTRAINT `access_cards_visitor_id_foreign` FOREIGN KEY (`visitor_id`) REFERENCES `visits` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `departments`;
@@ -186,7 +190,7 @@ CREATE TABLE `visits` (
   `visitor_experience` longtext COLLATE utf8mb4_unicode_ci,
   `status` enum('ongoing','departed') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ongoing',
   `devices` json DEFAULT NULL,
-  `dependents` json DEFAULT NULL,
+  `companions` json DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),

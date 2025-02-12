@@ -27,7 +27,7 @@ public function accessCard():BelongsToMany{
 
     protected $casts = [
         'devices' => 'array',
-        'dependents' => 'array'
+        'companions' => 'array'
     ];
 }
 

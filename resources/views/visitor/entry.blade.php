@@ -213,14 +213,14 @@
                   <label for="hasDevice" class="block text-base font-medium text-black">Did you come with companions</label>
                      <div class="flex items-center gap-4 py-4" >
 
-                        <label for="dependents-radio-1" class="flex items-center gap-2 text-base font-medium text-gray-900">
-                           <input id="dependents-radio-1" type="radio" value="yes" required name="hasCompany" class="relative size-4 appearance-none rounded-full border border-gray-400 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white checked:border-blue-400 checked:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden">
+                        <label for="companions-radio-1" class="flex items-center gap-2 text-base font-medium text-gray-900">
+                           <input id="companions-radio-1" type="radio" value="yes" required name="hasCompany" class="relative size-4 appearance-none rounded-full border border-gray-400 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white checked:border-blue-400 checked:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden">
                            Yes
                         </label>
     
 
-                        <label for="dependents-radio-2" class="flex items-center gap-2 text-base font-medium text-gray-900">
-                           <input id="dependents-radio-2" type="radio" value="no" name="hasCompany" class="relative size-4 appearance-none rounded-full border border-gray-400 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white checked:border-blue-400 checked:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden">
+                        <label for="companions-radio-2" class="flex items-center gap-2 text-base font-medium text-gray-900">
+                           <input id="companions-radio-2" type="radio" value="no" name="hasCompany" class="relative size-4 appearance-none rounded-full border border-gray-400 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white checked:border-blue-400 checked:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden">
                            No
                         </label>
                      </div>
@@ -233,13 +233,13 @@
 
                      <div class="companion-block flex gap-2 mb-5">
                      <div class="flex flex-col gap-2">
-                        <label for="dependents" class="">Full Name</label>
-                    <input type="text" placeholder="Kweku Amos" id="dependents" name="dependents[0][name]" class="companions w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                        <label for="companions" class="">Full Name</label>
+                    <input type="text" placeholder="Kweku Amos" id="companions" name="companions[0][name]" class="companions w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
 
                      </div>
                      <div class="flex flex-col gap-2">
                         <label for="deviceSerialNumber" class="">Phone Number</label>
-                    <input type="text" placeholder="0250987654" id="dependents" name="dependents[0][phone_number]" class="companions w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-slate-600 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                    <input type="text" placeholder="0250987654" id="companions" name="companions[0][phone_number]" class="companions w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-slate-600 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
 
                      </div>
 
@@ -251,7 +251,7 @@
 
                     <button id="addPersonButton" class="text-blue-400" type="button"><span class="text-xl">+</span> Add another person</button>
                  </div>
-                    @error('dependents')
+                    @error('companions')
                     <div class="text-red-500 italic font-normal text-sm">{{ $message }}                    
                      </div>
                         @enderror  
@@ -292,8 +292,11 @@ let lastRemovedCompanionBlock = null;
 
 function updateDeviceIndices() {
    $('#deviceInputsContainer .device-block').each(function(index) {
+      // console.log( $(this).find('input'));
       $(this).find('input').each(function() {
          const name = $(this).attr('name');
+         
+         console.log(name);
          if (name) {
             const updatedName = name.replace(/devices\[\d+\]/, `devices[${index}]`);
             $(this).attr('name', updatedName);
@@ -303,12 +306,29 @@ function updateDeviceIndices() {
 }
 
 function updateCompanionIndices() {
+
+// console.log($('#companionsInputsContainer .companion-block'));
    $('#companionsInputsContainer .companion-block').each(function(index) {
+
+         // console.log( $(this).find('input'));
       $(this).find('input').each(function() {
          const name = $(this).attr('name');
+         console.log(name);
+
          if (name) {
-            const updatedName = name.replace(/companions\[\d+\]/, `companions[${index}]`);
-            $(this).attr('name', updatedName);
+            // const newVar = "companions[0][name]";
+            // const updatedVar = newVar.replace(/companions\[\d+\]/, `companions[${index}]`);
+
+            // console.log("Arr" , updatedVar);
+
+            console.log('name before: ', name)
+
+            const companionName = name.replace(/companions\[\d+\]/, `companions[${index}]`);
+
+            console.log('uodated name: ', companionName);
+            $(this).attr('name', companionName);
+
+
          }
       });
    });
