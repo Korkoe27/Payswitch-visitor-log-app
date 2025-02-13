@@ -52,4 +52,18 @@ class KeyEventController extends Controller
             
             return redirect('/');
         }
+
+
+        public function submitKey(KeyEvent $keyEvent){
+
+            $employees = Employee::get();
+
+            return view('keys.submit-key',compact('employees'),['key_events'=>$keyEvent]);
+            // return view('keys.submit-key',  ['key'  => $keyEvent]);
+        }
+
+
+        public function returnKey(){
+
+        }
 }

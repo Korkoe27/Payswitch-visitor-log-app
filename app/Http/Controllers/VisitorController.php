@@ -7,6 +7,8 @@ use App\Models\Employee;
 use App\Models\Visitor;
 use App\Models\VisitorAccessCard;
 use Carbon\Carbon;
+use Exception;
+use Hamcrest\Arrays\IsArray;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -29,10 +31,27 @@ class VisitorController extends Controller
         $availableCards = VisitorAccessCard::where('status', 'available')->get();
 
         function getCardId($index, $availableCards){
-            if(isset($availableCards[$index])){
-                return $availableCards[$index];
-            }else{
-                return 0;
+            Log::debug("Size Of Available Cards: ". sizeof($availableCards));
+            Log::debug("index + 1: " . $index+1);
+            try{
+                if( $index+1 <= sizeof($availableCards)){
+                    return $availableCards[$index];
+                }else{
+                    return 0;
+                }
+                /*if(isset($availableCards[$index])){
+
+                    Log::debug('Function card Id'. $availableCards[$index]);
+                    return $availableCards[$index];
+                }else{
+                    Log::debug("Else 0");
+                    return 0;
+                }  */ 
+
+            }   catch (Exception $exception){
+
+                Log::debug("Exception");
+                    return 0;
             }
         }
 
@@ -61,7 +80,7 @@ class VisitorController extends Controller
 
     $countVisitors = count($companionJson)+1;
 
-    Log::debug('Number of visitors: '.$countVisitors);
+    // 
 
 
 
@@ -69,7 +88,7 @@ class VisitorController extends Controller
     
 
     // Log::debug($devicesJson);
-    Log::debug($countVisitors);
+    // Log::debug($countVisitors);
 
 
 
@@ -91,31 +110,86 @@ class VisitorController extends Controller
     $lastInsertedId = $visitor->id;
 
     //     Log::debug('korkoe');
-    // Log::debug($lastInsertedId);
+                Log::debug('Last Inserted Id first: '. $lastInsertedId);
 
 
     if($availableCards->count() > 0){
 
-        Log::debug("Card Number",["Cards"=>$availableCards[0]->card_number]);
+        // Log::debug("Card Number",["Cards"=>$availableCards[0]->card_number]);
 
-
-        for($card = 0; $card < $countVisitors-1; $card++){
+Log::debug('Number of visitors: '.$countVisitors);
+        for($card = 0; $card < $countVisitors; $card++){
             $card_number = getCardId($card, $availableCards);
 
+            DB::table('access_cards')->insert([
+                'visitor_id'=>$lastInsertedId,
+                'card_number'=>is_object($card_number)?$card_number['card_number']:$card_number
+            ]);
 
-        Log::debug("Loop: ". $card_number['card_number']);
-            // dd($card_number);
-        DB::table('access_cards')->insert([
+            if(is_object($card_number)){
+                DB::table('visitor_access_cards')
+                    ->where('card_number','=',$card_number['card_number'])
+                    ->update(['status'=>'unavailable']);
+            }
+
+        //     $card_id    = 'N/A';
+
+        //     if(isset($card_number)){
+        //         $card_id = $card_number['card_number'];
+        //     }
+
+        // DB::table('access_cards')->insert([
+        //     'visitor_id'=>$lastInsertedId,
+        //     'card_number'=>$card_id,
+        // ]);
+
+        /*Log::debug(gettype($card_number));
+        if(is_object($card_number)){
+            Log::debug("Loop: ". $card_number['card_number']); 
+            DB::table('access_cards')->insert([
+                'visitor_id'=>$lastInsertedId,
+                'card_number'=>$card_number['card_number']
+            ]);
+        }else{
+            Log::debug("Loop: ". $card_number); 
+            DB::table('access_cards')->insert([
+                'visitor_id'=>$lastInsertedId,
+                'card_number'=>$card_number
+            ]);
+        }*/
+        
+          /* if(is_object($card_number)){
+                
+        Log::debug("Visitor Count: ". $card);
+        Log::debug("Loop: ". $card_number['card_number']);        
+
+
+                DB::table('access_cards')->insert([
             'visitor_id'=>$lastInsertedId,
             'card_number'=>$card_number['card_number'],
         ]);
+
+            }   else{
+
+                Log::debug("Test failed");
+            //DB::table('access_cards')->insert(['visitor_id'=>$lastInsertedId,
+            //'card_number'=>"Null"
+               // ]); 
+                Log::debug("Visitor Count: ". $card);
+
+                Log::debug('Last Inserted Id'. $lastInsertedId);
+               
+            }
+
+            // dd($card_number);
+
    
 
    
 
         DB::table('visitor_access_cards')
         ->where('card_number','=',$card_number['card_number'])
-        ->update(['status'=>'unavailable']);
+        ->update(['status'=>'unavailable']);*/
         }
 
 

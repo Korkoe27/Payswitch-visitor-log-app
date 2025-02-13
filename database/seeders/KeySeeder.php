@@ -13,6 +13,6 @@ class KeySeeder extends Seeder
      */
     public function run(): void
     {
-        Key::factory()->count(10)->create();
+        Key::factory()->count(5)->create();
     }
 }

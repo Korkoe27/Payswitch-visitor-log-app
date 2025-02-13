@@ -87,6 +87,10 @@ Route::get('create-key', [KeyController::class, 'create']);
 
 Route::post('store-key', [KeyController::class, 'store']);
 
+Route::get('submit-key',[KeyEventController::class, 'submitKey']);
+
+Route::post('return-key', [KeyEventController::class, 'returnKey']);
+
 
 //device
 
