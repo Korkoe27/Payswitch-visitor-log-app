@@ -14,7 +14,6 @@ CREATE TABLE `access_cards` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `access_cards_card_number_unique` (`card_number`), -- Unique constraint still applies, but NULL values are allowed
   CONSTRAINT `access_cards_visitor_id_foreign` FOREIGN KEY (`visitor_id`) REFERENCES `visits` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

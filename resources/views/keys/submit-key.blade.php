@@ -1,14 +1,16 @@
 <x-layout>
 
     <x-slot:heading>
-        Dashboard
+        Return Key
     </x-slot:heading>
 
 
     <main class="">
         <aside class="">
             <h2 class="">Return Key</h2>
-            <h4 class="">You are returning the {{ $keyEvent['key_name'] }} key.</h4>
+            <h4 class=""><span class="">{{ $keyEvent->key_name }}</span></h4>
+
+            {{ Log::debug('Keys name' . $keyEvent->key_name) }}
         </aside>
         <form action="" method="post">
 
