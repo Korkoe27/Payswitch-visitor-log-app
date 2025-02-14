@@ -17,9 +17,7 @@ class KeyEventController extends Controller
         return view('keys.create',compact('employees','keys'));
         }
     
-        public function logKey(){
-
-            // dd(request()->all());
+        public function logKey() {
             request()->validate([
                 'picked_by' => 'required|exists:employees,id',
                 'key_name' => 'required',
@@ -27,20 +25,13 @@ class KeyEventController extends Controller
         
             $employee = Employee::findOrFail(request('picked_by'));
         
-        
             $activeKeyEvent = KeyEvent::where('status', 'picked')
-            ->where('status', 'picked')
-            ->whereNull('returned_at')
-            ->first();
-        
+                ->whereNull('returned_at')
+                ->first();
         
             if ($activeKeyEvent) {
-                $pickedByEmployee = Employee::find($activeKeyEvent->picked_by);
-                return redirect()->back()->with('error', 
-                    "Key has already been picked."
-                );
+                return redirect()->back()->with('error', "Key has already been picked.");
             }
-        
         
             KeyEvent::create([
                 'key_name' => request('key_name'),
@@ -49,9 +40,9 @@ class KeyEventController extends Controller
                 'status' => 'picked'
             ]);
         
-            
             return redirect('/');
         }
+        
 
 
         // public function submitKey(KeyEvent $keyEvent){
@@ -70,7 +61,17 @@ class KeyEventController extends Controller
             ]);
         }
 
-        public function returnKey(){
+        public function returnKey(KeyEvent  $keyEvent){
+            request()->validate([
+                'returned_by' => 'required|exists:employees,id',
+            ]);
 
+            
+
+            $keyEvent->update([
+                'returned_by'   =>  request('returned_by'),
+                'status'=>'returned',
+                'returned_at' =>Carbon::now()
+            ]);
         }
 }

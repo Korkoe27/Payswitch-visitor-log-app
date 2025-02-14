@@ -113,7 +113,8 @@ CREATE TABLE `keys` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `keys_key_number_unique` (`key_number`)
+  UNIQUE KEY `keys_key_number_unique` (`key_number`),
+  UNIQUE KEY `keys_key_name_unique` (`key_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `migrations`;

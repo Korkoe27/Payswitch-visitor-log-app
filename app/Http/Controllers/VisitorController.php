@@ -109,15 +109,14 @@ class VisitorController extends Controller
     // Log::debug('Saved Dependents:', $visitor->dependents);
     $lastInsertedId = $visitor->id;
 
-    //     Log::debug('korkoe');
-                Log::debug('Last Inserted Id first: '. $lastInsertedId);
+                // Log::debug('Last Inserted Id first: '. $lastInsertedId);
 
 
     if($availableCards->count() > 0){
 
         // Log::debug("Card Number",["Cards"=>$availableCards[0]->card_number]);
 
-Log::debug('Number of visitors: '.$countVisitors);
+// Log::debug('Number of visitors: '.$countVisitors);
         for($card = 0; $card < $countVisitors; $card++){
             $card_number = getCardId($card, $availableCards);
 
@@ -132,64 +131,6 @@ Log::debug('Number of visitors: '.$countVisitors);
                     ->update(['status'=>'unavailable']);
             }
 
-        //     $card_id    = 'N/A';
-
-        //     if(isset($card_number)){
-        //         $card_id = $card_number['card_number'];
-        //     }
-
-        // DB::table('access_cards')->insert([
-        //     'visitor_id'=>$lastInsertedId,
-        //     'card_number'=>$card_id,
-        // ]);
-
-        /*Log::debug(gettype($card_number));
-        if(is_object($card_number)){
-            Log::debug("Loop: ". $card_number['card_number']); 
-            DB::table('access_cards')->insert([
-                'visitor_id'=>$lastInsertedId,
-                'card_number'=>$card_number['card_number']
-            ]);
-        }else{
-            Log::debug("Loop: ". $card_number); 
-            DB::table('access_cards')->insert([
-                'visitor_id'=>$lastInsertedId,
-                'card_number'=>$card_number
-            ]);
-        }*/
-        
-          /* if(is_object($card_number)){
-                
-        Log::debug("Visitor Count: ". $card);
-        Log::debug("Loop: ". $card_number['card_number']);        
-
-
-                DB::table('access_cards')->insert([
-            'visitor_id'=>$lastInsertedId,
-            'card_number'=>$card_number['card_number'],
-        ]);
-
-            }   else{
-
-                Log::debug("Test failed");
-            //DB::table('access_cards')->insert(['visitor_id'=>$lastInsertedId,
-            //'card_number'=>"Null"
-               // ]); 
-                Log::debug("Visitor Count: ". $card);
-
-                Log::debug('Last Inserted Id'. $lastInsertedId);
-               
-            }
-
-            // dd($card_number);
-
-   
-
-   
-
-        DB::table('visitor_access_cards')
-        ->where('card_number','=',$card_number['card_number'])
-        ->update(['status'=>'unavailable']);*/
         }
 
 
@@ -205,11 +146,11 @@ Log::debug('Number of visitors: '.$countVisitors);
     }
 
 
-        Log::debug("completed");
+        // Log::debug("completed");
 
     return redirect('/')->with('success', 'Visitor record created successfully!');
 
-        }   catch(\Exception $e){
+        }   catch(Exception $e){
             return redirect()->back()->withErrors(['error' => 'An error occurred while creating the visitor record.']);
 
         }
@@ -250,13 +191,7 @@ Log::debug('Number of visitors: '.$countVisitors);
 
                 $visitor_id = base64_decode(request('masked_id'));
                 $visitor = Visitor::findOrFail(id: $visitor_id);
-              
-                // DB::table('visitor')->where('id', $visitor_id)->update([
-                //     'rating' => request('rating'),
-                //     'visitor_experience' => request('visitor_experience'),
-                //     'marketing_consent' => request('marketing_consent'),
-                //     'status' => 'departed',
-                // ]);
+
 
             $visitor->update([
                 'rating' => request('rating'),

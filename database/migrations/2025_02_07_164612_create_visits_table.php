@@ -24,7 +24,6 @@ return new class extends Migration
             // $table->string('vehicle_number')->nullable();
             $table->string('purpose');//done
             $table->longText('rating')->nullable();
-            // $table->longText('comment')->nullable();
             
             $table->timestamp('departed_at')->nullable();
             $table->boolean('marketing_consent')->default(false)->nullable();

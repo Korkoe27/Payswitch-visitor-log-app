@@ -153,7 +153,7 @@
                             <a href="#" class="font-medium text-blue-500 text-lg hover:underline">View</a>
                         </td>
                         <td class="px-3 py-4">
-                            <a href="{{ url('submit-key') }}" class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">Submit Key</a>
+                            <a href="{{ url('submit-key/'. $key->id) }}" class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">Submit Key</a>
                         </td>
                     </tr>
                 @endforeach

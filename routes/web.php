@@ -31,7 +31,7 @@ Route::get('/', function () {
 
         'departed' => Visitor::where('status', 'departed')->simplePaginate(5),
 
-        'keys' => KeyEvent::with('pickedByEmployee')->simplePaginate(10),
+        'keys' => KeyEvent::with('pickedByEmployee')->where('status', 'picked')->simplePaginate(10),
         
     ],compact('devices'));
 
@@ -87,9 +87,9 @@ Route::get('create-key', [KeyController::class, 'create']);
 
 Route::post('store-key', [KeyController::class, 'store']);
 
-Route::get('submit-key',[KeyEventController::class, 'submitKey']);
+Route::get('submit-key/{keyEvent}',[KeyEventController::class, 'submitKey']);
 
-Route::post('return-key', [KeyEventController::class, 'returnKey']);
+Route::patch('return-key/{keyEvent}', [KeyEventController::class, 'returnKey']);
 
 
 //device
