@@ -4,7 +4,14 @@ A comprehensive visitor , key and device management logger for PaySwitch Com. Lt
 
 ## Table of Content
 
-1.[Introduction](#introduction) 2.[Features](#features) 3.[Installation](#installation) 4.[Usage](#usage) 5.[Configuration](#configuration) 6.[Contributing](#contributing) 7.[References](#references) 8.[Contact](#contact)
+1.[Introduction](#introduction) 
+2.[Features](#features) 
+3.[Installation](#installation) 
+4.[Usage](#usage) 
+5.[Configuration](#configuration) 
+6.[Contributing](#contributing) 
+7.[References](#references) 
+8.[Contact](#contact)
 
 ## Introduction
 
@@ -31,7 +38,7 @@ Previously, PaySwitch employed a manual paper-and-pen system to document events 
 1. Clone the repository
 
     ```bash
-    git clone [text](https://github.com/Korkoe27/Payswitch-visitor-log-app.git)
+    git clone https://github.com/Korkoe27/Payswitch-visitor-log-app.git
     cd Payswitch-visitor-log-app
 
     ```
@@ -73,7 +80,7 @@ No configuration needed.
 
 ## Contribution
 
-1. Fork the repository ([text](https://github.com/Korkoe27/Payswitch-visitor-log-app.git))
+1. [Fork the repository](https://github.com/Korkoe27/Payswitch-visitor-log-app.git)
 2. Create a new branch: git checkout -b feature/YourFeatureName.
 
 3. Commit your changes: git commit -m 'Add some feature'.
@@ -84,8 +91,8 @@ No configuration needed.
 
 ## References
 
--   Official Laravel Docs [Official Laravel Docs](https://laravel.com/docs/10.x)
--   30 Days to learn Laravel by Laracasts. [text](https://www.youtube.com/watch?v=SqTdHCTWqks&t=2271s)
+-   [Official Laravel Docs](https://laravel.com/docs/10.x)
+-   [30 Days to learn Laravel by Laracasts.](https://www.youtube.com/watch?v=SqTdHCTWqks&t=2271s)
 
 ## Contact
 
