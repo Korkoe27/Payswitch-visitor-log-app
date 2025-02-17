@@ -4,14 +4,14 @@ A comprehensive visitor , key and device management logger for PaySwitch Com. Lt
 
 ## Table of Content
 
-1.[Introduction](#introduction) 
-2.[Features](#features) 
-3.[Installation](#installation) 
-4.[Usage](#usage) 
-5.[Configuration](#configuration) 
-6.[Contributing](#contributing) 
-7.[References](#references) 
-8.[Contact](#contact)
+1.[Introduction](#introduction) <br>
+2.[Features](#features) <br>
+3.[Installation](#installation) <br>
+4.[Usage](#usage) <br>
+5.[Configuration](#configuration) <br>
+6.[Contributing](#contributing) <br>
+7.[References](#references) <br>
+8.[Contact](#contact) <br>
 
 ## Introduction
 
