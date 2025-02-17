@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Key extends Model
 {
@@ -13,6 +14,13 @@ class Key extends Model
     protected $guarded = [];
     use HasFactory;
 
+    public function pickedBy():BelongsToMany{
+        return $this->belongsToMany(Employee::class,'employees','key_number','picked_by');
+    }
+
+    public function returnedBy():BelongsToMany{
+        return $this->belongsToMany(Employee::class,'employees','key_number','returned_by');
+    }
 
 
 }

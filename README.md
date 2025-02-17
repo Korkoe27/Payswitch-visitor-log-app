@@ -4,18 +4,18 @@ A comprehensive visitor , key and device management logger for PaySwitch Com. Lt
 
 ## Table of Content
 
-1.[Introduction](#introduction) <br>
-2.[Features](#features) <br>
-3.[Installation](#installation) <br>
-4.[Usage](#usage) <br>
-5.[Configuration](#configuration) <br>
-6.[Contributing](#contributing) <br>
-7.[References](#references) <br>
-8.[Contact](#contact) <br>
+1. [Introduction](#introduction) 
+2. [Features](#features) 
+3. [Installation](#installation) 
+4. [Usage](#usage) 
+5. [Configuration](#configuration) 
+6. [Contributing](#contributing) 
+7. [References](#references) 
+8. [Contact](#contact) 
 
 ## Introduction
 
-Previously, PaySwitch employed a manual paper-and-pen system to document events at security checkpoints. The process of recording visitor information was tedious and time-consuming, particularly when multiple people visited for the same purpose. Similarly, staff logging in their devices and department keys involved lengthy queues to sign in before retrieving the items. This app aims to streamline these processes, reducing the number of steps and the workload for both users(visitors and employees).
+Previously, PaySwitch employed a manual paper-and-pen system to document events at security checkpoints. The process of recording visitor information was tedious and time-consuming, particularly when multiple people visited for the same purpose. Similarly, staff logging in their devices and department keys involved lengthy queues to sign in before retrieving the items. This app aims to streamline these processes, reducing the number of steps and the workload for all users(visitors and employees).
 
 ## Features
 
