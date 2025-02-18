@@ -14,13 +14,16 @@ class Key extends Model
     protected $guarded = [];
     use HasFactory;
 
-    public function pickedBy():BelongsToMany{
-        return $this->belongsToMany(Employee::class,'employees','key_number','picked_by');
-    }
+    // public function pickedBy():BelongsToMany{
+    //     return $this->belongsToMany(Employee::class,'employees','key_number','picked_by');
+    // }
 
-    public function returnedBy():BelongsToMany{
-        return $this->belongsToMany(Employee::class,'employees','key_number','returned_by');
-    }
+    // public function returnedBy():BelongsToMany{
+    //     return $this->belongsToMany(Employee::class,'employees','key_number','returned_by');
+    // }
 
+    public function pickKey(){
+        return $this->belongsToMany(Employee::class);
+    }
 
 }

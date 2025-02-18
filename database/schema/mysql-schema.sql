@@ -91,6 +91,7 @@ CREATE TABLE `key_events` (
   `picked_by` bigint unsigned NOT NULL,
   `returned_by` bigint unsigned DEFAULT NULL,
   `key_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key_number` bigint unsigned DEFAULT NULL,
   `picked_at` timestamp NOT NULL,
   `returned_at` timestamp NULL DEFAULT NULL,
   `status` enum('picked','returned') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'picked',
@@ -99,10 +100,13 @@ CREATE TABLE `key_events` (
   PRIMARY KEY (`id`),
   KEY `key_events_picked_by_foreign` (`picked_by`),
   KEY `key_events_returned_by_foreign` (`returned_by`),
-  CONSTRAINT `key_events_picked_by_foreign` FOREIGN KEY (`picked_by`) REFERENCES `employees` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `key_events_returned_by_foreign` FOREIGN KEY (`returned_by`) REFERENCES `employees` (`id`) ON DELETE CASCADE
+  KEY `key_events_key_number_foreign` (`key_number`),
+  CONSTRAINT `key_events_picked_by_foreign` FOREIGN KEY (`picked_by`) REFERENCES `employees` (`id`),
+  CONSTRAINT `key_events_returned_by_foreign` FOREIGN KEY (`returned_by`) REFERENCES `employees` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `key_events_key_number_foreign` FOREIGN KEY (`key_number`) REFERENCES `keys` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
 DROP TABLE IF EXISTS `keys`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;

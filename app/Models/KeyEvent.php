@@ -13,14 +13,4 @@ class KeyEvent extends Model
     protected $guarded = [];
     use HasFactory;
 
-
-    public function pickedByEmployee(): BelongsTo
-    {
-        return $this->belongsTo(Employee::class, 'picked_by');
-    }
-
-    public function returnedByEmployee(): BelongsTo
-    {
-        return $this->belongsTo(Employee::class, 'returned_by');
-    }
 }

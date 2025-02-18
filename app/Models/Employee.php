@@ -29,7 +29,7 @@ class Employee extends Model
     }
 
     public function logKey(){
-        return $this->hasMany(Key::class, 'picked_by');
+        return $this->belongsToMany(Key::class,foreignPivotKey:'key_number');
     }
 
     // public function returnKey()

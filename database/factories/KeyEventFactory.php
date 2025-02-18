@@ -27,7 +27,7 @@ class KeyEventFactory extends Factory
             
             'picked_by' => Employee::inRandomOrder()->first()->id,
             'returned_by' => Employee::inRandomOrder()->first()->id,
-            'key_name' => Key::inRandomOrder()->first()->key_name,
+            'key_number' => Key::inRandomOrder()->first()->key_number,
             'status' => fake()->randomElement(['picked', 'returned']),
             'picked_at' => fake()->dateTimeBetween('-1 days', 'now'),
             'returned_at' => fake()->dateTimeBetween('-1 days', '+3 days'),

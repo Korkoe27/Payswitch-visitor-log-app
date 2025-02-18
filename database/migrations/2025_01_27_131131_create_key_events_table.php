@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Employee;
+use App\Models\Key;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,16 +15,11 @@ return new class extends Migration
     {
         Schema::create('key_events', function (Blueprint $table) {
             $table->id();
-        $table->foreignIdFor(Employee::class, 'picked_by')
-            ->constrained('employees')
-            ->onDelete('cascade');
-        $table->foreignIdFor(Employee::class, 'returned_by')
-            ->nullable()
-            ->constrained('employees')
-            ->onDelete('cascade');
-            $table->string('key_name');
+        $table->foreignIdFor(Employee::class,   'picked_by')->nullable()->constrained()->onDelete('SET NULL');
+        $table->foreignIdFor(Employee::class,   'returned_by')->nullable()->constrained()->onDelete('SET NULL');
+        $table->foreignIdFor(Key::class, 'key_number')->nullable()->constrained()->onDelete('SET NULL');
         $table->timestamp('picked_at');
-        $table->timestamp('returned_at')->nullable();
+        $table->timestamp('returned_at');
         $table->enum('status', ['picked', 'returned'])->default('picked');
             $table->timestamps();
         });
