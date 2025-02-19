@@ -144,16 +144,16 @@
                 </tr>
             </thead>
             <tbody class="text-base">
-                @foreach ($keys as $key)
+                @foreach ($keys as $event)
                     <tr class="odd:bg-white even:bg-gray-50 border-b">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $key->key_name }}</th>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $key->pickedByEmployee->first_name }} {{$key->pickedByEmployee->last_name}}</th>
-                        <td class="px-6 py-4">{{ $key->created_at->format('H:i')}}</td>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $event->key?->key_name }}</th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $event?->employee?->first_name}} {{ $event?->employee?->last_name }}</th>
+                        <td class="px-6 py-4">{{ $event->created_at->format('H:i')}}</td>
                         <td class="px-6 py-4">
                             <a href="#" class="font-medium text-blue-500 text-lg hover:underline">View</a>
                         </td>
                         <td class="px-3 py-4">
-                            <a href="{{ url('submit-key/'. $key->id) }}" class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">Submit Key</a>
+                            <a href="{{ url('submit-key/'. $event->id) }}" class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">Submit Key</a>
                         </td>
                     </tr>
                 @endforeach

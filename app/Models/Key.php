@@ -23,7 +23,9 @@ class Key extends Model
     // }
 
     public function pickKey(){
-        return $this->belongsToMany(Employee::class);
+        return $this->belongsToMany(Employee::class,'key_events','key_number','picked_by')
+        ->withPivot('picked_at','returned_at','status')
+        ->withTimestamps();
     }
 
 }

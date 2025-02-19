@@ -90,7 +90,7 @@ CREATE TABLE `key_events` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `picked_by` bigint unsigned NOT NULL,
   `returned_by` bigint unsigned DEFAULT NULL,
-  `key_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  -- `key_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `key_number` bigint unsigned DEFAULT NULL,
   `picked_at` timestamp NOT NULL,
   `returned_at` timestamp NULL DEFAULT NULL,

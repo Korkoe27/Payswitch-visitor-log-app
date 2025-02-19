@@ -39,9 +39,13 @@
         
                 return redirect()->back()->with('success', 'Device logged successfully.');
             } catch (\Exception $e) {
-                Log::error($e->getMessage());
                 return redirect()->back()->withErrors(['error' => 'An error occurred while logging the device.']);
             }
+        }
+
+
+        public function updateDeviceLog(){
+            
         }
         
 

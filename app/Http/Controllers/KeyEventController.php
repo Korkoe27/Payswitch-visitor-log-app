@@ -10,6 +10,16 @@ use Illuminate\Http\Request;
 
 class KeyEventController extends Controller
 {
+
+
+
+    public function pickedKeys(){
+        $keys   =   KeyEvent::where('status', 'picked')
+        ->with(['key','employee'])
+        ->simplePaginate(10);
+
+        return view('index',compact('keys'));
+    }
     public function pickKey(){
         
         $employees = Employee::get();
@@ -18,23 +28,28 @@ class KeyEventController extends Controller
         }
     
         public function logKey() {
+
             request()->validate([
                 'picked_by' => 'required|exists:employees,id',
-                'key_name' => 'required',
+                'key_number' => 'required',
             ]);
         
             $employee = Employee::findOrFail(request('picked_by'));
+
+            // dd('Hello there');
+            // dd($employee);
         
-            $activeKeyEvent = KeyEvent::where('status', 'picked')
-                ->whereNull('returned_at')
-                ->first();
+            $activeKeyEvent =   KeyEvent::where('key_number',request('key_number'))
+            ->where('status','picked')
+            ->whereNull('returned_at')
+            ->first();
         
             if ($activeKeyEvent) {
                 return redirect()->back()->with('error', "Key has already been picked.");
             }
         
             KeyEvent::create([
-                'key_name' => request('key_name'),
+                'key_number' => request('key_number'),
                 'picked_by' => $employee->id,
                 'picked_at' => Carbon::now(),
                 'status' => 'picked'
@@ -73,5 +88,8 @@ class KeyEventController extends Controller
                 'status'=>'returned',
                 'returned_at' =>Carbon::now()
             ]);
+
+            
+            return redirect('/');
         }
 }

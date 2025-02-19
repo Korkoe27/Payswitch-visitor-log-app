@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Employee extends Model
 {
@@ -28,10 +29,13 @@ class Employee extends Model
         return $this->hasMany(Device::class);
     }
 
-    public function logKey(){
-        return $this->belongsToMany(Key::class,foreignPivotKey:'key_number');
+    public function pickKey():BelongsToMany{
+        return $this->belongsToMany(Key::class,
+        'key_events','picked_by',
+        'key_number')
+        ->withPivot('picked_at','returned_at','status')
+        ->withTimestamps();
     }
-
     // public function returnKey()
 
     //WORKING ON RETURN KEY RELATIONSHIP

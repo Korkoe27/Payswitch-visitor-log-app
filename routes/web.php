@@ -26,14 +26,17 @@ Route::get('/', function () {
 
 
     $devices = Device::with('employee')->get();
+    $keys = KeyEvent::where('status', 'picked')
+    ->with(['key', 'employee'])
+    ->simplePaginate(10);
     return view('index',[
         'visitor' => Visitor::where('status', 'ongoing')->simplePaginate(5),
 
         'departed' => Visitor::where('status', 'departed')->simplePaginate(5),
 
-        'keys' => KeyEvent::with('pickedByEmployee')->where('status', 'picked')->simplePaginate(10),
+        // 'keys' => KeyEvent::with('pickedByEmployee')->where('status', 'picked')->simplePaginate(10),
         
-    ],compact('devices'));
+    ],compact('devices','keys'));
 
 
        
@@ -75,6 +78,9 @@ Route::put('exit',[VisitorController::class, 'exit']);
 
 
 //keys
+
+
+
 
 
 Route::get('keys', [KeyController::class, 'keys']);
