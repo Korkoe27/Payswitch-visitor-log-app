@@ -4,6 +4,22 @@
         Dashboard
     </x-slot:heading>
 
+    <dialog id="signOutDialog" class="absolute left-0 right-0 backdrop:bg-black/50 bottom-0 top-0 w-fit h-fit p-10">
+        <div class="bg-white/10 flex-col flex gap-4">
+            <h1 class="text-center">Sign Out Device</h1>
+            <form action="" class="flex-col flex gap-4 justify-between" method="POST">
+                @method('PATCH')
+                @csrf
+                <p class="">Are you sure you want to sign out this device?</p>
+                <div class="flex justify-between">
+                    <button type="button" id="cancelSignoutBtn" class="border border-red-300 text-red-500 rounded px-5 py-3">Cancel</button>
+                    <button type="submit" class="bg-blue-400 text-white rounded-lg px-5 py-3">Sign Out</button>
+                </div>
+            </form>
+        </div>
+        
+    </dialog>
+
     <div class="flex px-10">
         <button id="visitors-btn" class="text-black lg:w-32 bg-white border-t-0 border rounded-t-none rounded-r-none rounded-b rounded-br text-sm flex items-center gap-2 lg:px-5 lg:py-2 shadow-md">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -189,26 +205,21 @@
                         {{ $device->employee?->first_name }} {{ $device->employee?->last_name }}
                     </td>
                     <td class="px-6 py-4">{{ $device->created_at?->format('d, M Y') }}</td>
-                    <td class="px-6 py-4">
-                        {{ $device->created_at?->format('H:i') }}
-                    </td>
+                    <td class="px-6 py-4">{{ $device->created_at?->format('H:i') }}</td>
                     <td class="px-3 py-4">
                         @if ($device->action === 'bringDevice')
-                            <a href="#" class="font-medium text-blue-500 p-[5px] rounded-lg border border-blue-400">Sign Out</a>
+                            <button onclick="signOutDevice()"   class="signOutDeviceBtn font-medium text-blue-500 p-[5px] rounded-lg border border-blue-400" data-device-id="{{ $device->id }}">Sign Out</button>
                         @elseif ($device->action === 'log')
                             <a href="#" class="font-medium text-green-500 p-[5px] rounded-lg border border-green-400">Return Device</a>
                         @endif
                     </td>
-                </tr> 
-            @endforeach
-            
+                </tr>
+                @endforeach
             </tbody>
         </table>
-{{--  
-        {{ $key->pickedByEmployee ? $key->pickedByEmployee->first_name . ' ' . $key->pickedByEmployee->last_name : 'N/A' }} --}}
     </div> 
 
+<script src="{{ asset('/js/index.js') }}"></script>
 
 </x-layout>
 
-<script src="{{ asset('/js/index.js') }}"></script>

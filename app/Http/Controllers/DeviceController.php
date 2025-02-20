@@ -44,9 +44,6 @@
         }
 
 
-        public function updateDeviceLog(){
-            
-        }
         
 
     }

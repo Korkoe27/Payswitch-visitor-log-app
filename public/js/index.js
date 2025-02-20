@@ -55,3 +55,33 @@ document.addEventListener('DOMContentLoaded', function() {
     visitorsBtn.style.color = '#3b82f6';
     visitorsBtn.style.borderTop = 'none';
 });
+
+
+function signOutDevice() {
+const signOutDeviceBtn = document.querySelectorAll('.signOutDeviceBtn');
+const cancelSignOutBtn = document.getElementById('cancelSignoutBtn');
+const signOutDialog = document.getElementById('signOutDialog');
+
+// function openCheck(){
+//     if(signOutDialog.open){
+//         console.log("Dialog is open")
+//     }   else{
+//         console.log("Dialog is closed")
+//     }
+// }
+
+
+signOutDeviceBtn.forEach((btn) => {
+    btn.addEventListener('click', function() {
+        signOutDialog.showModal();
+        // openCheck(signOutDeviceBtn);
+    });
+
+});
+
+cancelSignOutBtn.addEventListener('click', ()   =>{
+    signOutDialog.close();
+    // openCheck(signOutDialog);
+})
+
+  }

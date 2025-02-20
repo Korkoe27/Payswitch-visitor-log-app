@@ -102,6 +102,7 @@ Route::patch('return-key/{keyEvent}', [KeyEventController::class, 'returnKey']);
 
 Route::get('device-logs/create', [DeviceController::class, 'create']);
 
+// Route::patch()
 
 Route::post('log-device', [DeviceController::class, 'store']);
 
