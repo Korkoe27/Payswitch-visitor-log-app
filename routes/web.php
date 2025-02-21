@@ -25,7 +25,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
 
 
-    $devices = Device::with('employee')->get();
+    $devices = Device::where('status', 'picked')
+    ->orWhere('status', 'device_logged_in')
+    ->with('employee')
+    ->simplePaginate(10);
+
     $keys = KeyEvent::where('status', 'picked')
     ->with(['key', 'employee'])
     ->simplePaginate(10);
@@ -67,13 +71,18 @@ Route::post('visit',[VisitorController::class, 'store']);
 
 Route::get('create-visit', [VisitorController::class, 'create']);
 
+Route::get('check-visitor', [VisitorController::class, 'checkVisitor']);
+
+Route::post('find-visitor',[VisitorController::class,'oldVisitor']);
+
 Route::get('visit/{visitor}', [VisitorController::class, 'show']);
 
-// Route::get('departure/{visitor}', [VisitorController::class, 'departure'])->name('departure');
+
+
 Route::get('departure', [VisitorController::class, 'departure']);
 
 
-Route::put('exit',[VisitorController::class, 'exit']);
+Route::patch('exit',[VisitorController::class, 'exit']);
 
 
 
@@ -102,7 +111,7 @@ Route::patch('return-key/{keyEvent}', [KeyEventController::class, 'returnKey']);
 
 Route::get('device-logs/create', [DeviceController::class, 'create']);
 
-// Route::patch()
+Route::patch('sign-out-device/{device}', [DeviceController::class, 'signOutDevice']);
 
 Route::post('log-device', [DeviceController::class, 'store']);
 

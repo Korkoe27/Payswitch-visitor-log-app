@@ -18,27 +18,31 @@
                     <div class=" lg:p-4 col-start-1 lg:min-w-64">
                         <img src="{{ asset('logo.png') }}" alt="">
                     </div>
-                                    <div class="md:flex hidden col-start-2 md:px-4 md:col-span-2  justify-start">
+                                    <div class="md:flex hidden col-start-2 md:px-4 md:col-span-1  justify-start">
                                         <h1 class="font-bold text-xl text-blue-900">{{ $heading }}</h1>
                                     </div>
             
-                                    <div class="border border-gray-300 flex col-start-5 col-span-2 p-1 text-gray-400 rounded items-center ">
+                                    <div class="border border-gray-300 flex col-start-3 col-span-2 p-1 text-gray-400 rounded items-center ">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                         </svg>
                                         <input type="search" placeholder="Search" class="outline-none md:p-3 w-full rounded">
                                     </div>
-                                    <div class="justify-center hidden md:col-start-8 md:col-span-2 pr-16 gap-4 sm:flex md:pr-0">
+                                    <div class="justify-between hidden md:col-start-7 md:col-span-3 pr-16 gap-4 lg:flex md:pr-0">
+                                        <a href="{{ url('check-visitor') }}"
+                                            class="py-3 md:text-sm font-medium  md:px-2 lg:px-7 rounded-lg order text-white bg-red-500 hover:text-primary">
+                                            Old Visitor
+                                        </a>
                                         <a href="{{ url('create-visit') }}"
-                                            class="py-3 md:text-base font-medium  md:px-2 lg:px-7 rounded-lg order text-white bg-blue-500 hover:text-primary">
-                                            Log Visitor
+                                            class="py-3 md:text-sm font-medium  md:px-2 lg:px-7 rounded-lg order text-white bg-blue-500 hover:text-primary">
+                                            New Visitor
                                         </a>
                                         <a href="{{url('pick-key')}}"
-                                            class="py-3 text-base font-medium rounded-lg text-blue-600 border border-blue-600  bg-primary lg:px-7 md:px-2 hover:bg-primary/90">
+                                            class="py-3 text-sm font-medium rounded-lg text-blue-600 border border-blue-600  bg-primary lg:px-7 md:px-2 hover:bg-primary/90">
                                             Pick Key
                                         </a>
                                         <a href="{{url('device-logs/create')}}"
-                                            class="py-3 text-base font-medium rounded-lg text-blue-600 border border-blue-500  bg-primary lg:px-7 md:px-2 hover:bg-primary/90">
+                                            class="py-3 text-sm font-medium rounded-lg text-blue-600 border border-blue-500  bg-primary lg:px-7 md:px-2 hover:bg-primary/90">
                                             Log Device
                                         </a>
                                     </div>

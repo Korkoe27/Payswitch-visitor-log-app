@@ -52,7 +52,7 @@
                     <input
                       type="radio"
                       name="action"
-                      value="log"
+                      value="takeDeviceHome"
                       id="log"
                       class="size-5 border-gray-300 text-blue-500"
             

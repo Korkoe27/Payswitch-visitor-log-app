@@ -1,7 +1,7 @@
 <x-layout>
 
     <x-slot:heading>
-        Pick your Office Key
+        Pick a Key
     </x-slot:heading>
 
 
@@ -33,13 +33,18 @@
                    <label for="" class="mb-[10px] block text-base font-medium text-black">
                    Who are you?
                    </label>
-                   <div class="">
+                   <div class="flex-col flex gap-4">
                       <select class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-1/2" name="picked_by" required >
                             <option value="" selected disabled class="">Find your name.</option>
                         @foreach ($employees as $employee)
                          <option value="{{$employee->id}}" class="dark:bg-dark-2">{{$employee->first_name}} {{$employee->last_name}}</option>
                         @endforeach
                       </select>
+
+
+                      <label for="" class="mb-[10px] block text-base font-medium text-black">
+                        Key you are picking.
+                        </label>
                       <select class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-1/2" name="key_number" required >
                             <option value="" selected disabled class="">What Key are you picking?</option>
                         @foreach ($keys as $key)

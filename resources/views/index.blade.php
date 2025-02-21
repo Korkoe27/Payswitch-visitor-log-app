@@ -175,8 +175,7 @@
                 @endforeach
             </tbody>
         </table>
-{{--  
-        {{ $key->pickedByEmployee ? $key->pickedByEmployee->first_name . ' ' . $key->pickedByEmployee->last_name : 'N/A' }} --}}
+
     </div> 
     <div id="device-table" class="w-full hidden sm:rounded-lg m-4">
         <table class="w-full text-sm text-left text-gray-500">
@@ -208,16 +207,22 @@
                     <td class="px-6 py-4">{{ $device->created_at?->format('H:i') }}</td>
                     <td class="px-3 py-4">
                         @if ($device->action === 'bringDevice')
-                            <button onclick="signOutDevice()"   class="signOutDeviceBtn font-medium text-blue-500 p-[5px] rounded-lg border border-blue-400" data-device-id="{{ $device->id }}">Sign Out</button>
+                            <button form="signOutForm" type="submit" class="signOutDeviceBtn font-medium text-blue-500 p-[5px] rounded-lg border border-blue-400"">Sign Out</button>
                         @elseif ($device->action === 'log')
-                            <a href="#" class="font-medium text-green-500 p-[5px] rounded-lg border border-green-400">Return Device</a>
+                            <button  form="signOutForm" href="#" class="font-medium text-green-500 p-[5px] rounded-lg border border-green-400">Return Device</button>
                         @endif
                     </td>
                 </tr>
+    <form action="{{ url('sign-out-device/'. $device->id) }}" id="signOutForm" method="post" class="hidden">
+        @csrf
+        @method('PATCH')
+
+    </form>
                 @endforeach
             </tbody>
         </table>
     </div> 
+
 
 <script src="{{ asset('/js/index.js') }}"></script>
 

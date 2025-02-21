@@ -6,10 +6,23 @@
 
 
 
-<div class="h-[850px]  overflow-y-auto">
+<div class="h-[850px] relative overflow-y-auto">
     <!-- Simplicity is the ultimate sophistication. - Leonardo da Vinci -->
 
+    @if (session()->has('error'))
+    {{-- <p class="">{{ session()->get('error') }}</p> --}}
 
+
+    <div class="flex items-center absolute top-0 gap-4 justify-evenly h-fit  bottom-0 lg:left-[700px] w-fit left-1/2 lg:w-[25rem]  p-4 rounded-lg shadow-md ">
+<img src="{{ asset('sign-up.gif') }}" alt="" class="text-green-300">
+
+        <h3 class="">{{ session()->get('error') }}</h3>
+
+        <button type="button" onclick="this.parentElement.style.display='none'">
+            <img src="{{ asset('x.svg') }}" alt="" class="w-5 h-5">
+        </button>
+    </div>
+@endif
 
 
             <div class="w-full md:w-1/2 my-4 px-10 lg:w-1/3">

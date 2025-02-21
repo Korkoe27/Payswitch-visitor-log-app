@@ -38,7 +38,7 @@ CREATE TABLE `devices` (
   `serial_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `employee_id` bigint unsigned NOT NULL,
   `action` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` ENUM('picked', 'returned') COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `status` ENUM('picked', 'returned','signed_out','device_logged_in') COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `logged_at` timestamp NOT NULL,
   `signed_out_at` timestamp NULL,
   `returned_at` timestamp NULL,

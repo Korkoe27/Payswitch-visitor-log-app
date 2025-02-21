@@ -17,7 +17,7 @@
             <form action="{{ url('exit/'.$visitor['id'])}}" method="POST" class="flex flex-col gap-y-10 h-full gap-4 m-auto justify-center items-center w-full">
 
                 @csrf
-                @method('PUT')
+                @method('PATCH')
                 <p class="font-semibold text-xl">How was your experience visiting us? <span class="text-red-500">*</span></p>
 
 

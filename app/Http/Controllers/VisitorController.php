@@ -69,7 +69,7 @@ class VisitorController extends Controller
 
 
 
-    $name = explode(' ', $validatedData['full_name']);
+    $name = explode(' ', string: $validatedData['full_name']);
 
     $firstName = $name[0];
     $lastName = $name[1];
@@ -114,9 +114,6 @@ class VisitorController extends Controller
 
     if($availableCards->count() > 0){
 
-        // Log::debug("Card Number",["Cards"=>$availableCards[0]->card_number]);
-
-// Log::debug('Number of visitors: '.$countVisitors);
         for($card = 0; $card < $countVisitors; $card++){
             $card_number = getCardId($card, $availableCards);
 
@@ -189,6 +186,8 @@ class VisitorController extends Controller
 
 //   Log::debug(base64_decode(request('masked_id')));
 
+                
+
                 $visitor_id = base64_decode(request('masked_id'));
                 $visitor = Visitor::findOrFail(id: $visitor_id);
 
@@ -205,4 +204,30 @@ class VisitorController extends Controller
 
 
             }
+
+            public function checkVisitor(){
+                return view('visitor.old-visitor');
+            }
+
+            public function oldVisitor(Request $request)
+            {
+                // Validate the request
+                $request->validate([
+                    'phone_number' => 'required'
+                ]);
+            
+                // Fetch visitor
+                $visitor = Visitor::where('phone_number', $request->phone_number)->first();
+            
+                // If visitor exists, debug and show details
+                if ($visitor) {
+                    dd($visitor);
+                } else {
+                    return redirect('create-visit')->with('error', 'First Time Visiting? Please Sign up.');
+
+                }
+            }
+            
+
+        
 }
