@@ -208,6 +208,9 @@ class VisitorController extends Controller
             public function checkVisitor(){
                 return view('visitor.old-visitor');
             }
+            public function oldVisitorSignIn(){
+                return view('visitor.old-visitor-sign-in')->with('visitor', session('visitor'));
+            }
 
             public function oldVisitor(Request $request)
             {
@@ -221,7 +224,9 @@ class VisitorController extends Controller
             
                 // If visitor exists, debug and show details
                 if ($visitor) {
-                    dd($visitor);
+                    // dd($visito
+
+                    return redirect('old-visitor')->with('visitor', $visitor);
                 } else {
                     return redirect('create-visit')->with('error', 'First Time Visiting? Please Sign up.');
 

@@ -71,6 +71,8 @@ Route::post('visit',[VisitorController::class, 'store']);
 
 Route::get('create-visit', [VisitorController::class, 'create']);
 
+Route::get('old-visitor', [VisitorController::class, 'oldVisitorSignIn']);
+
 Route::get('check-visitor', [VisitorController::class, 'checkVisitor']);
 
 Route::post('find-visitor',[VisitorController::class,'oldVisitor']);
