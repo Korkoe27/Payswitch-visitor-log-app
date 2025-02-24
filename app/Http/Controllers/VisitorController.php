@@ -27,7 +27,6 @@ class VisitorController extends Controller
     public function store(){
         
 
-        // dd(request());
         $availableCards = VisitorAccessCard::where('status', 'available')->get();
 
         function getCardId($index, $availableCards){
@@ -39,14 +38,7 @@ class VisitorController extends Controller
                 }else{
                     return 0;
                 }
-                /*if(isset($availableCards[$index])){
 
-                    Log::debug('Function card Id'. $availableCards[$index]);
-                    return $availableCards[$index];
-                }else{
-                    Log::debug("Else 0");
-                    return 0;
-                }  */ 
 
             }   catch (Exception $exception){
 
@@ -80,15 +72,6 @@ class VisitorController extends Controller
 
     $countVisitors = count($companionJson)+1;
 
-    // 
-
-
-
-
-    
-
-    // Log::debug($devicesJson);
-    // Log::debug($countVisitors);
 
 
 
@@ -106,10 +89,8 @@ class VisitorController extends Controller
     ]);
 
     
-    // Log::debug('Saved Dependents:', $visitor->dependents);
     $lastInsertedId = $visitor->id;
 
-                // Log::debug('Last Inserted Id first: '. $lastInsertedId);
 
 
     if($availableCards->count() > 0){
@@ -168,14 +149,7 @@ class VisitorController extends Controller
     }
 
             public function exit(Request $request, Visitor $visitor){
-                // $visitor = Visitor::findOrFail($visitor->id);
 
-                // Log::debug($request->query('visitor'));
-                
-
-                
-
-                // Log::debug('data',request()->all());
 
                 request()->validate([
                     'rating'=> 'required',
@@ -184,7 +158,6 @@ class VisitorController extends Controller
                 ]);
 
 
-//   Log::debug(base64_decode(request('masked_id')));
 
                 
 
@@ -208,9 +181,7 @@ class VisitorController extends Controller
             public function checkVisitor(){
                 return view('visitor.old-visitor');
             }
-            public function oldVisitorSignIn(){
-                return view('visitor.old-visitor-sign-in')->with('visitor', session('visitor'));
-            }
+
 
             public function oldVisitor(Request $request)
             {
@@ -222,11 +193,10 @@ class VisitorController extends Controller
                 // Fetch visitor
                 $visitor = Visitor::where('phone_number', $request->phone_number)->first();
             
-                // If visitor exists, debug and show details
                 if ($visitor) {
-                    // dd($visito
-
-                    return redirect('old-visitor')->with('visitor', $visitor);
+                    $employees = Employee::get();
+                    return view('visitor.old-visitor-sign-in',compact('visitor','employees'));
+                    // return redirect('old-visitor')->with('visitor', $visitor);
                 } else {
                     return redirect('create-visit')->with('error', 'First Time Visiting? Please Sign up.');
 
