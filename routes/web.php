@@ -142,5 +142,5 @@ Route::get('records', function () {
 });
 
 Route::get('settings', function () {
-    return view('settings');
+    return view('settings.settings');
 });

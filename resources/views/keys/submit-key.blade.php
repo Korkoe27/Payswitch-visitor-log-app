@@ -8,7 +8,7 @@
 
     <main class="w-1/2 flex flex-col gap-4 p-10">
         <aside class="w-fit">
-            <h4 class="text-xl font-light">You are returning the <span class="text-red-500 font-bold text-xl">{{ $keyEvent->key_name }}</span> Key.</h4>
+            <h4 class="text-xl font-light">You are returning the <span class="text-red-500 font-bold text-xl">{{$keyEvent->key()->first()->key_name}}</span> Key.</h4>
         </aside>
         <form action="{{ url('return-key/'.$keyEvent['id']) }}" class="flex w-1/2  gap-y-4 flex-col" method="POST">
 
