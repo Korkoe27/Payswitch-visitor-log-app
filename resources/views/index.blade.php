@@ -208,7 +208,7 @@
                     <td class="px-3 py-4">
                         @if ($device->action === 'bringDevice')
                             <button form="signOutForm" type="submit" class="signOutDeviceBtn font-medium text-blue-500 p-[5px] rounded-lg border border-blue-400"">Sign Out</button>
-                        @elseif ($device->action === 'log')
+                        @elseif ($device->action === 'takeDeviceHome')
                             <button  form="signOutForm" href="#" class="font-medium text-green-500 p-[5px] rounded-lg border border-green-400">Return Device</button>
                         @endif
                     </td>
