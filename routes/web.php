@@ -5,6 +5,7 @@ use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\KeyController;
 use App\Http\Controllers\KeyEventController;
+use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\VisitorAccessCardController;
 use App\Http\Controllers\VisitorController;
 use App\Models\Device;
@@ -44,96 +45,137 @@ Route::get('/', function () {
 
 
        
-});
+})->middleware('auth')->name('/');
 
 
 
 //auth
-Route::get('login', function () {
-    return view('auth.login');
+
+Route::middleware('guest')->group(function(){
+        Route::view('login', 'auth.login')->name(name: 'login');
+        Route::post('login', [UserAuthController::class, 'login']);
+
 });
+
+Route::middleware('auth')->group(function(){
+
+
+
+        
+
+Route::post('logout', [UserAuthController::class, 'logout']);
 
 
 //staff
 
-Route::get('staff', [EmployeeController::class, 'index']);
+Route::controller(EmployeeController::class)->group(function(){
 
-Route::get('staff/{staff}', [EmployeeController::class, 'show']);
+        Route::get('staff',  'index');
 
-Route::post('store-staff', [EmployeeController::class, 'store']);
+        Route::get('staff/{staff}',  'show');
 
-Route::get('create-staff', [EmployeeController::class, 'create']);
+        Route::post('store-staff',  'store');
+
+        Route::get('create-staff',  'create');
+});
+
 
 
 //visitor
 
-Route::post('visit',[VisitorController::class, 'store']);
 
-Route::get('create-visit', [VisitorController::class, 'create']);
+Route::controller(VisitorController::class)->group(function(){
+        
+        Route::post('visit', 'store');
 
-// Route::get('old-visitor', [VisitorController::class, 'oldVisitorSignIn'])->name('old-visitor');
+        Route::get('create-visit',  'create');
 
-Route::get('check-visitor', [VisitorController::class, 'checkVisitor']);
+        // Route::get('old-visitor',  'oldVisitorSignIn')->name('old-visitor');
 
-Route::post('find-visitor',[VisitorController::class,'oldVisitor']);
+        Route::get('check-visitor',  'checkVisitor');
 
-Route::get('visit/{visitor}', [VisitorController::class, 'show']);
+        Route::post('find-visitor','oldVisitor');
 
-
-
-Route::get('departure', [VisitorController::class, 'departure']);
+        Route::get('visit/{visitor}',  'show');
 
 
-Route::patch('exit',[VisitorController::class, 'exit']);
+
+        Route::get('departure',  'departure');
+
+
+        Route::patch('exit', 'exit');
+});
+
 
 
 
 //keys
 
 
+Route::controller(KeyEventController::class)->group(function(){
+        Route::get('pick-key', 'pickKey');
+
+        Route::post('log-key',  'logKey');
+
+        Route::get('submit-key/{keyEvent}', 'submitKey');
+
+        Route::patch('return-key/{keyEvent}',  'returnKey');
 
 
+});
 
-Route::get('keys', [KeyController::class, 'keys']);
+Route::controller(KeyController::class)->group(function(){
+    
+        Route::get('keys', [KeyController::class, 'keys']);
 
-Route::get('pick-key',[KeyEventController::class, 'pickKey']);
 
-Route::post('log-key', [KeyEventController::class, 'logKey']);
+        Route::get('create-key', [KeyController::class, 'create']);
 
-Route::get('create-key', [KeyController::class, 'create']);
+        Route::post('store-key', [KeyController::class, 'store']);
 
-Route::post('store-key', [KeyController::class, 'store']);
+});
 
-Route::get('submit-key/{keyEvent}',[KeyEventController::class, 'submitKey']);
 
-Route::patch('return-key/{keyEvent}', [KeyEventController::class, 'returnKey']);
 
 
 //device
 
-Route::get('device-logs/create', [DeviceController::class, 'create']);
+Route::controller(DeviceController::class)->group(function(){
 
-Route::patch('sign-out-device/{device}', [DeviceController::class, 'signOutDevice']);
+        Route::get('device-logs/create',  'create');
 
-Route::post('log-device', [DeviceController::class, 'store']);
+        Route::patch('sign-out-device/{device}',  'signOutDevice');
 
+        Route::post('log-device',  'store');
+
+
+});
 
 
 //departments
 
 
-Route::get('departments', [DepartmentController::class, 'index']);
+Route::controller(DepartmentController::class)->group(function(){
+        Route::get('departments',  'index');
 
-Route::get('create-department', [DepartmentController::class, 'create']);
+        Route::get('create-department',  'create');
 
-Route::post('store-department', [DepartmentController::class, 'store']);
+        Route::post('store-department',  'store');
+
+    });
+
+
 
 
 
 //access card
-Route::get('create-access-card', [VisitorAccessCardController::class,    'create']);
 
-Route::post('store-access-card', [VisitorAccessCardController::class, 'store']);
+Route::controller(VisitorAccessCardController::class)->group(function(){
+Route::get('create-access-card',     'create');
+
+Route::post('store-access-card',  'store');
+
+});
 
 
 
@@ -141,6 +183,10 @@ Route::get('records', function () {
     return view('records');
 });
 
-Route::get('settings', function () {
-    return view('settings.settings');
+// Route::get('settings', function () {
+//     return view('settings.settings');
+// });
+
+
+Route::view('settings', 'settings.index');
 });
