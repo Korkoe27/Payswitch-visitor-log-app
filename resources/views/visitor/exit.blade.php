@@ -24,7 +24,7 @@
                <input type="hidden" name="masked_id" value="{{ request()->query('visitor')}}">
                 <div class="flex justify-evenly gap-4 w-full">
                     <label for="bad" name="rating" class="flex flex-col">
-                        <input type="radio" value="1" name="rating" required id="">
+                        <input type="radio" value="1" name="rating"  id="">
                         <span class="lg:text-2xl">😡</span>
                     </label>
                     <label for="bad" name="rating" class="flex flex-col">

@@ -30,12 +30,8 @@
                                     </div>
                                     <div class="justify-between hidden md:col-start-7 md:col-span-3 pr-16 gap-4 lg:flex md:pr-0">
                                         <a href="{{ url('check-visitor') }}"
-                                            class="py-3 md:text-sm font-medium  md:px-2 lg:px-7 rounded-lg order text-white bg-red-500 hover:text-primary">
-                                            Old Visitor
-                                        </a>
-                                        <a href="{{ url('create-visit') }}"
                                             class="py-3 md:text-sm font-medium  md:px-2 lg:px-7 rounded-lg order text-white bg-blue-500 hover:text-primary">
-                                            New Visitor
+                                            Log Visitor
                                         </a>
                                         <a href="{{url('pick-key')}}"
                                             class="py-3 text-sm font-medium rounded-lg text-blue-600 border border-blue-600  bg-primary lg:px-7 md:px-2 hover:bg-primary/90">
@@ -108,15 +104,17 @@
                                             <span class="hidden lg:flex">Settings</span>
                                         </x-nav-link>
                                     </li>
+
+
                                 </ul>
-                    
-                            
-                            <form action="{{ url('logout') }}" method="POST" class="justify-end">
+                        <form action="{{ url('logout') }}" method="POST" class="mx-auto bottom-0 flex flex-col w-fit">
                                 @csrf
                                 <button class="px-4 py-3 bg-blue-500 text-white rounded-xl">
                                     Logout
                                 </button>
                             </form>
+                            
+
 
                             </nav>
                     

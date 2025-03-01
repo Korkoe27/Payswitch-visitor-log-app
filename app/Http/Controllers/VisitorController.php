@@ -152,7 +152,7 @@ class VisitorController extends Controller
 
 
                 request()->validate([
-                    'rating'=> 'required',
+                    'rating'=> '',
                     'visitor_experience' => '',
                     'marketing_consent' => '',  
                 ]);
