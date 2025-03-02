@@ -192,6 +192,7 @@ class VisitorController extends Controller
             
                 // Fetch visitor
                 $visitor = Visitor::where('phone_number', $request->phone_number)->first();
+
             
                 if ($visitor) {
                     $employees = Employee::get();

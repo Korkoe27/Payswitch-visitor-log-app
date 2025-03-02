@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->unique();
+            $table->string('description')->nullable();
+            $table->boolean('can_create_users')->default(0);
+            $table->boolean('can_edit_users')->default(0);
+            $table->boolean('can_delete_users')->default(0);
+            $table->boolean('can_view_users')->default(0);
             $table->timestamps();
         });
     }
