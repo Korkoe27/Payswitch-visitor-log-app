@@ -16,12 +16,10 @@ return new class extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-            // $table->string('full_name');
             $table->string('email')->nullable();//done
             $table->string('phone_number');//done
             $table->foreignIdFor(Employee::class, 'employee_Id');//done
             $table->string('company_name')->nullable();
-            // $table->string('vehicle_number')->nullable();
             $table->string('purpose');//done
             $table->longText('rating')->nullable();
             

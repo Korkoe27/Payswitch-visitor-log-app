@@ -252,7 +252,7 @@
                      </div>
                      <div class="flex flex-col gap-2">
                         <label for="deviceSerialNumber" class="">Phone Number</label>
-                    <input type="text" placeholder="0250987654" id="companions" name="companions[0][phone_number]" class="companions w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-slate-600 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                    <input type="tel" placeholder="0250987654" id="companions" name="companions[0][phone_number]" class="companions w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-slate-600 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
 
                      </div>
 

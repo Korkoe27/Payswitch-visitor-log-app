@@ -15,10 +15,36 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('description')->nullable();
+
             $table->boolean('can_create_users')->default(0);
             $table->boolean('can_edit_users')->default(0);
             $table->boolean('can_delete_users')->default(0);
             $table->boolean('can_view_users')->default(0);
+
+            $table->boolean('can_create_roles')->default(0);
+            $table->boolean('can_edit_roles')->default(0);
+            $table->boolean('can_view_roles')->default(0);
+            $table->boolean('can_delete_roles')->default(0);
+
+            $table->boolean('can_log_visitors')->default(0);
+
+
+            $table->boolean('can_create_staff')->default(0);
+            $table->boolean('can_view_staff')->default(0);
+            $table->boolean('can_log_staff_events')->default(0);
+            $table->boolean('can_assign_roles')->default(0);
+
+
+            $table->boolean('can_manage_departments')->default(0);
+
+            $table->boolean('can_manage_keys')->default(0);
+            $table->boolean('can_view_keys')->default(0);
+
+
+            $table->boolean('can_delete_keys')->default(0);
+
+            // $table->boolean('can_create_roles')->default(0);
+            // $table->boolean('can_create_roles')->default(0);
             $table->timestamps();
         });
     }

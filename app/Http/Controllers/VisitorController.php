@@ -29,6 +29,9 @@ class VisitorController extends Controller
 
         $availableCards = VisitorAccessCard::where('status', 'available')->get();
 
+
+        // dd($availableCards);
+
         function getCardId($index, $availableCards){
             Log::debug("Size Of Available Cards: ". sizeof($availableCards));
             Log::debug("index + 1: " . $index+1);
@@ -91,24 +94,41 @@ class VisitorController extends Controller
     
     $lastInsertedId = $visitor->id;
 
+    
+    Log::debug("Last Visitor ID: ". $lastInsertedId);
 
 
     if($availableCards->count() > 0){
 
+
+
         for($card = 0; $card < $countVisitors; $card++){
             $card_number = getCardId($card, $availableCards);
 
+
+            Log::debug("Card Number: ". $card_number['card_number']);
+
+            // try{
             DB::table('access_cards')->insert([
                 'visitor_id'=>$lastInsertedId,
                 'card_number'=>is_object($card_number)?$card_number['card_number']:$card_number
             ]);
+
+            // }catch(Exception $e){
+                // Log::debug("Error: ". $e);
+            // }
+
+            try{
 
             if(is_object($card_number)){
                 DB::table('visitor_access_cards')
                     ->where('card_number','=',$card_number['card_number'])
                     ->update(['status'=>'unavailable']);
             }
+        }catch(Exception $e){
+            Log::debug("Error: ". $e);
 
+        }
         }
 
 
@@ -164,6 +184,12 @@ class VisitorController extends Controller
                 $visitor_id = base64_decode(request('masked_id'));
                 $visitor = Visitor::findOrFail(id: $visitor_id);
 
+                $access_cards = DB::table('access_cards')
+                    ->where('visitor_id', $visitor_id)
+                    ->get();
+
+
+                    Log::debug('Access Cards: '. $access_cards);
 
             $visitor->update([
                 'rating' => request('rating'),
@@ -172,6 +198,10 @@ class VisitorController extends Controller
                 'departed_at' =>Carbon::now(),
                 'status' => 'departed'
             ]);
+
+            DB::table('visitor_access_cards')
+                ->where('card_number', $access_cards->card_number)
+                ->update(['status'=>'available']);
 
             return redirect('/')->with('success', 'Visitor record updated successfully!');
 

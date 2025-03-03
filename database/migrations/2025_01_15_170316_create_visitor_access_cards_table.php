@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('visitor_access_cards', function (Blueprint $table) {
             $table->id();
-            $table->string('card_number')->unique();        $table->enum('status', ['available', 'unavailable'])->default('available');
+            $table->string('card_number')->unique();        
+            $table->enum('status', ['available', 'unavailable'])->default('available');
             $table->timestamps();
         });
     }

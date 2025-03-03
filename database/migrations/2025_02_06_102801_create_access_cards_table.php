@@ -15,15 +15,15 @@ return new class extends Migration
     {
         Schema::create('access_cards', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('visitor_id')->unsigned();
-            $table->string('card_number')->nullable();
-            $table->timestamps();
-
 
             $table->foreignIdFor(Visitor::class,'visitor_id');
 
-            $table->foreignIdFor(AccessCards::class,'card_number');
-        });
+            $table->string('card_number')->nullable();
+            $table->foreign('card_number')->references('card_number')->on('visitor_access_cards')->onDelete('SET NULL');
+            $table->timestamps();
+
+
+        }); 
     }
 
     /**
