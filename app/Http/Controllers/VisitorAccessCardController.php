@@ -17,6 +17,10 @@ class VisitorAccessCardController extends Controller
         return view('visitor_access_card.create');
     }
 
+    public function index(){
+        $visitorAccessCards = VisitorAccessCard::all();
+        return view('visitor_access_card.index',compact('visitorAccessCards'));
+    }
 
     public function store(){
         request()->validate([
@@ -29,7 +33,7 @@ class VisitorAccessCardController extends Controller
             'status'=> 'available',
         ]);
 
-
+        return redirect('access-cards');
 
     }
 }

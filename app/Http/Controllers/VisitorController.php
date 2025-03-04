@@ -144,7 +144,7 @@ class VisitorController extends Controller
     }
 
 
-        // Log::debug("completed");
+        Log::debug("completed");
 
     return redirect('/')->with('success', 'Visitor record created successfully!');
 
@@ -156,8 +156,10 @@ class VisitorController extends Controller
 
 
     public function show(Visitor $visitor){
-        
-    return view('visitor.show', ['visitor' => $visitor]);
+        $access_cards = DB::table('access_cards')
+            ->where('visitor_id', $visitor->id)
+            ->get();
+    return view('visitor.show', ['visitor' => $visitor])->with('access_cards', $access_cards);
     }
 
 
@@ -188,8 +190,18 @@ class VisitorController extends Controller
                     ->where('visitor_id', $visitor_id)
                     ->get();
 
+                if($access_cards->count()>0){
+                    foreach($access_cards as $card){
+                        $card_number = $card->card_number;
+                        if($card_number != NULL){
+                            DB::table('visitor_access_cards')
+                                ->where('card_number', $card_number)
+                                ->update(['status'=>'available']);
+                        }
+                    }
+                }
 
-                    Log::debug('Access Cards: '. $access_cards);
+                    // Log::debug('Access Cards: '. $access_cards);
 
             $visitor->update([
                 'rating' => request('rating'),
@@ -199,9 +211,7 @@ class VisitorController extends Controller
                 'status' => 'departed'
             ]);
 
-            DB::table('visitor_access_cards')
-                ->where('card_number', $access_cards->card_number)
-                ->update(['status'=>'available']);
+
 
             return redirect('/')->with('success', 'Visitor record updated successfully!');
 

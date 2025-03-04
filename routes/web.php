@@ -174,7 +174,10 @@ Route::middleware('auth')->group(function(){
 
                 Route::post('store-access-card',  'store');
 
+                Route::get('access-cards','index');
                 });
+
+                
 
 
 

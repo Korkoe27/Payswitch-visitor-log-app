@@ -129,7 +129,7 @@
                     {{-- <td class="px-6 py-4">{{ $person?->created_at?->format('H:i') }}</td> --}}
                     <td class="px-6 py-4">{{ date_format(date_create($person?->departed_at),'H:i') }}</td>
                     <td class="px-6 py-4">
-                        <a href="#" class="font-medium text-blue-600 text-lg hover:underline">View</a>
+                        <a href="{{ url('visit/' . $person->id) }}" class="font-medium text-blue-600 text-lg hover:underline">View</a>
                     </td>
                     <td class="px-3 py-4">
                         {{-- <a href="{{ url('departure/'.$person->id) }}" 

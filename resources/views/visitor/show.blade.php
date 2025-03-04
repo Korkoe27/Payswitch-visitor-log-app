@@ -53,27 +53,74 @@
                         @endswitch
                         </div>
                     </div>
+                    
 
                 </div>  
-                <div class="flex gap-4">
+                
+                {{-- <div class="flex gap-4">
                     <div class="w-1/2">
                         <label for="company" class="font-bold">Devices</label>
 
-                        {{-- @dd($visitor); --}}
                         @foreach(($visitor->devices) as $row)
                             @foreach ($row as $device => $values)
                             <p class="uppercase">{{$device}} {{ $values }}</p>
                             @endforeach
                         @endforeach
                     </div>
+                </div> --}}
+                @if($visitor->devices && count($visitor->devices) > 0)
+                <div class="flex gap-4">
+                    <div class="w-1/2">
+                        <label for="company" class="font-bold">Devices</label>
+                        @foreach(($visitor->devices) as $row)
+                            @foreach ($row as $device => $values)
+                                <p class="uppercase">{{$device}} {{ $values }}</p>
+                            @endforeach
+                        @endforeach
+                    </div>
                 </div>
+            @endif
+                @if(!empty($visitor->companions))
+                <div class="flex gap-4">
+                    <div class="w-1/2">
+                        <label for="company" class="font-bold">Companions</label>
+                        @foreach($visitor->companions as $row)
+                            @foreach($row as $companions => $values)
+                                <p class="uppercase"> {{ $values }}</p>
+                            @endforeach
+                        @endforeach
+                    </div>
+                </div>
+            @endif
 
+            <div class="w-1/2">
+                <label for="company" class="font-bold">Access Cards</label>
+                @if(!empty($visitor?->access_cards) && is_array($visitor->access_cards))
+                    @foreach($visitor->access_cards as $cards)
+                        @foreach($cards as $card => $values)
+                            <p class="uppercase">{{ $values }}</p>
+                        @endforeach
+                    @endforeach
+                @else
+                    <p>No cards</p>
+                @endif
+            </div>
                 <div class="flex gap-4">
                     <div class="w-1/2">
                         <label for="time_in" class="font-bold">Time In</label>
                         <p>{{ $visitor->created_at->format('H:i') }}</p>
                     </div>
                 </div>
+                <div class="flex gap-4">
+                    <div class="w-1/2">
+                        <label for="time_in" class="font-bold">Departed At</label>
+                        <p class="text-xl text-green-900">{{ $visitor->departed_at ? $visitor->departed_at->format('H:i') : 'Visit Ongoing' }}</p>
+                    </div>
+                </div>
+                    
+
+
+
             </div>
         </div>
         {{-- <div class="p-4">
