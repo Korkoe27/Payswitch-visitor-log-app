@@ -44,4 +44,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function modules(){
+        return $this->belongsToMany(Module::class,'permissions')->withPivot('can_create', 'can_modify', 'can_view', 'can_delete');
+    }
+
+    public function hasPermission($moduleName, $action){
+        $permissionColumn = "can_$action";
+
+        return $this->modules()
+        ->where('name', $moduleName)
+        ->wherePivot($permissionColumn, 1)
+        ->exists();
+    }
 }

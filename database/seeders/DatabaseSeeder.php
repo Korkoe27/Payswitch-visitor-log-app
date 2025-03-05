@@ -2,32 +2,56 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-
-use App\Models\Department;
-use App\Models\Employee;
-use App\Models\Visitor;
+use App\Models\Module;
+use App\Models\User;
+use App\Models\Permission;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
+        // Call other seeders
         $this->call([
             DepartmentSeeder::class,
             EmployeeSeeder::class,
+            KeySeeder::class,
+            VisitorAccessCardSeeder::class,
+            ModuleSeeder::class,
+            UserSeeder::class,
         ]);
 
-        Visitor::factory(20)->create();
+        // Assign Permissions to Users
+        $this->assignPermissions();
+    }
+
+    private function assignPermissions(): void
+    {
+        $users = User::all();
+        $modules = Module::all();
+
+        // Ensure there are users and modules
+        if ($users->isEmpty() || $modules->isEmpty()) {
+            $this->command->info('Skipping permissions: No users or modules found.');
+            return;
+        }
+
+        foreach ($users as $user) {
+            // Each user gets permissions for a random subset of modules
+            $assignedModules = $modules->random(rand(3, $modules->count()));
+
+            foreach ($assignedModules as $module) {
+                Permission::create([
+                    'user_id' => $user->id,
+                    'module_id' => $module->id,
+                    'can_view' => fake()->boolean(),
+                    'can_create' => fake()->boolean(),
+                    'can_modify' => fake()->boolean(),
+                    'can_delete' => fake()->boolean(),
+                ]);
+            }
+        }
+
+        $this->command->info('Permissions assigned successfully.');
     }
 }
