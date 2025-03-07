@@ -59,6 +59,7 @@
                             <nav class="fixed h-screen flex flex-col gap-10 lg:relative bg-white col-span-1 lg:min-w-64">
                             {{-- <nav class="hidden"> --}}
                                 <ul class="flex flex-col gap-4">
+                                    @if(\App\Models\User::hasPermission(auth()->id(), 'visits', 'view'))
                                     <li class="">
                                         <x-nav-link href="{{ url('/') }}" :active="request()->is('/')">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -70,6 +71,7 @@
                                             <span class="hidden lg:flex">Dashboard</span>
                                         </x-nav-link>
                                     </li>
+                                    @endif
                                     <li class="">
                                         <x-nav-link href="{{ url('staff') }}" :active="request()->is('staff')">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -90,6 +92,9 @@
                                             <span class="hidden lg:flex">Records</span>
                                         </x-nav-link>
                                     </li>
+
+                                    @if(\App\Models\User::hasPermission(auth()->id(), 'settings', 'view'))
+
                                     <li class="">
                                         <x-nav-link href="{{ url('settings') }}" :active="request()->is('settings')">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -104,6 +109,7 @@
                                             <span class="hidden lg:flex">Settings</span>
                                         </x-nav-link>
                                     </li>
+                                    @endif
 
 
                                 </ul>

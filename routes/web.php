@@ -34,6 +34,7 @@ Route::get('/', function () {
         $keys = KeyEvent::where('status', 'picked')
         ->with(['key', 'employee'])
         ->simplePaginate(10);
+        
         return view('index',[
         'visitor' => Visitor::where('status', 'ongoing')->simplePaginate(5),
 
@@ -69,13 +70,13 @@ Route::middleware('auth')->group(function(){
 
                 Route::controller(EmployeeController::class)->group(function(){
 
-                        Route::get('staff',  'index');
+                        Route::get('staff',  'index')->middleware('module.permission:staff,view');
 
-                        Route::get('staff/{staff}',  'show');
+                        Route::get('staff/{staff}',  'show')->middleware('module.permission:staff,view');
 
-                        Route::post('store-staff',  'store');
+                        Route::post('store-staff',  'store')->middleware('module.permission:staff,create,modify,delete');
 
-                        Route::get('create-staff',  'create');
+                        Route::get('create-staff',  'create')->middleware('module.permission:staff,create,modify,delete');
                 });
 
 
@@ -84,6 +85,8 @@ Route::middleware('auth')->group(function(){
 
 
                 Route::controller(VisitorController::class)->group(function(){
+
+                        Route::get('/', 'index');
                         
                         Route::post('visit', 'store');
 
@@ -97,13 +100,11 @@ Route::middleware('auth')->group(function(){
 
                         Route::get('visit/{visitor}',  'show');
 
-
-
                         Route::get('departure',  'departure');
 
 
                         Route::patch('exit', 'exit');
-                });
+                })->middleware('module.permission:visits,view,create,modify,delete');
 
 
 
@@ -112,6 +113,8 @@ Route::middleware('auth')->group(function(){
 
 
                 Route::controller(KeyEventController::class)->group(function(){
+
+                        Route::get('/', 'pickedKeys');
                         Route::get('pick-key', 'pickKey');
 
                         Route::post('log-key',  'logKey');
@@ -121,7 +124,7 @@ Route::middleware('auth')->group(function(){
                         Route::patch('return-key/{keyEvent}',  'returnKey');
 
 
-                });
+                })->middleware('module.permission:keys,view');
 
                 Route::controller(KeyController::class)->group(function(){
                 
@@ -132,7 +135,7 @@ Route::middleware('auth')->group(function(){
 
                         Route::post('store-key', [KeyController::class, 'store']);
 
-                });
+                })->middleware('module.permission:keys,view,create,modify,delete');
 
 
 
@@ -148,7 +151,7 @@ Route::middleware('auth')->group(function(){
                         Route::post('log-device',  'store');
 
 
-                });
+                })->middleware('module.permission:settings,view,create,modify,delete');
 
 
                 //departments
@@ -161,7 +164,7 @@ Route::middleware('auth')->group(function(){
 
                         Route::post('store-department',  'store');
 
-                });
+                })->middleware('module.permission:departments,view,create,modify,delete');
 
 
 
@@ -170,11 +173,11 @@ Route::middleware('auth')->group(function(){
                 //access card
 
                 Route::controller(VisitorAccessCardController::class)->group(function(){
-                Route::get('create-access-card',     'create');
+                Route::get('create-access-card', 'create')->middleware('module.permission:settings,view,create,modify,delete');
 
-                Route::post('store-access-card',  'store');
+                Route::post('store-access-card',  'store')->middleware('module.permission:settings,view,create,modify,delete');
 
-                Route::get('access-cards','index');
+                Route::get('access-cards','index')->middleware('module.permission:reports,view');
                 });
 
                 
@@ -183,13 +186,14 @@ Route::middleware('auth')->group(function(){
 
                 Route::get('records', function () {
                 return view('records');
-                });
+                })->middleware('module.permission:reports,view,create,modify,delete');
 
                 // Route::get('settings', function () {
                 //     return view('settings.settings');
                 // });
 
 
-                Route::view('settings', 'settings.index');
+                Route::view('settings', 'settings.index')
+                ->middleware('module.permission:settings,view,create,modify,delete');
 
         });

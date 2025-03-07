@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -46,14 +47,15 @@ class User extends Authenticatable
     ];
 
 
-    public function modules(){
-        return $this->belongsToMany(Module::class,'permissions')->withPivot('can_create', 'can_modify', 'can_view', 'can_delete');
+    public function modules(): BelongsToMany{
+        return $this->belongsToMany(Module::class,'permissions')->withPivot('create', 'modify', 'view', 'delete');
     }
 
-    public function hasPermission($moduleName, $action){
+    public static function hasPermission($userId,$moduleName, $action): bool{
         $permissionColumn = "can_$action";
 
-        return $this->modules()
+        return User::find($userId)
+        ->modules()
         ->where('name', $moduleName)
         ->wherePivot($permissionColumn, 1)
         ->exists();

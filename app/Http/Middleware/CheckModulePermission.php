@@ -17,10 +17,13 @@ class CheckModulePermission
      */
     public function handle(Request $request, Closure $next, $module, $action): Response
     {
-        //$user = User::hasPermission()
-        if(!User::hasPermission($module, $action)){
-            abort(403, 'Sorry! You are not authorized to access this feature!');
+        $user = Auth::user(); // Get the authenticated user
+    
+        if (!$user || !User::hasPermission($user->id, $module, $action)) {
+            abort(403, 'Go back! Now!');
         }
+    
         return $next($request);
     }
+    
 }

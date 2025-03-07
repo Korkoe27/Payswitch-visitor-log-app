@@ -17,14 +17,11 @@ class ModuleFactory extends Factory
     public function definition(): array
     {
 
-        static $modules = ['user','keys','logs','settings','reports','staff','departments','roles'];
+        $modules = ['user','visits','keys','logs','settings','reports','staff','departments','roles'];
 
-        $module = count($modules)>0
-            ? array_shift($modules)
-            : 'generated-' . fake()->unique()->word();
         return [
-            'name'=> $module,
             'description'=>fake()->catchPhrase(),
+            'name'=> $this->faker->unique()->randomElement($modules),
         ];
     }
 }

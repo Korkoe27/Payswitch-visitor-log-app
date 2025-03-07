@@ -11,7 +11,7 @@ class Module extends Model
     use HasFactory;
 
     public function users(){
-        return $this->belongsToMany(User::class,'permissions')->withPivot( 'can_view','can_create', 'can_modify', 'can_delete');
+        return $this->belongsToMany(User::class,'permissions')->withPivot( 'view','create', 'modify', 'delete');
     }
     
 }
