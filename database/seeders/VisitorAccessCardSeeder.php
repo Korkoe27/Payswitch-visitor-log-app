@@ -14,6 +14,6 @@ class VisitorAccessCardSeeder extends Seeder
     public function run(): void
     {
         //
-        VisitorAccessCard::factory()->count(10)->create();
+        VisitorAccessCard::factory()->count(20)->create();
     }
 }

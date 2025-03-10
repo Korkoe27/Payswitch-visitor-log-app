@@ -117,7 +117,13 @@
                         <p class="text-xl text-green-900">{{ $visitor->departed_at ? $visitor->departed_at->format('H:i') : 'Visit Ongoing' }}</p>
                     </div>
                 </div>
-                    
+            
+
+                {{-- <div class="">
+                    @foreach ($visitor->accessCard as $item)
+                        
+                    @endforeach
+                </div> --}}
 
 
 

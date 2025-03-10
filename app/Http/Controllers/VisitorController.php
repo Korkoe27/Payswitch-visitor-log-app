@@ -16,17 +16,7 @@ use Illuminate\Support\Facades\Log;
 class VisitorController extends Controller
 {
 
-    public function index()
-    {
-        $visitor = Visitor::where('status', 'ongoing')->simplePaginate(5);
 
-        Log::debug("Visitor: ". $visitor);
-        $departed = Visitor::where('status', 'departed')->simplePaginate(5);
-    
-        dd($visitor, $departed);
-
-        return view('index', compact('visitor', 'departed'));
-    }
     
     public function create(){
         $employees = Employee::get();

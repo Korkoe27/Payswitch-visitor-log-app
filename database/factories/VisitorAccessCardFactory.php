@@ -21,7 +21,7 @@ class VisitorAccessCardFactory extends Factory
     {
         return [
             'card_number'=>fake()->unique()->numerify('PS-VS-####'),
-            'status'=>fake()->randomElement(['available','unavailable']),
+            'status'=>'available',
         ];
     }
 }

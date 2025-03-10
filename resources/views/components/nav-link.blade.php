@@ -1,5 +1,5 @@
 @props(['active' => false])
 
-<a  class="{{ $active  ?  'md:bg-[#e3effc] text-blue-900 font-bold' : 'text-black font-normal lg:text-base hover:bg-[#e3effc] md:text-sm'  }} flex items-center w-full  md:py-4 md:px-10  gap-2" {{$attributes}}    aria-current="{{  $active ?  'page' : 'false'}}" >
+<a  class="{{ $active  ?  'hover:bg-[#003C90] bg-[#003C90] text-[#C8DFFF] font-bold' : 'text-[#C8DFFF] font-normal lg:text-base hover:bg-[#003C90] md:text-sm'  }} lg:px-5 flex items-center rounded-md w-full lg:py-4 gap-2" {{$attributes}}    aria-current="{{  $active ?  'page' : 'false'}}" >
       {{$slot}}              
  </a>

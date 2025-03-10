@@ -23,6 +23,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
+
+//auth
+
+Route::middleware('guest')->group(function(){
+        Route::view('login', 'auth.login')->name(name: 'login');
+        Route::post('login', [UserAuthController::class, 'login']);
+
+});
+
+Route::middleware('auth')->group(function(){
+
+
+
+        
 Route::get('/', function () {
 
 
@@ -40,26 +56,12 @@ Route::get('/', function () {
 
         'departed' => Visitor::where('status', 'departed')->simplePaginate(5),
 
-        // 'keys' => KeyEvent::with('pickedByEmployee')->where('status', 'picked')->simplePaginate(10),
+        'keys' => KeyEvent::with('pickedByEmployee')->where('status', 'picked')->simplePaginate(10),
         
         ],compact('devices','keys'));
 
 
-})->middleware('auth')->name('/');
-
-
-
-//auth
-
-Route::middleware('guest')->group(function(){
-        Route::view('login', 'auth.login')->name(name: 'login');
-        Route::post('login', [UserAuthController::class, 'login']);
-
-});
-
-Route::middleware('auth')->group(function(){
-
-
+})->middleware('module.permission:staff,view')->name('/');
 
         
 
@@ -86,7 +88,7 @@ Route::middleware('auth')->group(function(){
 
                 Route::controller(VisitorController::class)->group(function(){
 
-                        Route::get('/', 'index');
+                        // Route::get('/', 'index');
                         
                         Route::post('visit', 'store');
 
@@ -114,7 +116,7 @@ Route::middleware('auth')->group(function(){
 
                 Route::controller(KeyEventController::class)->group(function(){
 
-                        Route::get('/', 'pickedKeys');
+                        // Route::get('/', 'pickedKeys');
                         Route::get('pick-key', 'pickKey');
 
                         Route::post('log-key',  'logKey');

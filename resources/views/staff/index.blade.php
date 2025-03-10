@@ -4,6 +4,7 @@
         Staff
     </x-slot:heading>
 
+    @if(\App\Models\User::hasPermission(auth()->id(), 'staff', 'create'))
 
 
     <div class="flex justify-self-end md:px-6 ">
@@ -12,7 +13,7 @@
           </svg>
           New Staff</a>
     </div>
-   
+  @endif
     <div class=" overflow-x-auto shadow-md sm:rounded-lg m-4">
         <table class="w-full text-sm text-left text-gray-500">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -59,13 +60,15 @@
                                 View
                             </a>
                         </td>
-            
+                        @if(\App\Models\User::hasPermission(auth()->id(), 'staff', 'create'))
                         <!-- Assign Role -->
                         <td class="px-3 py-4">
                             <a href="#" class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">
                                 Assign Role
                             </a>
                         </td>
+
+                        @endif
                     </tr>
                 @endforeach
             </tbody>
