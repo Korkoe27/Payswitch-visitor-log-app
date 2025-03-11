@@ -17,6 +17,17 @@ class VisitorController extends Controller
 {
 
 
+    public function index(){
+
+
+        return view('visitor.visits',[
+            'visitor' => Visitor::where('status', 'ongoing')->simplePaginate(10),
+    
+            'departed' => Visitor::where('status', 'departed')->simplePaginate(5),
+
+        ]);
+    }
+
     
     public function create(){
         $employees = Employee::get();

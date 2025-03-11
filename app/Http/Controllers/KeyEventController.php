@@ -14,11 +14,10 @@ class KeyEventController extends Controller
 
 
     public function pickedKeys(){
-        $keys   =   KeyEvent::where('status', 'picked')
-        ->with(['key','employee'])
-        ->simplePaginate(10);
+        $keys = KeyEvent::with(['key', 'employee'])->get();
 
-        return view('index',compact('keys'));
+
+        return view('keys.keys',compact('keys'));
     }
     public function pickKey(){
         

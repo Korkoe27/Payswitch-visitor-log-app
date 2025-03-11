@@ -11,6 +11,7 @@ use App\Http\Controllers\VisitorController;
 use App\Models\Device;
 use App\Models\Visitor;
 use App\Models\KeyEvent;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,7 @@ Route::get('/', function () {
 
         $devices = Device::where('status', 'picked')
         ->orWhere('status', 'device_logged_in')
+        ->orWhere('created_at', Carbon::today())
         ->with('employee')
         ->simplePaginate(10);
 
@@ -54,14 +56,13 @@ Route::get('/', function () {
         return view('index',[
         'visitor' => Visitor::where('status', 'ongoing')->simplePaginate(5),
 
-        'departed' => Visitor::where('status', 'departed')->simplePaginate(5),
-
-        'keys' => KeyEvent::with('pickedByEmployee')->where('status', 'picked')->simplePaginate(10),
+        'keys' => KeyEvent::with('employee')->where('status', 'picked')->simplePaginate(10),
+        'all_keys' => Visitor::where('created_at', Carbon::today())->get(),
         
         ],compact('devices','keys'));
 
 
-})->middleware('module.permission:staff,view')->name('/');
+})->name('/');
 
         
 
@@ -88,7 +89,7 @@ Route::get('/', function () {
 
                 Route::controller(VisitorController::class)->group(function(){
 
-                        // Route::get('/', 'index');
+                        Route::get('visits', 'index');
                         
                         Route::post('visit', 'store');
 
@@ -116,7 +117,7 @@ Route::get('/', function () {
 
                 Route::controller(KeyEventController::class)->group(function(){
 
-                        // Route::get('/', 'pickedKeys');
+                        Route::get('keys', 'pickedKeys');
                         Route::get('pick-key', 'pickKey');
 
                         Route::post('log-key',  'logKey');
@@ -130,7 +131,7 @@ Route::get('/', function () {
 
                 Route::controller(KeyController::class)->group(function(){
                 
-                        Route::get('keys', [KeyController::class, 'keys']);
+                        Route::get('all_keys', [KeyController::class, 'keys']);
 
 
                         Route::get('create-key', [KeyController::class, 'create']);
@@ -146,7 +147,9 @@ Route::get('/', function () {
 
                 Route::controller(DeviceController::class)->group(function(){
 
-                        Route::get('device-logs/create',  'create');
+                        Route::get('device-logs', 'index');
+
+                        Route::get('log',  'create');
 
                         Route::patch('sign-out-device/{device}',  'signOutDevice');
 

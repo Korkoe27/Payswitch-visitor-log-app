@@ -12,6 +12,14 @@
     class DeviceController extends Controller
     {
         //
+
+
+        public function index(){
+            return view('devices.index',[
+                'devices' => Device::get()
+            ]);
+        }
+
         public function create(){
             $employees = Employee::get();
             return view('devices.create', compact('employees'));

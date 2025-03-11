@@ -10,17 +10,16 @@
     <title>Visitor Log</title>
 </head>
 
-<body class="flex h-screen">
+<body class="flex w-full">
 
-    <nav class="flex flex-col lg:fixed bg-[#0F51AE] h-full lg:w-64">
+    <nav class="flex flex-col bg-[#0F51AE] h-screen lg:w-1/6">
         <div class="flex flex-col lg:p-10 justify-center w-full lg:pb-10 border-b border-[#C8DFFF] items-center">
             <img src="{{ asset('payswitch.png') }}" class="" alt="">
             {{-- <span class="lg:text-2xl font-bold hidden lg:flex text-[#C8DFFF]">{{ Auth::user()->name }}</span> --}}
         </div>
 
         <div class="flex lg:p-10 h-full flex-col">
-            <ul class="flex lg:py-10 flex-col">
-                @if(\App\Models\User::hasPermission(auth()->id(), 'visits', 'view'))
+            <ul class="flex lg:py-10 lg:gap-4 flex-col">
                 <li class="">
                     <x-nav-link href="{{ url('/') }}" :active="request()->is('/')">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -32,7 +31,44 @@
                         <span class="hidden lg:flex">Dashboard</span>
                     </x-nav-link>
                 </li>
+                @if(\App\Models\User::hasPermission(auth()->id(), 'visits', 'view'))
+                <li class="text-[#529AFF] font-semibold text-lg">Tables</li>
+                <li>
+                <x-nav-link href="{{ url('visits') }}" :active="request()->is('visits')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg" class="size-6">
+                        <path d="M16 21V19C16 17.9391 15.5786 16.9217 14.8284 16.1716C14.0783 15.4214 13.0609 15 12 15H6C4.93913 15 3.92172 15.4214 3.17157 16.1716C2.42143 16.9217 2 17.9391 2 19V21M22 21V19C21.9993 18.1137 21.7044 17.2528 21.1614 16.5523C20.6184 15.8519 19.8581 15.3516 19 15.13M16 3.13C16.8604 3.3503 17.623 3.8507 18.1676 4.55231C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89317 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88M13 7C13 9.20914 11.2091 11 9 11C6.79086 11 5 9.20914 5 7C5 4.79086 6.79086 3 9 3C11.2091 3 13 4.79086 13 7Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+
+                    <span class="hidden lg:flex">Visits</span>
+                </x-nav-link>
+
+                </li>
+
+                <li class="">
+                    <x-nav-link href="{{ url('keys') }}" :active="request()->is('keys')">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path d="M2.586 17.414C2.2109 17.789 2.00011 18.2976 2 18.828V21C2 21.2653 2.10536 21.5196 2.29289 21.7071C2.48043 21.8947 2.73478 22 3 22H6C6.26522 22 6.51957 21.8947 6.70711 21.7071C6.89464 21.5196 7 21.2653 7 21V20C7 19.7348 7.10536 19.4805 7.29289 19.2929C7.48043 19.1054 7.73478 19 8 19H9C9.26522 19 9.51957 18.8947 9.70711 18.7071C9.89464 18.5196 10 18.2653 10 18V17C10 16.7348 10.1054 16.4805 10.2929 16.2929C10.4804 16.1054 10.7348 16 11 16H11.172C11.7024 15.9999 12.211 15.7891 12.586 15.414L13.4 14.6C14.7898 15.0842 16.3028 15.0823 17.6915 14.5948C19.0801 14.1072 20.2622 13.1629 21.0444 11.9162C21.8265 10.6695 22.1624 9.19421 21.9971 7.73178C21.8318 6.26934 21.1751 4.90629 20.1344 3.86561C19.0937 2.82493 17.7307 2.16822 16.2683 2.00293C14.8058 1.83763 13.3306 2.17353 12.0839 2.95568C10.8372 3.73782 9.89279 4.91991 9.40525 6.30856C8.91771 7.69721 8.91585 9.2102 9.4 10.6L2.586 17.414Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16.5 8.00004C16.7761 8.00004 17 7.77618 17 7.50004C17 7.2239 16.7761 7.00004 16.5 7.00004C16.2239 7.00004 16 7.2239 16 7.50004C16 7.77618 16.2239 8.00004 16.5 8.00004Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>                          
+                            <span class="hidden lg:flex">Keys</span>
+                            
+                    </x-nav-link>
+                </li>
+
+                <li class="">
+                    <x-nav-link href="{{ url('device-logs') }}" :active="request()->is('devices-logs')">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path d="M18 8V6C18 5.46957 17.7893 4.96086 17.4142 4.58579C17.0391 4.21071 16.5304 4 16 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V13C2 13.5304 2.21071 14.0391 2.58579 14.4142C2.96086 14.7893 3.46957 15 4 15H12M10 19V15.04V18.19M7 19H12M18 12H20C21.1046 12 22 12.8954 22 14V20C22 21.1046 21.1046 22 20 22H18C16.8954 22 16 21.1046 16 20V14C16 12.8954 16.8954 12 18 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span class="hidden lg:flex">Devices</span>
+                            
+                    </x-nav-link>
+                </li>
+
+
                 @endif
+                @if(\App\Models\User::hasPermission(auth()->id(), 'reports', 'view'))
+                <li class="text-[#529AFF] font-semibold text-lg">Records</li>
                 <li class="">
                     <x-nav-link href="{{ url('staff') }}" :active="request()->is('staff')">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -42,6 +78,7 @@
                         <span class="hidden lg:flex">Staff</span>
                     </x-nav-link>
                 </li>
+                @endif
                 @if(\App\Models\User::hasPermission(auth()->id(), 'reports', 'view'))
                 <li class="">
                     <x-nav-link href="{{ url('records') }}" :active="request()->is('records')">
@@ -86,7 +123,7 @@
         </div>
     </nav>
 
-    <main class="lg:pl-64 w-full">
+    <main class="lg:w-5/6">
 
             <header class="flex justify-between items-center w-full border-b border-[#C8DFFF] lg:p-10">
                 <h1 class=" text-[#0F51AE] lg:text-2xl lg:font-bold">{{ $heading }}</h1>

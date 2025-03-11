@@ -4,6 +4,21 @@
         Dashboard
     </x-slot:heading>
 
+
+    
+
+    @php
+    $hour = now()->hour;
+
+    if ($hour < 12) {
+        $greeting = "Good Morning";
+    } elseif ($hour < 18) {
+        $greeting = "Good Afternoon";
+    } else {
+        $greeting = "Good Evening";
+    }
+@endphp
+{{-- 
     <dialog id="signOutDialog" class="absolute left-0 right-0 backdrop:bg-black/50 bottom-0 top-0 w-fit h-fit p-10">
         <div class="bg-white/10 flex-col flex gap-4">
             <h1 class="text-center">Sign Out Device</h1>
@@ -18,32 +33,88 @@
             </form>
         </div>
         
-    </dialog>
+    </dialog> --}}    
+    <h1 class="flex items-center p-10 gap-3">
+        <span class="lg:text-4xl">{{ $greeting }} </span>
+       <span class="text-[#0F51AE] rounded-full bg-[#F2F8FF] px-2 p-1 font-semibold">{{ Auth::user()->name  }}</span> 
+    </h1>
+    @if(\App\Models\User::hasPermission(auth()->id(), 'visits', 'view'))
+    <main class="flex-col flex">
 
-    <div class="flex px-10">
-        <button id="visitors-btn" class="text-black lg:w-32 bg-white border-t-0 border rounded-t-none rounded-r-none rounded-b rounded-br text-sm flex items-center gap-2 lg:px-5 lg:py-2 shadow-md">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-            </svg>
-            Visitors
-        </button>
-        <button id="keys-btn" class="text-black lg:w-32 text-sm bg-white  lg:px-5 lg:py-2 border border-t-0 rounded-t-none rounded-r-none rounded-b rounded-br flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" />
-            </svg>
-            Keys
-        </button>
-        <button id="device-btn" class="text-black lg:w-32 text-sm bg-white  lg:px-5 lg:py-2 border border-t-0 rounded-t-none rounded-r-none rounded-b rounded-br flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" />
-              </svg>
-            Devices
-        </button>
-    </div>
+    
 
+        <div class="flex lg:gap-10 h-fit lg:flex-row flex-col p-10 lg:justify-between">
+            <div class="flex lg:h-full rounded-2xl bg-[#F2F8FF] w-full lg:p-6 lg:gap-6 flex-col justify-between">
+                <h3 class="lg:text-2xl text-black/50 flex gap-2 items-center font-semibold">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="stroke-current">
+                        <path d="M16 21V19C16 17.9391 15.5786 16.9217 14.8284 16.1716C14.0783 15.4214 13.0609 15 12 15H6C4.93913 15 3.92172 15.4214 3.17157 16.1716C2.42143 16.9217 2 17.9391 2 19V21M22 21V19C21.9993 18.1137 21.7044 17.2528 21.1614 16.5523C20.6184 15.8519 19.8581 15.3516 19 15.13M16 3.13C16.8604 3.3503 17.623 3.8507 18.1676 4.55231C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89317 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88M13 7C13 9.20914 11.2091 11 9 11C6.79086 11 5 9.20914 5 7C5 4.79086 6.79086 3 9 3C11.2091 3 13 4.79086 13 7Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Ongoing Visits
+                </h3>
+                
+                <h1 class="">
+                    <span class="lg:text-6xl font-bold">{{ $visitor ? count($visitor) : 0 }}</span>
+                </h1>
+
+                <div class="flex justify-between">
+                <a href="{{ url('create-visit') }}" class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4]">Log Visitor</a>
+                    <a href="{{ url('visits') }}" class="flex items-center text-green-700 font-bold text-xl">All visits
+
+                        <img src="{{ asset('right.svg') }}" alt="" class="w-5">
+                    </a>
+   
+
+                </div>
+                    
+            </div>
+            <div class="flex lg:h-full rounded-2xl bg-[#F2F8FF] w-full lg:p-6 lg:gap-6 flex-col justify-between">
+                <h3 class="lg:text-2xl text-black/50 gap-2 flex items-center font-semibold">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="stroke-current">
+                        <path d="M2.586 17.414C2.2109 17.789 2.00011 18.2976 2 18.828V21C2 21.2653 2.10536 21.5196 2.29289 21.7071C2.48043 21.8947 2.73478 22 3 22H6C6.26522 22 6.51957 21.8947 6.70711 21.7071C6.89464 21.5196 7 21.2653 7 21V20C7 19.7348 7.10536 19.4805 7.29289 19.2929C7.48043 19.1054 7.73478 19 8 19H9C9.26522 19 9.51957 18.8947 9.70711 18.7071C9.89464 18.5196 10 18.2653 10 18V17C10 16.7348 10.1054 16.4805 10.2929 16.2929C10.4804 16.1054 10.7348 16 11 16H11.172C11.7024 15.9999 12.211 15.7891 12.586 15.414L13.4 14.6C14.7898 15.0842 16.3028 15.0823 17.6915 14.5948C19.0801 14.1072 20.2622 13.1629 21.0444 11.9162C21.8265 10.6695 22.1624 9.19421 21.9971 7.73178C21.8318 6.26934 21.1751 4.90629 20.1344 3.86561C19.0937 2.82493 17.7307 2.16822 16.2683 2.00293C14.8058 1.83763 13.3306 2.17353 12.0839 2.95568C10.8372 3.73782 9.89279 4.91991 9.40525 6.30856C8.91771 7.69721 8.91585 9.2102 9.4 10.6L2.586 17.414Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M16.5 8.00004C16.7761 8.00004 17 7.77618 17 7.50004C17 7.2239 16.7761 7.00004 16.5 7.00004C16.2239 7.00004 16 7.2239 16 7.50004C16 7.77618 16.2239 8.00004 16.5 8.00004Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Picked Keys
+                </h3>
+                
+
+
+                <h1 class="">
+                    <span class="lg:text-6xl font-bold">{{ $keys ? count($keys) : 0 }}</span>
+                </h1>
+                <div class="flex justify-between">
+                    <a href="{{ url('pick-key') }}" class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4]">Log Key</a>
+                    <a href="{{ url('keys') }}" class="flex items-center text-green-700 font-bold text-xl">Keys
+
+                        <img src="{{ asset('right.svg') }}" alt="" class="w-5">
+                    </a>
+                </div>
+            </div>
+            <div class="flex lg:h-full rounded-2xl bg-[#F2F8FF] w-full lg:p-6 lg:gap-6 flex-col justify-between">
+                <h3 class="lg:text-2xl text-black/50 flex gap-2 items-center font-semibold">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="stroke-current">
+                        <path d="M18 8V6C18 5.46957 17.7893 4.96086 17.4142 4.58579C17.0391 4.21071 16.5304 4 16 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V13C2 13.5304 2.21071 14.0391 2.58579 14.4142C2.96086 14.7893 3.46957 15 4 15H12M10 19V15.04V18.19M7 19H12M18 12H20C21.1046 12 22 12.8954 22 14V20C22 21.1046 21.1046 22 20 22H18C16.8954 22 16 21.1046 16 20V14C16 12.8954 16.8954 12 18 12Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Logged Devices
+                </h3>
+                
+                <h1 class="lg:text-6xl font-bold">{{ $devices ? count($devices) : 0 }}</h1>
+                
+                <div class="flex justify-between">
+                    <a href="{{ url('device-logs') }}" class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4]">Log Device</a>
+                    <a href="{{ url('logs') }}" class="flex items-center text-green-700 font-bold text-xl">Devices
+
+                        <img src="{{ asset('right.svg') }}" alt="" class="w-5">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    
     <div id="visitors-table" class="sm:rounded-lg m-4">
         <table class="w-full text-sm text-left text-gray-500">
-            <h2 class="font-bold p-4">Visitors</h2>
+            <h2 class="font-bold p-4">Ongoing Visitors</h2>
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
                     <th scope="col" class="px-6 py-3">Name</th>
@@ -78,10 +149,6 @@
                             <a href="{{ url('visit/' . $person->id) }}" class="font-medium text-blue-600 text-lg hover:underline">View</a>
                         </td>
                         <td class="px-3 py-4">
-                            {{-- <a href="{{ url('departure/'.$person->id) }}" 
-                                class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">
-                                Sign Out
-                             </a> --}}
                             <a href="departure?visitor={{base64_encode($person->id)}}" class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">Sign Out</a>
                         </td>
                     </tr>
@@ -92,136 +159,11 @@
     {{ $visitor->links() }}
 </div> 
 
-   
-<div id="departed-table" class="sm:rounded-lg m-4">
-    <table class="w-full text-sm text-left text-gray-500">
-        <h2 class="font-bold p-4">completed Visits</h2>
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-            <tr>
-                <th scope="col" class="px-6 py-3">Name</th>
-                <th scope="col" class="px-6 py-3">Visiting</th>
-<th scope="col" class="px-6 py-3">Purpose</th>
-                {{-- <th scope="col" class="px-6 py-3">Time In</th> --}}
-                <th scope="col" class="px-6 py-3">Time Out</th>
-                <th class="px-6 py-6" scope="col"></th>
-            </tr>
-        </thead>
-        <tbody class="text-base">
-            @foreach ($departed as $person)
-                <tr class="odd:bg-white even:bg-gray-50 border-b">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $person['first_name'] }} {{ $person['last_name'] }}</th>
-                    <td class="px-6 py-4">{{ $person->visitee ? $person->visitee->first_name . ' ' . $person->visitee->last_name : 'N/A' }}</td>
-                    <td class="px-6 py-4 capitalize">
-                        @switch($person['purpose'])
-                            @case('personal')
-                                <span class="text-green-500 ">{{ $person['purpose'] }}</span>
-                                @break
-                            @case('interview')
-                                <span class="text-yellow-500">{{ $person['purpose'] }}</span>
-                                @break
-                            @case('official')
-                                <span class="text-red-600">{{ $person['purpose'] }}</span>
-                                @break
-                            @default
-                                <span class="text-blue-600">{{ $person['purpose'] }}</span>
-                        @endswitch
-                    </td>
-                    {{-- <td class="px-6 py-4">{{ $person?->created_at?->format('H:i') }}</td> --}}
-                    <td class="px-6 py-4">{{ date_format(date_create($person?->departed_at),'H:i') }}</td>
-                    <td class="px-6 py-4">
-                        <a href="{{ url('visit/' . $person->id) }}" class="font-medium text-blue-600 text-lg hover:underline">View</a>
-                    </td>
-                    <td class="px-3 py-4">
-                        {{-- <a href="{{ url('departure/'.$person->id) }}" 
-                            class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">
-                            Sign Out
-                         </a> --}}
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-<div class="px-6 py-4">
-{{ $visitor->links() }}
-</div> 
-</div>
 
     </div>
 
-    <div id="keys-table" class="w-full hidden sm:rounded-lg m-4">
-        <table class="w-full text-sm text-left text-gray-500">
-            <h2 class="font-bold p-4">Keys</h2>
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                <tr>
-                    <th scope="col" class="px-6 py-3">Key</th>
-                    <th scope="col" class="px-6 py-3">Picked By</th>
-                    <th scope="col" class="px-6 py-3">Time In</th>
-                    <th class="px-6 py-6" scope="col"></th>
-                </tr>
-            </thead>
-            <tbody class="text-base">
-                @foreach ($keys as $event)
-                    <tr class="odd:bg-white even:bg-gray-50 border-b">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $event->key?->key_name }}</th>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $event?->employee?->first_name}} {{ $event?->employee?->last_name }}</th>
-                        <td class="px-6 py-4">{{ $event->created_at->format('H:i')}}</td>
-                        <td class="px-6 py-4">
-                            <a href="#" class="font-medium text-blue-500 text-lg hover:underline">View</a>
-                        </td>
-                        <td class="px-3 py-4">
-                            <a href="{{ url('submit-key/'. $event->id) }}" class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">Submit Key</a>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+    @endif
 
-    </div> 
-    <div id="device-table" class="w-full hidden sm:rounded-lg m-4">
-        <table class="w-full text-sm text-left text-gray-500">
-            <div class="flex justify-between px-8 w-full m-auto">
-            <h2 class="font-bold">Devices</h2>
-
-                <a class="border p-4 rounded-lg" href='{{url('device-logs/create')}}'>Log Device</a>
-
-            </div>
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                <tr>
-                    <th scope="col" class="px-6 py-3">Serial Number</th>
-                    <th scope="col" class="px-6 py-3">Brand</th>
-                    <th scope="col" class="px-6 py-3">Staff</th>
-                    <th scope="col" class="px-6 py-3">Date</th>
-                    <th scope="col" class="px-6 py-3">Time</th>
-                    <th class="px-6 py-6" scope="col"></th>
-                </tr>
-            </thead>
-            <tbody class="text-base">
-                @foreach ($devices as $device)
-                <tr class="odd:bg-white even:bg-gray-50 border-b">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $device->serial_number }}</th>
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $device->device_brand }} </th>
-                    <td class="px-6 py-4 uppercase">
-                        {{ $device->employee?->first_name }} {{ $device->employee?->last_name }}
-                    </td>
-                    <td class="px-6 py-4">{{ $device->created_at?->format('d, M Y') }}</td>
-                    <td class="px-6 py-4">{{ $device->created_at?->format('H:i') }}</td>
-                    <td class="px-3 py-4">
-                        @if ($device->action === 'bringDevice')
-                            <button form="signOutForm" type="submit" class="signOutDeviceBtn font-medium text-blue-500 p-[5px] rounded-lg border border-blue-400"">Sign Out</button>
-                        @elseif ($device->action === 'takeDeviceHome')
-                            <button  form="signOutForm" href="#" class="font-medium text-green-500 p-[5px] rounded-lg border border-green-400">Return Device</button>
-                        @endif
-                    </td>
-                </tr>
-    <form action="{{ url('sign-out-device/'. $device->id) }}" id="signOutForm" method="post" class="hidden">
-        @csrf
-        @method('PATCH')
-
-    </form>
-                @endforeach
-            </tbody>
-        </table>
-    </div> 
 
 
 <script src="{{ asset('/js/index.js') }}"></script>
