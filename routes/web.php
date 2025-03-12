@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivitiesController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\EmployeeController;
@@ -174,6 +175,11 @@ Route::get('/', function () {
 
 
 
+                //Activity Logs
+                Route::controller(ActivitiesController::class)->group(function(){
+                        Route::get('logs','index')->middleware('module.permission:logs,view');
+                });
+
 
                 //access card
 
@@ -192,10 +198,6 @@ Route::get('/', function () {
                 Route::get('records', function () {
                 return view('records');
                 })->middleware('module.permission:reports,view,create,modify,delete');
-
-                // Route::get('settings', function () {
-                //     return view('settings.settings');
-                // });
 
 
                 Route::view('settings', 'settings.index')

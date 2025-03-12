@@ -2,6 +2,7 @@
 
     namespace App\Http\Controllers;
 
+    use App\Models\Activities;
     use App\Models\Device;
     use App\Models\Employee;
     use Carbon\Carbon;
@@ -16,7 +17,7 @@
 
         public function index(){
             return view('devices.index',[
-                'devices' => Device::get()
+                'devices' => Device::simplePaginate(15)
             ]);
         }
 
@@ -51,6 +52,11 @@
                     'action' => request('action'),
                     'logged_at' => Carbon::now(),
                 ]);
+
+                Activities::log(
+                    action: 'Logged Device'
+                );
+
                 return redirect('/')->with('success', 'Device logged successfully.');
                 // return redirect()->back()->with('success', 'Device logged successfully.');
             } catch (\Exception $e) {
@@ -74,10 +80,9 @@
                     'signed_out_at' => Carbon::now(),
                 ]);
             }
-            // $device->update([
-            //     'status' => $status,
-            //     'signed_out_at' => Carbon::now(),
-            // ]);
+            Activities::log(
+                action: 'Updated Device Log'
+            );
             return redirect()->back()->with('success', 'Device signed out successfully.');
         }
 

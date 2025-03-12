@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activities;
 use App\Models\Employee;
 use App\Models\Key;
 use Carbon\Carbon;
@@ -28,6 +29,10 @@ public function store(){
         'key_name'=>request('key_name'),
         // 'status'=>'available',
     ]);
+
+    Activities::log(
+        action: 'Created New Key'
+    );
 
     return redirect('/keys');
 }

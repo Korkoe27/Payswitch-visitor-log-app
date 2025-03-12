@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AccessCards;
+use App\Models\Activities;
 use App\Models\Employee;
 use App\Models\Visitor;
 use App\Models\VisitorAccessCard;
@@ -156,9 +157,9 @@ class VisitorController extends Controller
         ]);
 
     }
-
-
-        Log::debug("completed");
+        Activities::log(
+            action: 'Logged Visitor'
+        );
 
     return redirect('/')->with('success', 'Visitor record created successfully!');
 
@@ -225,7 +226,9 @@ class VisitorController extends Controller
                 'status' => 'departed'
             ]);
 
-
+            Activities::log(
+                action: ' Visitor Departed'
+            );
 
             return redirect('/')->with('success', 'Visitor record updated successfully!');
 

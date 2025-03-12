@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activities;
 use App\Models\VisitorAccessCard;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,7 @@ class VisitorAccessCardController extends Controller
     }
 
     public function index(){
-        $visitorAccessCards = VisitorAccessCard::all();
+        $visitorAccessCards = VisitorAccessCard::simplePaginate(15);
         return view('visitor_access_card.index',compact('visitorAccessCards'));
     }
 
@@ -32,6 +33,10 @@ class VisitorAccessCardController extends Controller
             'card_number' => request('card_number'),
             'status'=> 'available',
         ]);
+
+        Activities::log(
+            action: 'Created New Visitor Access Card.'
+        );
 
         return redirect('access-cards');
 

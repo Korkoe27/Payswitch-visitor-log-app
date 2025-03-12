@@ -5,9 +5,16 @@
     </x-slot:heading>
 
 
-    <div id="visitors-table" class="sm:rounded-lg m-4">
+    <div id="visitors-table" class="sm:rounded-lg p-5">
         <table class="w-full text-sm text-left text-gray-500">
-            <h2 class="font-bold p-4">Visitors</h2>
+
+            @if(\App\Models\User::hasPermission(auth()->id(), 'staff', 'create'))
+            <div class="flex justify-end">
+                <a href="{{ url('create-visit') }}" class="bg-red-600 text-white rounded-lg px-3 py-2">Log Visitor</a>
+            </div>
+
+            @endif
+            {{-- <h2 class="font-bold p-4">Visitors</h2> --}}
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
                     <th scope="col" class="px-6 py-3">Name</th>

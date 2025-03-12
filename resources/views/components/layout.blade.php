@@ -13,12 +13,12 @@
 <body class="flex w-full">
 
     <nav class="flex flex-col bg-[#0F51AE] h-screen lg:w-1/6">
-        <div class="lg:p-10 justify-center w-full border-b border-[#C8DFFF]">
+        <div class="lg:p-10 justify-center w-full border-b border-[#529AFF]">
             <img src="{{ asset('payswitch.png') }}" class="lg:w-2/3" alt="">
         </div>
 
-        <div class="flex lg:p-10 h-full flex-col">
-            <ul class="flex lg:gap-4 flex-col">
+        <div class="flex lg:p-10 h-full justify-between flex-col">
+            <ul class="flex flex-col">
                 <li class="">
                     <x-nav-link href="{{ url('/') }}" :active="request()->is('/')">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -31,7 +31,7 @@
                     </x-nav-link>
                 </li>
                 @if(\App\Models\User::hasPermission(auth()->id(), 'visits', 'view'))
-                <li class="text-[#529AFF] font-semibold text-lg">Tables</li>
+                <li class="text-[#529AFF] font-semibold pt-4 text-lg">Tables</li>
                 <li>
                 <x-nav-link href="{{ url('visits') }}" :active="request()->is('visits')">
                     <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg" class="size-6">
@@ -93,6 +93,20 @@
 
                 @endif
 
+                @if(\App\Models\User::hasPermission(auth()->id(), 'logs', 'view'))
+                <li class="">
+                    <x-nav-link href="{{ url('logs') }}" :active="request()->is('logs')">
+                        <svg width="20" stroke="currentColor" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 12H21M13 18H21M13 6H21M3 12H4M3 18H4M3 6H4M8 12H9M8 18H9M8 6H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            
+
+
+                        <span class="hidden lg:flex">Logs</span>
+                    </x-nav-link>
+                </li>
+                @endif
+
                 @if(\App\Models\User::hasPermission(auth()->id(), 'settings', 'view'))
 
                 <li class="">
@@ -113,27 +127,43 @@
 
 
             </ul>
-    <form action="{{ url('logout') }}" method="POST" class="">
+
+            <aside class="flex h-fit">
+
+            <div class="  flex items-center gap-2  rounded-lg userDiv cursor-pointer">
+                <svg width="18" height="18" viewBox="0 0 135 122" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M106.838 121.876C123.413 109.586 134.167 89.8065 134.167 67.5C134.167 30.2208 104.132 0 67.0833 0C30.0342 0 0 30.2208 0 67.5C0 89.7364 10.6859 109.462 27.1726 121.76C29.0585 101.422 46.1699 85.5 67 85.5C87.8697 85.5 105.007 101.483 106.838 121.876ZM90 53.5C90 66.2025 79.7025 76.5 67 76.5C54.2975 76.5 44 66.2025 44 53.5C44 40.7975 54.2975 30.5 67 30.5C79.7025 30.5 90 40.7975 90 53.5Z" fill="#C8DFFF"/>
+                    </svg>
+                    
+                    
+                <span class="text-2xl font-semibold hidden lg:flex text-[#C8DFFF]">{{ Auth::user()->name }}</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 18L15 12L9 6" stroke="#C8DFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    
+                    
+                    
+                    
+
+                </div>
+    <form action="{{ url('logout') }}" method="POST" class="hidden w-full logout-button">
             @csrf
-            <button class="w-full lg:py-3 bg-blue-500 text-white rounded-xl">
+            <button class="w-full  lg:p-3 bg-blue-500 flex items-center text-white rounded-xl">
+                <svg width="20" stroke="#C8DFFF" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9M16 17L21 12M21 12L16 7M21 12H9"  stroke="#C8DFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 Logout
             </button>
+            </aside>
+
         </form>
         </div>
     </nav>
 
     <main class="lg:w-5/6">
 
-            <header class="flex justify-between items-center w-full border-b border-[#C8DFFF] lg:p-10">
+            <header class="flex justify-start items-center w-full border-b border-[#C8DFFF] lg:p-10">
                 <h1 class=" text-[#0F51AE] lg:text-2xl lg:font-bold">{{ $heading }}</h1>
-
-                <div class="  flex items-center gap-4  rounded-lg">
-                    <span class="rounded-full bg-[#C8DFFF]  p-3"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                    </svg></span>
-                    <span class="text-2xl font-semibold hidden lg:flex text-[#0F51AE]">{{ Auth::user()->name }}</span>
-
-                    </div>
             </header>
 
         <section class="">
@@ -147,6 +177,15 @@
 
 
 
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const userDiv = document.querySelector('.userDiv');
+            const logoutButton = document.querySelector('.logout-button');
+        
+            userDiv.addEventListener('click', function() {
+                logoutButton.classList.toggle('hidden');
+            });
+        });
+        </script>
 
 

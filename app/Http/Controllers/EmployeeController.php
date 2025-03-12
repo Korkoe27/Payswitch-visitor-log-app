@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activities;
 use App\Models\Department;
 use App\Models\Employee;
 use Illuminate\Http\Request;
@@ -54,6 +55,10 @@ class EmployeeController extends Controller
                 'access_card_number' => request('access_card_number'),
                 'gender' => request('gender')
             ]);
+
+            Activities::log(
+                action: 'Created New Staff'
+            );
         
         
             

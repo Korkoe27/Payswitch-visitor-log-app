@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activities;
 use App\Models\Employee;
 use App\Models\Key;
 use App\Models\KeyEvent;
@@ -53,6 +54,10 @@ class KeyEventController extends Controller
                 'picked_at' => Carbon::now(),
                 'status' => 'picked'
             ]);
+
+            Activities::log(
+                action: 'Logged Key'
+            );
         
             return redirect('/');
         }
@@ -89,6 +94,10 @@ class KeyEventController extends Controller
                 'status'=>'returned',
                 'returned_at' =>Carbon::now()
             ]);
+
+            Activities::log(
+                action: 'Key Returned'
+            );
 
             
             return redirect('/');

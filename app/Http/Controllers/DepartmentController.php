@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activities;
 use App\Models\Department;
 use Illuminate\Http\Request;
 
@@ -36,6 +37,10 @@ class DepartmentController extends Controller
         Department::create([
             'name'=>request('name'),
         ]);
+
+        Activities::log(
+            action: 'Created New department.'
+        );
 
         return redirect('/departments');
     }

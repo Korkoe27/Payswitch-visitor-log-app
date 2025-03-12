@@ -7,14 +7,19 @@
 
 
 
-<div id="device-table" class="w-full sm:rounded-lg m-4">
+<div id="device-table" class="w-full flex sm:rounded-lg p-10 flex-col gap-5">
+    @if(\App\Models\User::hasPermission(auth()->id(), 'visits', 'create'))
+
+    <div class="flex justify-end ">
+        <a href="{{url('log')}}" class="flex bg-green-900 rounded-md items-center text-white py-2 px-3 gap-1"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+          </svg>
+          Log Device
+        </a>
+    </div>
+   
+    @endif
     <table class="w-full text-sm text-left text-gray-500">
-        <div class="flex justify-between px-8 w-full m-auto">
-        <h2 class="font-bold">Devices</h2>
-
-            <a class="border p-4 rounded-lg" href='{{url('log')}}'>Log Device</a>
-
-        </div>
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
                 <th scope="col" class="px-6 py-3">Serial Number</th>

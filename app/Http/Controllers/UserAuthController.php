@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activities;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -22,6 +23,10 @@ class UserAuthController extends Controller
         }
 
         request()->session()->regenerate();
+
+        Activities::log(
+            action: 'login'
+        );
 
         return redirect('/');
     }

@@ -5,8 +5,14 @@
     </x-slot:heading>
 
 
-    <table class="w-full text-sm text-left text-gray-500">
-        <h2 class="font-bold p-4">Keys</h2>
+    <main class="p-10 flex-col flex gap-4">
+            @if(\App\Models\User::hasPermission(auth()->id(), 'keys', 'view'))
+            <div class="flex justify-end">
+                <a href="{{ url('create-visit') }}" class="bg-red-600 text-white rounded-lg px-3 py-2">Log Key</a>
+            </div>
+
+            @endif
+        <table class="w-full text-sm text-left text-gray-500">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
                 <th scope="col" class="px-6 py-3">Key</th>
@@ -32,4 +38,6 @@
         </tbody>
     </table>
 
+    </main>
+    
 </x-layout>
