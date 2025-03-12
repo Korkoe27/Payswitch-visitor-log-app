@@ -8,7 +8,7 @@ use App\Models\Visitor;
 use App\Models\VisitorAccessCard;
 use Carbon\Carbon;
 use Exception;
-use Hamcrest\Arrays\IsArray;
+use OTPHP\TOTP;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Log;
 class VisitorController extends Controller
 {
 
+
+    
 
     public function index(){
 

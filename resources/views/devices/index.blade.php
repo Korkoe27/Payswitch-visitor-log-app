@@ -7,7 +7,7 @@
 
 
 
-<div id="device-table" class="w-full hidden sm:rounded-lg m-4">
+<div id="device-table" class="w-full sm:rounded-lg m-4">
     <table class="w-full text-sm text-left text-gray-500">
         <div class="flex justify-between px-8 w-full m-auto">
         <h2 class="font-bold">Devices</h2>

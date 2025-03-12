@@ -13,13 +13,12 @@
 <body class="flex w-full">
 
     <nav class="flex flex-col bg-[#0F51AE] h-screen lg:w-1/6">
-        <div class="flex flex-col lg:p-10 justify-center w-full lg:pb-10 border-b border-[#C8DFFF] items-center">
-            <img src="{{ asset('payswitch.png') }}" class="" alt="">
-            {{-- <span class="lg:text-2xl font-bold hidden lg:flex text-[#C8DFFF]">{{ Auth::user()->name }}</span> --}}
+        <div class="lg:p-10 justify-center w-full border-b border-[#C8DFFF]">
+            <img src="{{ asset('payswitch.png') }}" class="lg:w-2/3" alt="">
         </div>
 
         <div class="flex lg:p-10 h-full flex-col">
-            <ul class="flex lg:py-10 lg:gap-4 flex-col">
+            <ul class="flex lg:gap-4 flex-col">
                 <li class="">
                     <x-nav-link href="{{ url('/') }}" :active="request()->is('/')">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -56,7 +55,7 @@
                 </li>
 
                 <li class="">
-                    <x-nav-link href="{{ url('device-logs') }}" :active="request()->is('devices-logs')">
+                    <x-nav-link href="{{ url('device-logs') }}" :active="request()->is('device-logs')">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                             <path d="M18 8V6C18 5.46957 17.7893 4.96086 17.4142 4.58579C17.0391 4.21071 16.5304 4 16 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V13C2 13.5304 2.21071 14.0391 2.58579 14.4142C2.96086 14.7893 3.46957 15 4 15H12M10 19V15.04V18.19M7 19H12M18 12H20C21.1046 12 22 12.8954 22 14V20C22 21.1046 21.1046 22 20 22H18C16.8954 22 16 21.1046 16 20V14C16 12.8954 16.8954 12 18 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
