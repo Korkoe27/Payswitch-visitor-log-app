@@ -15,7 +15,7 @@ class KeyEventController extends Controller
 
 
     public function pickedKeys(){
-        $keys = KeyEvent::with(['key', 'employee'])->get();
+        $keys = KeyEvent::with(['key', 'employee'])->orderBy('status')->get();
 
 
         return view('keys.keys',compact('keys'));
@@ -34,7 +34,12 @@ class KeyEventController extends Controller
                 'key_number' => 'required',
             ]);
         
+
+            $pickedKey = Key::findOrFail(request('key_number'));
             $employee = Employee::findOrFail(request('picked_by'));
+
+            
+            $employeeName = $employee->first_name . ' ' . $employee->last_name;
 
             // dd('Hello there');
             // dd($employee);
@@ -56,7 +61,8 @@ class KeyEventController extends Controller
             ]);
 
             Activities::log(
-                action: 'Logged Key'
+                action: 'Logged Key',
+                description: $employeeName . ' ' . ' picked the ' . $pickedKey->key_name . ' key.'            
             );
         
             return redirect('/');
@@ -87,8 +93,14 @@ class KeyEventController extends Controller
                 'returned_by' => 'required|exists:employees,id',
             ]);
 
-            
+            $returnEmployee = Employee::findOrFail(request('returned_by'));
 
+            $employeeName = $returnEmployee->first_name . ' ' . $returnEmployee->last_name;
+
+
+            $key = Key::findOrFail($keyEvent->key_number);
+            
+// dd($key->key_name);
             $keyEvent->update([
                 'returned_by'   =>  request('returned_by'),
                 'status'=>'returned',
@@ -96,7 +108,8 @@ class KeyEventController extends Controller
             ]);
 
             Activities::log(
-                action: 'Key Returned'
+                action: 'Key Returned',
+                description: $employeeName . ' returned the ' . $key->key_name . ' key.'
             );
 
             

@@ -29,32 +29,39 @@
 
         public function store(Request $request) {
             try {
-                request()->validate([
+                $request->validate([
                     'serial_number' => 'required',
                     'device_brand' => 'required',
                     'employee_id' => 'required|exists:employees,id',
                     'action' => 'required',
                 ]);
+                // dd($request);
 
                 if(request('action')=='bringDevice'){
-                    $status = 'device_logged_in';
+                    $status = 'deviceLoggedIn';
                 }else{
-                    $status = 'picked';
+                    $status = 'takeHome';
                 }
         
                 $staff = Employee::findOrFail(request('employee_id'));
-        
+                $employeeName = $staff->first_name . ' ' . $staff->last_name;
+                try{
                 Device::create([
-                    'serial_number' => request('serial_number'),
-                    'status' => $status,
-                    'device_brand' => request('device_brand'),
+                    'device_brand' => $request->device_brand,
+                    'serial_number' => $request->serial_number,
                     'employee_id' => $staff->id,
-                    'action' => request('action'),
+                    'action' => $request->action,
+                    'status' => $status,
                     'logged_at' => Carbon::now(),
                 ]);
 
+                } catch(\Exception $e){
+                    Log::debug("Did not log device because: ". $e);
+                }
+                // Log::debug('Hello: ' );
                 Activities::log(
-                    action: 'Logged Device'
+                    action: 'Logged Device',
+                    description: $employeeName . ' logged their device!'
                 );
 
                 return redirect('/')->with('success', 'Device logged successfully.');
@@ -67,7 +74,7 @@
 
         public function signOutDevice(Device $device){
             // dd($device->status);
-            if($device->status == 'picked'){
+            if($device->status == 'takeHome'){
                 $status = 'returned';
                 $device->update([
                     'status' => $status,

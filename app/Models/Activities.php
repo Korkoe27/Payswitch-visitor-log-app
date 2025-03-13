@@ -17,10 +17,11 @@ class Activities extends Model
         return $this->belongsTo(User::class);
     }
 
-    public static function log($action){
+    public static function log($action, $description = null){
         return self::create([
             'user_id' => auth()->id(),
             'action'=>$action,
+            'description' => $description
         ]);
     }
 }

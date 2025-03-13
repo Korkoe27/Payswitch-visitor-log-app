@@ -12,6 +12,7 @@
                 <tr>
                     <th scope="col" class="px-6 py-3">User</th>
                     <th scope="col" class="px-6 py-3">Action</th>
+                    <th scope="col" class="px-6 py-3">Description</th>
                     <th scope="col" class="px-6 py-3">Date</th>
                     <th scope="col" class="px-6 py-3">Time</th>
                     {{-- <th scope="col" class="px-6 py-3">Time In</th> --}}
@@ -23,6 +24,7 @@
                     <tr class="odd:bg-white even:bg-gray-50 border-b">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $log->user->name }}</th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $log->action }} </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $log->description ?? 'N/A' }} </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $log->created_at?->format('Y/m/d') }} </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $log->created_at?->format('H:i') }} </th>
 
@@ -33,7 +35,9 @@
         
         
         </table>
-
+        <div class="px-6 py-4">
+            {{ $logs->links() }}
+        </div> 
 
     </main>
 

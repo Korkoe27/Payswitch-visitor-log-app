@@ -92,7 +92,6 @@ class VisitorController extends Controller
 
 
 
-
     $visitor = Visitor::create([
         'first_name' => $firstName,
         'last_name' => $lastName,
@@ -158,7 +157,8 @@ class VisitorController extends Controller
 
     }
         Activities::log(
-            action: 'Logged Visitor'
+            action: 'Logged Visitor',
+            description: $countVisitors . " person(s) logged."
         );
 
     return redirect('/')->with('success', 'Visitor record created successfully!');
@@ -227,7 +227,8 @@ class VisitorController extends Controller
             ]);
 
             Activities::log(
-                action: ' Visitor Departed'
+                action: ' Visitor Departed',
+                description: $visitor->first_name . ' ' . $visitor->last_name . ' departed.'
             );
 
             return redirect('/')->with('success', 'Visitor record updated successfully!');

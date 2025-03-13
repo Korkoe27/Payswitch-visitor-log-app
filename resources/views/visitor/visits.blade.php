@@ -10,7 +10,7 @@
 
             @if(\App\Models\User::hasPermission(auth()->id(), 'staff', 'create'))
             <div class="flex justify-end">
-                <a href="{{ url('create-visit') }}" class="bg-red-600 text-white rounded-lg px-3 py-2">Log Visitor</a>
+                <a href="{{ url('check-visitor') }}" class="bg-red-600 text-white rounded-lg px-3 py-2">Log Visitor</a>
             </div>
 
             @endif

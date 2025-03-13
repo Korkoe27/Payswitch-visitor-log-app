@@ -35,7 +35,8 @@ class VisitorAccessCardController extends Controller
         ]);
 
         Activities::log(
-            action: 'Created New Visitor Access Card.'
+            action: 'Created New Visitor Access Card.',
+            description: 'New Card with ID: ' . request('card_number')
         );
 
         return redirect('access-cards');

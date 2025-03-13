@@ -39,7 +39,8 @@ class DepartmentController extends Controller
         ]);
 
         Activities::log(
-            action: 'Created New department.'
+            action: 'Created New department.',
+            description: 'New department called ' . request('name')
         );
 
         return redirect('/departments');

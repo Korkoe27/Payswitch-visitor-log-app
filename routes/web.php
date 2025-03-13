@@ -44,8 +44,8 @@ Route::middleware('auth')->group(function(){
 Route::get('/', function () {
 
 
-        $devices = Device::where('status', 'picked')
-        ->orWhere('status', 'device_logged_in')
+        $devices = Device::where('status', 'takeHome')
+        ->orWhere('status', 'deviceLoggedIn')
         ->orWhere('created_at', Carbon::today())
         ->with('employee')
         ->simplePaginate(10);
@@ -138,6 +138,8 @@ Route::get('/', function () {
                         Route::get('create-key', [KeyController::class, 'create']);
 
                         Route::post('store-key', [KeyController::class, 'store']);
+
+                        Route::delete('/all_keys/{id}', [KeyController::class, 'destroy']);
 
                 })->middleware('module.permission:keys,view,create,modify,delete');
 

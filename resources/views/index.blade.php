@@ -57,7 +57,7 @@
                 </h1>
 
                 <div class="flex justify-between">
-                <a href="{{ url('create-visit') }}" class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4]">Log Visitor</a>
+                <a href="{{ url('check-visitor') }}" class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4]">Log Visitor</a>
                     <a href="{{ url('visits') }}" class="flex items-center text-green-700 font-bold text-xl">All visits
 
                         
@@ -106,7 +106,7 @@
                 <h1 class="lg:text-6xl font-bold">{{ $devices ? count($devices) : 0 }}</h1>
                 
                 <div class="flex justify-between">
-                    <a href="{{ url('device-logs') }}" class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4]">Log Device</a>
+                    <a href="{{ url('log') }}" class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4]">Log Device</a>
                     <a href="{{ url('logs') }}" class="flex items-center text-green-700 font-bold text-xl">Devices
 
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

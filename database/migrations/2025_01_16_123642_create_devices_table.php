@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string(column: 'serial_number');
             $table->foreignIdFor(Employee::class, 'employee_id')->constrained('employees');
             $table->string(column: 'action');
-            $table->enum('status',['returned','signed_out']);
+            $table->enum('status',['deviceLoggedIn','takeHome']);
             $table->timestamp('logged_at');
             $table->timestamp('signed_out_at')->nullable();
             $table->timestamp('returned_at')->nullable();

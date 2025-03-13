@@ -31,10 +31,11 @@ public function store(){
     ]);
 
     Activities::log(
-        action: 'Created New Key'
+        action: 'Created New Key',
+        description: 'New key with ID: ' . request('key_number')
     );
 
-    return redirect('/keys');
+    return redirect('/all_keys');
 }
 
 //show all keys
@@ -48,6 +49,14 @@ public function keys(){
 
 
 //delete a key
-
+    public function destroy($id){
+        try{
+            $key = Key::findOrFail($id);
+            $key->delete();
+            return response()->json(['success'=>true], 200);
+        }   catch(\Exception $e){
+            return response()->json(['error'=>'Failed to delete key'], 500);
+        }
+    }
 
 }
