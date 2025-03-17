@@ -119,20 +119,10 @@
                 </div>
             
 
-                {{-- <div class="">
-                    @foreach ($visitor->accessCard as $item)
-                        
-                    @endforeach
-                </div> --}}
-
 
 
             </div>
         </div>
-        {{-- <div class="p-4">
-            <h2 class="font-bold">Actions</h2>
-            <div class="flex gap-4">
-                <a href="{{ url('visit/' . $visitor->id . --}}
     </div>
 
 

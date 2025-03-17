@@ -29,7 +29,7 @@
                         <th scope="row" class="px-6 py-4 text-base  font-medium text-gray-900 whitespace-nowrap">{{ $key->key_number }}</th>
                         <th scope="row" class="px-6 py-4 text-base font-medium text-gray-900 whitespace-nowrap">{{ $key->key_name }} </th>
                         <td class="px-3 py-4">
-                            <button type="button" onclick="confirmDelete({{ $key->id }})" class="font-medium text-lg text-white p-3 rounded-lg bg-red-400">Delete Key</button>
+                            <button type="button" data-key-id="{{ $key->id }}" data-key-name="{{ $key->key_name }}" onclick="confirmDelete({{ $key->id}})" class=" delete-btn font-medium text-lg text-white p-3 rounded-lg bg-red-400">Delete Key</button>
                         </td>
                     </tr>
                 @endforeach
@@ -44,12 +44,21 @@
 
     <script>
 
-// const Swal = require('sweetalert2');
+        document.addEventListener("DOMContentLoaded", function(){
+            document.querySelectorAll(".delete-btn").forEach(button => {
+                button.addEventListener("click", function(){
+                    const keyId = this.getAttribute("data-key-id");
+                    const keyName = this.getAttribute("data-key-name");
+                    console.log(keyId, keyName);
+                    confirmDelete(keyId, keyName);
+                });
+            });
+        });
 
-        function confirmDelete(keyId){
+        function confirmDelete(keyId, keyName){
             Swal.fire({
                 title: "Delete Key?",
-                text: "Are you sure you want to delete this key?",
+                text: `Are you sure you want to delete the "${keyName}" key?`,
                 icon: "warning",
                 showCancelButton:true,
                 confirmButtonColor: "#d33",
@@ -59,24 +68,40 @@
             }).then((result)=>{
 
                 if(result.isConfirmed){
-                deleteKey(keyId);
-                }
-            });
-        }
-
-
-        function deleteKey(keyId){
-            axios.delete(`/all_keys/${keyId}`)
-            .then(response=>{
-                if(response.status === 200){
-                    Swal.fire("Deleted!","The key has been deleted.", "success");
-                    document.getElementById(`key-row-${keyId}`).remove();
+                deleteKey(keyId, keyName);
                 }
             })
-            .catch(error =>{
-                Swal.fire("Error!", "Somethig went wrong.", "error");
-            });
         }
+
+
+
+async function deleteKey(keyId, keyName) {
+    try {
+        const response = await axios.delete(`/all_keys/${keyId}`);
+        // console.log(JSON.stringify(response, null, 2));
+        // console.log(response.data.success);
+
+        if (response.data.success === true) {
+            await Swal.fire({
+                title: "Deleted!",
+                text: `The "${keyName}" key has been deleted.`,
+                icon: "success",
+                confirmButtonText: "OK"
+            });
+
+            // Redirect only after the user clicks "OK"
+            window.location.href = '/all_keys';
+        }
+    } catch (error) {
+        console.log(error);
+        let errorMessage = "Something went wrong.";
+        if (error.response && error.response.data && error.response.data.error) {
+            errorMessage = error.response.data.error;
+        }
+        await Swal.fire("Error!", errorMessage, "error");
+    }
+}
+
     </script>
 
 

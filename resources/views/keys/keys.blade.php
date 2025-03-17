@@ -27,30 +27,37 @@
         <tbody class="text-base">
             @foreach ($keys as $event)
                 <tr class="odd:bg-white even:bg-gray-50 border-b">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $event->key?->key_name }}</th>
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $event->key?->key_name ?? "Deleted" }}</th>
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $event?->employee?->first_name}} {{ $event?->employee?->last_name }}</th>
                     <td class="px-6 py-4 capitalize">
                     
-                    @switch($event->status)
+                    @switch($event?->status)
                         @case('picked')
-                            <span class="text-green-600">{{ $event->status }}</span>
+                            <span class="text-green-600">{{ $event?->status }}</span>
                             @break
                         @case('returned')
-                        <span class="text-red-600">{{ $event->status }}</span>
+                        <span class="text-red-600">{{ $event?->status }}</span>
                         @break
                     
                         @default
                             
                     @endswitch
                     </td>
-                    <td class="px-6 py-4">{{ $event->created_at}}</td>
+                    @php
+                    $employee = \App\Models\Employee::find($event->returned_by);
+                @endphp
+                    <td class="px-6 py-4">{{ $event?->created_at}}</td>
+                    <td class="px-6 py-4">{{ $employee ? $employee->first_name . " " . $employee->last_name : 'Not Submitted yet'}}</td>
                     <td class="px-6 py-4">
-                        {{ $event->returned_at }}
+                        {{ $event?->returned_at ?? "Not Submitted yet" }}
                     </td>
 
+                    @if ($event?->status === 'picked')
                     <td class="px-3 py-4">
-                        <a href="{{ url('submit-key/'. $event->id) }}" class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">Submit Key</a>
+                        <a href="{{ url('submit-key/'. $event?->id) }}"  class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">Submit Key</a>
                     </td>
+                    @endif
+
                 </tr>
             @endforeach
         </tbody>

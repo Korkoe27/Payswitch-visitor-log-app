@@ -6,7 +6,9 @@ use App\Models\Activities;
 use App\Models\Employee;
 use App\Models\Key;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class KeyController extends Controller
 {
@@ -49,14 +51,28 @@ public function keys(){
 
 
 //delete a key
-    public function destroy($id){
-        try{
-            $key = Key::findOrFail($id);
-            $key->delete();
-            return response()->json(['success'=>true], 200);
-        }   catch(\Exception $e){
-            return response()->json(['error'=>'Failed to delete key'], 500);
-        }
+public function destroy($id){
+    try {
+        $key = Key::findOrFail($id);
+        $key->delete();
+    Activities::log(
+        action: 'Deleted a key',
+        description: 'Deleted the ' . $key->key_name . 'key'
+    );
+
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Key deleted successfully'
+        ], 200);
+
+    } catch(\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'error' => 'Failed to delete key'
+        ], 500);
     }
+
+}
 
 }

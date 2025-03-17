@@ -93,7 +93,8 @@ class KeyEventController extends Controller
                 'returned_by' => 'required|exists:employees,id',
             ]);
 
-            $returnEmployee = Employee::findOrFail(request('returned_by'));
+            try{
+                            $returnEmployee = Employee::findOrFail(request('returned_by'));
 
             $employeeName = $returnEmployee->first_name . ' ' . $returnEmployee->last_name;
 
@@ -112,7 +113,19 @@ class KeyEventController extends Controller
                 description: $employeeName . ' returned the ' . $key->key_name . ' key.'
             );
 
+            return response()->json([
+                'success'=> true,
+                'message'=> "The key '{$key->key_name}' has been returned."
+            ]);
+            } catch(\Exception $e){
+                return response()->json([
+                    'success'=> false,
+                    'error'=>"Failed to return key. Please try again"
+                ], 500);
+            }
+
+
             
-            return redirect('/');
+            // return redirect('/');
         }
 }
