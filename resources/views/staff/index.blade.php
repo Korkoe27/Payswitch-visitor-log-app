@@ -7,29 +7,29 @@
     @if(\App\Models\User::hasPermission(auth()->id(), 'staff', 'create'))
 
 
-    <div class="flex justify-self-end md:px-6 ">
-        <a href="{{url('create-staff')}}" class="flex border border-black w-full rounded-md md:p-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+    <div class="flex justify-self-end p-10 ">
+        <a href="{{url('create-staff')}}" class="bg-gradient-to-b px-10 text-xl flex items-center rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4]"><svg xmlns="http://www.w3.org/2000/svg" fill="#fff" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff" class="size-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
           </svg>
           New Staff</a>
     </div>
   @endif
-    <div class=" overflow-x-auto shadow-md sm:rounded-lg m-4">
+    <div class=" overflow-x-auto sm:rounded-lg p-10">
         <table class="w-full text-sm text-left text-gray-500">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <thead class="text-xs text-black uppercase bg-gray-50">
                 <tr>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 lg:text-xl py-3">
                     Name
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 lg:text-xl py-3">
                         Dept
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 lg:text-xl py-3">
                         Role
                     </th>
 
-                    <th className="px-6 py-6" scope="col">
-
+                    <th className="px-6 py-6 lg:text-xl">
+                      Action
                     </th>
                 </tr>
             </thead>
@@ -37,17 +37,17 @@
                 @foreach ($employees as $staff)
                     <tr class="odd:bg-white even:bg-gray-50 border-b">
                         <!-- Full Name -->
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        <th scope="row" class="px-6 py-4 font-semibold text-gray-900 whitespace-nowrap">
                             {{ $staff?->first_name }} {{ $staff?->last_name }}
                         </th>
             
                         <!-- Department -->
-                        <td class="px-6 py-4 uppercase">
+                        <td class="px-6 py-4 text-black uppercase">
                             {{ $staff->department->name ?? 'N/A' }} <!-- Handle null department -->
                         </td>
             
                         <!-- Job Title -->
-                        <td class="px-6 py-4">
+                        <td class="px-6 text-black py-4">
                             {{ $staff->job_title }}
                         </td>
             
@@ -60,7 +60,7 @@
                                 View
                             </a>
                         </td>
-                        @if(\App\Models\User::hasPermission(auth()->id(), 'staff', 'create'))
+                        {{-- @if(\App\Models\User::hasPermission(auth()->id(), 'staff', 'create'))
                         <!-- Assign Role -->
                         <td class="px-3 py-4">
                             <a href="#" class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">
@@ -68,12 +68,12 @@
                             </a>
                         </td>
 
-                        @endif
+                        @endif --}}
                     </tr>
                 @endforeach
             </tbody>
         </table>
-        <div class="px-6 py-4">
+        <div class="px-6 py-4 text-blue-200">
             {{ $employees->links() }}
           </div>
 

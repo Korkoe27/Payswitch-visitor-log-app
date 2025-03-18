@@ -11,7 +11,7 @@
     @if(\App\Models\User::hasPermission(auth()->id(), 'visits', 'create'))
 
     <div class="flex justify-end ">
-        <a href="{{url('log')}}" class="flex bg-green-900 rounded-md items-center text-white py-2 px-3 gap-1"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <a href="{{url('log')}}" class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4] flex items-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
           </svg>
           Log Device
@@ -22,11 +22,11 @@
     <table class="w-full text-sm text-left text-gray-500">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
-                <th scope="col" class="px-6 py-3">Serial Number</th>
-                <th scope="col" class="px-6 py-3">Brand</th>
-                <th scope="col" class="px-6 py-3">Staff</th>
-                <th scope="col" class="px-6 py-3">Date</th>
-                <th scope="col" class="px-6 py-3">Time</th>
+                <th scope="col" class="px-6 lg:text-lg py-3">Serial Number</th>
+                <th scope="col" class="px-6 lg:text-lg py-3">Brand</th>
+                <th scope="col" class="px-6 lg:text-lg py-3">Staff</th>
+                <th scope="col" class="px-6 lg:text-lg py-3">Date</th>
+                <th scope="col" class="px-6 lg:text-lg py-3">Time</th>
                 <th class="px-6 py-6" scope="col"></th>
             </tr>
         </thead>
@@ -40,6 +40,9 @@
                 </td>
                 <td class="px-6 py-4">{{ $device->created_at?->format('d, M Y') }}</td>
                 <td class="px-6 py-4">{{ $device->created_at?->format('H:i') }}</td>
+
+                @if (!($device?->status === 'returned' || $device?->status === 'signed_out'))
+                    
                 <td class="px-3 py-4">
                     @if ($device->action === 'bringDevice')
                         <button form="signOutForm" type="submit" class="signOutDeviceBtn font-medium text-blue-500 p-[5px] rounded-lg border border-blue-400"">Sign Out</button>
@@ -47,6 +50,7 @@
                         <button  form="signOutForm" href="#" class="font-medium text-green-500 p-[5px] rounded-lg border border-green-400">Return Device</button>
                     @endif
                 </td>
+                @endif
             </tr>
 <form action="{{ url('sign-out-device/'. $device->id) }}" id="signOutForm" method="post" class="hidden">
     @csrf

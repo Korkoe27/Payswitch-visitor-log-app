@@ -57,17 +57,7 @@
 
                 </div>  
                 
-                {{-- <div class="flex gap-4">
-                    <div class="w-1/2">
-                        <label for="company" class="font-bold">Devices</label>
 
-                        @foreach(($visitor->devices) as $row)
-                            @foreach ($row as $device => $values)
-                            <p class="uppercase">{{$device}} {{ $values }}</p>
-                            @endforeach
-                        @endforeach
-                    </div>
-                </div> --}}
                 @if($visitor->devices && count($visitor->devices) > 0)
                 <div class="flex gap-4">
                     <div class="w-1/2">
@@ -80,7 +70,7 @@
                     </div>
                 </div>
             @endif
-                @if(!empty($visitor->companions))
+                @if(!empty($visitor->companions->values))
                 <div class="flex gap-4">
                     <div class="w-1/2">
                         <label for="company" class="font-bold">Companions</label>
@@ -95,14 +85,12 @@
 
             <div class="w-1/2">
                 <label for="company" class="font-bold">Access Cards</label>
-                @if(!empty($visitor?->access_cards) && is_array($visitor->access_cards))
-                    @foreach($visitor->access_cards as $cards)
-                        @foreach($cards as $card => $values)
-                            <p class="uppercase">{{ $values }}</p>
-                        @endforeach
+                @if($access_cards->isNotEmpty()) 
+                    @foreach($access_cards as $card)
+                        <p class="uppercase">{{ $card->card_number ?? "N/A" }}</p>
                     @endforeach
                 @else
-                    <p>No cards</p>
+                    <p>No cards assigned</p>
                 @endif
             </div>
                 <div class="flex gap-4">

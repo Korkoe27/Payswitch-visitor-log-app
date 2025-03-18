@@ -70,13 +70,6 @@ class KeyEventController extends Controller
         
 
 
-        // public function submitKey(KeyEvent $keyEvent){
-
-        //     $employees = Employee::get();
-
-        //     return view('keys.submit-key',compact('employees'),['key_events'=>$keyEvent]);
-        // }
-
 
         public function submitKey(KeyEvent $keyEvent){
             $employees = Employee::all();

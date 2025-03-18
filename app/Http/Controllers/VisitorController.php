@@ -24,9 +24,7 @@ class VisitorController extends Controller
 
 
         return view('visitor.visits',[
-            'visitor' => Visitor::where('status', 'ongoing')->simplePaginate(10),
-    
-            'departed' => Visitor::where('status', 'departed')->simplePaginate(5),
+            'visitor' => Visitor::orderBy('status')->simplePaginate(10),
 
         ]);
     }
@@ -170,13 +168,16 @@ class VisitorController extends Controller
     }
 
 
-    public function show(Visitor $visitor){
+    public function show(Visitor $visitor)
+    {
         $access_cards = DB::table('access_cards')
             ->where('visitor_id', $visitor->id)
             ->get();
-    return view('visitor.show', ['visitor' => $visitor])->with('access_cards', $access_cards);
-    }
 
+            // dd($access_cards);
+    
+        return view('visitor.show', compact('visitor', 'access_cards'));
+    }
 
 
     public function departure(Visitor $visitor){

@@ -5,7 +5,7 @@
     </x-slot:heading>
 
 
-    <section class="">
+    <section class="p-10">
         <form action="{{url('log-device')}}" class="w-1/4 felx flex-col space-y-10 lg:px-10" method="POST">
             @csrf
 

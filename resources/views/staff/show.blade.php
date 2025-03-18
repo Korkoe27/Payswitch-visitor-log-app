@@ -4,17 +4,17 @@
 
 
     <x-slot:heading>
-        {{ $employees->first_name   ?? 'N/A'}} {{ $employees?->other_name}} {{ $employees->last_name  ?? 'N/A'}}
+       Staff Details
     </x-slot:heading>
 
     <div
-    class="block overflow-hidden rounded-lg border w-1/4 border-gray-100 sm:p-6 lg:p-8"
+    class="block overflow-hidden rounded-lg border w-1/4 border-gray-100 lg:p-10"
   >
   
   
     <div class="sm:flex sm:justify-between sm:gap-10">
       <div>
-        <h3 class="text-lg font-bold text-gray-900 sm:text-xl">
+        <h3 class="text-lg font-bold text-gray-900 lg:text-3xl">
           {{ $employees->first_name   ?? 'N/A'}} {{ $employees?->other_name}} {{ $employees->last_name  ?? 'N/A'}}
         </h3>
   

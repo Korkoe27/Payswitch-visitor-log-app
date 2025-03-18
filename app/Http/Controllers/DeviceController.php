@@ -35,14 +35,15 @@
                     'employee_id' => 'required|exists:employees,id',
                     'action' => 'required',
                 ]);
-                // dd($request);
+                // dd($request->action);
 
-                if(request('action')=='bringDevice'){
+                if($request->action ==='bringDevice'){
                     $status = 'deviceLoggedIn';
                 }else{
                     $status = 'takeHome';
                 }
         
+                // dd($status);
                 $staff = Employee::findOrFail(request('employee_id'));
                 $employeeName = $staff->first_name . ' ' . $staff->last_name;
                 try{
@@ -81,7 +82,8 @@
                     'returned_at' => Carbon::now(),
                 ]);
             }else{
-                $status = 'signed_out';
+                $status = (string) 'signed_out';
+
                 $device->update([
                     'status' => $status,
                     'signed_out_at' => Carbon::now(),

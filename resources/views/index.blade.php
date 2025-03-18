@@ -17,23 +17,7 @@
     } else {
         $greeting = "Good Evening";
     }
-@endphp
-{{-- 
-    <dialog id="signOutDialog" class="absolute left-0 right-0 backdrop:bg-black/50 bottom-0 top-0 w-fit h-fit p-10">
-        <div class="bg-white/10 flex-col flex gap-4">
-            <h1 class="text-center">Sign Out Device</h1>
-            <form action="" class="flex-col flex gap-4 justify-between" method="POST">
-                @method('PATCH')
-                @csrf
-                <p class="">Are you sure you want to sign out this device?</p>
-                <div class="flex justify-between">
-                    <button type="button" id="cancelSignoutBtn" class="border border-red-300 text-red-500 rounded px-5 py-3">Cancel</button>
-                    <button type="submit" class="bg-blue-400 text-white rounded-lg px-5 py-3">Sign Out</button>
-                </div>
-            </form>
-        </div>
-        
-    </dialog> --}}    
+@endphp  
     <h1 class="flex items-center p-10 gap-3">
         <span class="lg:text-4xl">{{ $greeting }} </span>
        <span class="text-[#0F51AE] rounded-full bg-[#F2F8FF] px-2 p-1 font-semibold">{{ Auth::user()->name  }}</span> 
@@ -107,7 +91,7 @@
                 
                 <div class="flex justify-between">
                     <a href="{{ url('log') }}" class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4]">Log Device</a>
-                    <a href="{{ url('logs') }}" class="flex items-center text-green-700 font-bold text-xl">Devices
+                    <a href="{{ url('device-logs') }}" class="flex items-center text-green-700 font-bold text-xl">Devices
 
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M9 18L15 12L9 6" stroke="#15803D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -120,9 +104,9 @@
 
 
     
-    <div id="visitors-table" class="sm:rounded-lg m-4">
+    <div id="visitors-table" class="sm:rounded-lg p-10">
         <table class="w-full text-sm text-left text-gray-500">
-            <h2 class="font-bold p-4">Ongoing Visitors</h2>
+            <h2 class="font-bold p-4 lg:text-2xl">Ongoing Visits</h2>
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
                     <th scope="col" class="px-6 py-3">Name</th>
@@ -140,16 +124,16 @@
                         <td class="px-6 py-4 capitalize">
                             @switch($person['purpose'])
                                 @case('personal')
-                                    <span class="text-green-500 ">{{ $person['purpose'] }}</span>
+                                    <span class="text-green-700 bg-green-200 py-1 px-2 rounded-2xl">{{ $person['purpose'] }}</span>
                                     @break
                                 @case('interview')
-                                    <span class="text-yellow-500">{{ $person['purpose'] }}</span>
+                                    <span class="text-amber-600 bg-amber-100 py-1 px-2 rounded-2xl">{{ $person['purpose'] }}</span>
                                     @break
                                 @case('official')
-                                    <span class="text-red-600">{{ $person['purpose'] }}</span>
+                                    <span class="text-red-600 bg-red-100 rounded-2xl">{{ $person['purpose'] }}</span>
                                     @break
                                 @default
-                                    <span class="text-blue-600">{{ $person['purpose'] }}</span>
+                                    <span class="text-blue-600 bg-blue-100 rounded-2xl py-1 px-2">{{ $person['purpose'] }}</span>
                             @endswitch
                         </td>
                         <td class="px-6 py-4">{{ $person?->created_at?->format('H:i') }}</td>

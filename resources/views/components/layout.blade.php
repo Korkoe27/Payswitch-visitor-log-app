@@ -68,7 +68,7 @@
 
 
                 @endif
-                @if(\App\Models\User::hasPermission(auth()->id(), 'reports', 'view'))
+                @if(\App\Models\User::hasPermission(auth()->id(), 'staff', 'view'))
                 <li class="text-[#529AFF] font-semibold text-lg">Records</li>
                 <li class="">
                     <x-nav-link href="{{ url('staff') }}" :active="request()->is('staff')">
@@ -164,8 +164,13 @@
 
     <main class="lg:w-5/6">
 
-            <header class="flex justify-start items-center w-full border-b border-[#C8DFFF] lg:p-10">
+            <header class="flex justify-between items-center w-full border-b border-[#C8DFFF] lg:px-10 lg:py-5">
                 <h1 class=" text-[#0F51AE] lg:text-2xl lg:font-bold">{{ $heading }}</h1>
+
+                <div class="lg:text-2xl flex lg:w-fit p-3 text-[#0F51AE] rounded-3xl font-medium">
+                    <span class="lg:text-3xl lg:w-fit p-3 text-[#0F51AE] rounded-3xl font-semibold" id="clock"></span>
+                    <span class="lg:text-2xl lg:w-fit p-3 text-[#0F51AE] rounded-3xl font-medium" id="date"></span>
+                </div>
             </header>
 
         <section class="">
@@ -175,11 +180,35 @@
     </main>
 
 
-
-
-
-
     <script>
+function updateClock() {
+    const clockElement = document.getElementById('clock');
+    const dateElement = document.getElementById('date'); // Element for the date
+    const now = new Date();
+    
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    // Format the date
+    const options = { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' };
+    const formattedDate = now.toLocaleDateString('en-US', options); 
+
+    // Update clock
+    clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+
+    // Update date
+    dateElement.textContent = formattedDate;
+}
+
+// Update clock immediately
+updateClock();
+
+// Update clock every second
+setInterval(updateClock, 1000);
+
+
+
         document.addEventListener('DOMContentLoaded', function() {
             const userDiv = document.querySelector('.userDiv');
             const logoutButton = document.querySelector('.logout-button');

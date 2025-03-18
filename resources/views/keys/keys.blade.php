@@ -8,19 +8,19 @@
     <main class="p-10 flex-col flex gap-4">
             @if(\App\Models\User::hasPermission(auth()->id(), 'keys', 'view'))
             <div class="flex justify-end">
-                <a href="{{ url('pick-key') }}" class="bg-red-600 text-white rounded-lg px-3 py-2">Log Key</a>
+                <a href="{{ url('pick-key') }}" class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4]">Log Key</a>
             </div>
 
             @endif
         <table class="w-full text-sm text-left text-gray-500">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
-                <th scope="col" class="px-6 py-3">Key</th>
-                <th scope="col" class="px-6 py-3">Picked By</th>
-                <th scope="col" class="px-6 py-3">Status</th>
-                <th scope="col" class="px-6 py-3">Date/Time picked</th>
-                <th scope="col" class="px-6 py-3">Returned by</th>
-                <th scope="col" class="px-6 py-3">Date/Time returned</th>
+                <th scope="col" class="px-6 lg:text-lg py-3">Key</th>
+                <th scope="col" class="px-6 lg:text-lg py-3">Picked By</th>
+                <th scope="col" class="px-6 lg:text-lg py-3">Status</th>
+                <th scope="col" class="px-6 lg:text-lg py-3">Date/Time picked</th>
+                <th scope="col" class="px-6 lg:text-lg py-3">Returned by</th>
+                <th scope="col" class="px-6 lg:text-lg py-3">Date/Time returned</th>
                 <th class="px-6 py-6" scope="col"></th>
             </tr>
         </thead>

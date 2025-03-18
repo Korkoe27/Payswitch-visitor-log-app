@@ -22,7 +22,7 @@ class Visitor extends Model
     }
 
 public function accessCard():BelongsToMany{
-    return $this->belongsToMany(VisitorAccessCard::class, 'visitor_access_cards', 'visitor_id', 'card_id');
+    return $this->belongsToMany(VisitorAccessCard::class, 'access_cards', 'visitor_id', 'card_number');
 }
 
     protected $casts = [

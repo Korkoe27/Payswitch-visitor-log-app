@@ -5,7 +5,7 @@
     </x-slot:heading>
 
 
-    <aside class="">
+    <aside class="p-10">
         <form action="{{url('log-key')}}" class="w-full" method="POST">
 
             @csrf
