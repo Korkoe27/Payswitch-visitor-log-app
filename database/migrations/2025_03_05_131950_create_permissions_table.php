@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('role_id')->constrained('roles');
             $table->foreignId('module_id')->constrained()->onDelete('cascade');
             $table->boolean('can_view');
             $table->boolean('can_create');
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->timestamps();
 
 
-            $table->unique(['user_id', 'module_id']);
+            $table->unique(['role_id', 'module_id']);
         });
     }
 

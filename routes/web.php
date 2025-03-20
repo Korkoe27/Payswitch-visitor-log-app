@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivitiesController;
+use App\Http\Controllers\AssignUserController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\EmployeeController;
@@ -14,6 +15,7 @@ use App\Models\Visitor;
 use App\Models\KeyEvent;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Log;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,19 +45,24 @@ Route::middleware('auth')->group(function(){
         
 Route::get('/', function () {
 
-
+        
         $devices = Device::where('status', 'takeHome')
         ->orWhere('status', 'deviceLoggedIn')
         ->orWhere('created_at', Carbon::today())
         ->with('employee')
         ->simplePaginate(10);
-
+        
+        
+        
         $keys = KeyEvent::where('status', 'picked')
         ->with(['key', 'employee'])
         ->simplePaginate(10);
+
+        // $visitors = Visitor::where('status', 'ongoing')->simplePaginate(5);
         
+        // Log::debug( $visitors);
         return view('index',[
-        'visitor' => Visitor::where('status', 'ongoing')->simplePaginate(5),
+                'visitor' => Visitor::where('status', 'ongoing')->simplePaginate(5),
 
         'keys' => KeyEvent::with('employee')->where('status', 'picked')->simplePaginate(10),
         'all_keys' => Visitor::where('created_at', Carbon::today())->get(),
@@ -193,7 +200,18 @@ Route::get('/', function () {
                 Route::get('access-cards','index')->middleware('module.permission:reports,view');
                 });
 
+
                 
+                //user assignment
+
+
+                Route::controller(AssignUserController::class)->group(function(){
+                        Route::get('users','index');
+                        Route::get('create-user','create');
+                        Route::post('assign-user','store');
+                        Route::delete('revoke-access','destroy');
+
+                });
 
 
 

@@ -1,9 +1,7 @@
 <x-layout>
 
     <x-slot:heading>
-        Records
+        User Details
     </x-slot:heading>
 
-
-    <main class="">lkdsjcbdsjkbcnld</main>
 </x-layout>

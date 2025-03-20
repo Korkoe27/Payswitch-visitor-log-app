@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Module extends Model
 {
     protected $guarded = [];
+    protected $table = 'modules';
     use HasFactory;
 
-    public function users(){
-        return $this->belongsToMany(User::class,'permissions')->withPivot( 'view','create', 'modify', 'delete');
+    public function user_roles(){
+        return $this->belongsToMany(Roles::class,'permissions')->withPivot( 'view','create', 'modify', 'delete');
     }
     
 }

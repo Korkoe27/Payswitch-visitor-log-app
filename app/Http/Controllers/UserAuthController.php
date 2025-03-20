@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Activities;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class UserAuthController extends Controller
 {
     public function login(Request $request){
+
+        Log::debug($request->all());
         $attributes = request()->validate([
             'email'=>   ['required', 'email'],
             'password'=> ['required'],
@@ -18,7 +21,7 @@ class UserAuthController extends Controller
 
         if(!Auth::attempt($attributes)){
             throw ValidationException::withMessages([
-                'email'=>'Sorry this user does not exist. Contact Support for assistance'
+                'email'=>'Wrong credentials. Please try again'
             ]);
         }
 

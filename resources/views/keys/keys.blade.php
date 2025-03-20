@@ -6,7 +6,7 @@
 
 
     <main class="p-10 flex-col flex gap-4">
-            @if(\App\Models\User::hasPermission(auth()->id(), 'keys', 'view'))
+            @if(\App\Models\Roles::hasPermission(auth()->id(), 'keys', 'view'))
             <div class="flex justify-end">
                 <a href="{{ url('pick-key') }}" class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4]">Log Key</a>
             </div>

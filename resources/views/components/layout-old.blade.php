@@ -58,7 +58,7 @@
                             <nav class="fixed h-screen flex flex-col gap-10 lg:relative bg-white col-span-1 lg:min-w-64">
                             {{-- <nav class="hidden"> --}}
                                 <ul class="flex flex-col gap-4">
-                                    @if(\App\Models\User::hasPermission(auth()->id(), 'visits', 'view'))
+                                    @if(\App\Models\Roles::hasPermission(auth()->id(), 'visits', 'view'))
                                     <li class="">
                                         <x-nav-link href="{{ url('/') }}" :active="request()->is('/')">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -80,7 +80,7 @@
                                             <span class="hidden lg:flex">Staff</span>
                                         </x-nav-link>
                                     </li>
-                                    @if(\App\Models\User::hasPermission(auth()->id(), 'reports', 'view'))
+                                    @if(\App\Models\Roles::hasPermission(auth()->id(), 'reports', 'view'))
                                     <li class="">
                                         <x-nav-link href="{{ url('records') }}" :active="request()->is('records')">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -95,7 +95,7 @@
 
                                     @endif
 
-                                    @if(\App\Models\User::hasPermission(auth()->id(), 'settings', 'view'))
+                                    @if(\App\Models\Roles::hasPermission(auth()->id(), 'settings', 'view'))
 
                                     <li class="">
                                         <x-nav-link href="{{ url('settings') }}" :active="request()->is('settings')">

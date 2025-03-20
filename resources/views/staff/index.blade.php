@@ -4,7 +4,7 @@
         Staff
     </x-slot:heading>
 
-    @if(\App\Models\User::hasPermission(auth()->id(), 'staff', 'create'))
+    @if(\App\Models\Roles::hasPermission(auth()->id(), 'staff', 'create'))
 
 
     <div class="flex justify-self-end p-10 ">

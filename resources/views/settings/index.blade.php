@@ -28,5 +28,9 @@
             <label for="" class="">Create a New Staff</label>
         <a href="{{ url('create-staff') }}" class="px-5 py-2 bg-black text-white rounded-lg">New Staff</a>
         </div>
+        <div class="flex flex-col items-center w-fit gap-2">
+            <label for="" class="">Assign a New user</label>
+        <a href="{{ url('create-user') }}" class="px-5 py-2 bg-black text-white rounded-lg">New User</a>
+        </div>
     </main>
 </x-layout>

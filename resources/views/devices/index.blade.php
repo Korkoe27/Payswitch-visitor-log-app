@@ -8,7 +8,7 @@
 
 
 <div id="device-table" class="w-full flex sm:rounded-lg p-10 flex-col gap-5">
-    @if(\App\Models\User::hasPermission(auth()->id(), 'visits', 'create'))
+    @if(\App\Models\Roles::hasPermission(auth()->id(), 'visits', 'create'))
 
     <div class="flex justify-end ">
         <a href="{{url('log')}}" class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4] flex items-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">

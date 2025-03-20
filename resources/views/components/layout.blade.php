@@ -14,9 +14,13 @@
 
 <body class="flex w-full">
 
-    <nav class="flex flex-col bg-[#0F51AE] h-screen lg:w-1/6">
+
+
+
+    <nav class="flex flex-col bg-[#0F51AE] min-h-screen lg:w-1/6">
         <div class="lg:p-10 justify-center w-full border-b border-[#529AFF]">
             <img src="{{ asset('payswitch.png') }}" class="lg:w-2/3" alt="">
+            <img src="{{ asset('small-logo.png') }}" class="lg:hidden w-32" alt="">
         </div>
 
         <div class="flex lg:p-10 h-full justify-between flex-col">
@@ -32,8 +36,8 @@
                         <span class="hidden lg:flex">Dashboard</span>
                     </x-nav-link>
                 </li>
-                @if(\App\Models\User::hasPermission(auth()->id(), 'visits', 'view'))
-                <li class="text-[#529AFF] font-semibold pt-4 text-lg">Tables</li>
+                @if(\App\Models\Roles::hasPermission(auth()->id(), 'visits', 'view'))
+                <li ctrue   {{-- <li class="text-[#529AFF] font-semibold pt-4 text-lg">Tables</li> --}}
                 <li>
                 <x-nav-link href="{{ url('visits') }}" :active="request()->is('visits')">
                     <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg" class="size-6">
@@ -68,8 +72,8 @@
 
 
                 @endif
-                @if(\App\Models\User::hasPermission(auth()->id(), 'staff', 'view'))
-                <li class="text-[#529AFF] font-semibold text-lg">Records</li>
+                @if(\App\Models\Roles::hasPermission(auth()->id(), 'staff', 'view'))
+                <li class="text-[#529AFF] hidden lg:block font-semibold text-lg">Records</li>
                 <li class="">
                     <x-nav-link href="{{ url('staff') }}" :active="request()->is('staff')">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -80,7 +84,8 @@
                     </x-nav-link>
                 </li>
                 @endif
-                @if(\App\Models\User::hasPermission(auth()->id(), 'reports', 'view'))
+                {{-- @if(true) --}}
+                @if(\App\Models\Roles::hasPermission(auth()->id(), 'reports', 'view'))
                 <li class="">
                     <x-nav-link href="{{ url('records') }}" :active="request()->is('records')">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -95,7 +100,7 @@
 
                 @endif
 
-                @if(\App\Models\User::hasPermission(auth()->id(), 'logs', 'view'))
+                @if(\App\Models\Roles::hasPermission(auth()->id(), 'logs', 'view'))
                 <li class="">
                     <x-nav-link href="{{ url('logs') }}" :active="request()->is('logs')">
                         <svg width="20" stroke="currentColor" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -109,7 +114,7 @@
                 </li>
                 @endif
 
-                @if(\App\Models\User::hasPermission(auth()->id(), 'settings', 'view'))
+                @if(\App\Models\Roles::hasPermission(auth()->id(), 'settings', 'view'))
 
                 <li class="">
                     <x-nav-link href="{{ url('settings') }}" :active="request()->is('settings')">
@@ -162,9 +167,9 @@
         </div>
     </nav>
 
-    <main class="lg:w-5/6">
-
-            <header class="flex justify-between items-center w-full border-b border-[#C8DFFF] lg:px-10 lg:py-5">
+    <main class="lg:w-full  min-h-screen flex flex-col">
+        <!-- Top Section -->
+        <header class="flex justify-between items-center w-full border-b border-[#C8DFFF] lg:px-10 lg:py-5">
                 <h1 class=" text-[#0F51AE] lg:text-2xl lg:font-bold">{{ $heading }}</h1>
 
                 <div class="lg:text-2xl flex lg:w-fit p-3 text-[#0F51AE] rounded-3xl font-medium">
@@ -172,12 +177,18 @@
                     <span class="lg:text-2xl lg:w-fit p-3 text-[#0F51AE] rounded-3xl font-medium" id="date"></span>
                 </div>
             </header>
-
-        <section class="">
-        {{ $slot }}
-
-        </section>
+    
+        <!-- Text Section: Takes Remaining Space -->
+        <div class="flex-col  flex">
+            <div class="bg-white flex-col flex">
+              {{ $slot }}
+            </div>
+        </div>
     </main>
+    
+
+    
+   
 
 
     <script>
@@ -220,3 +231,5 @@ setInterval(updateClock, 1000);
         </script>
 
 
+</body>
+</html>

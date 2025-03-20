@@ -15,11 +15,20 @@
         //
 
 
-        public function index(){
-            return view('devices.index',[
-                'devices' => Device::simplePaginate(15)
+        public function index()
+        {
+            return view('devices.index', [
+                'devices' => Device::orderByRaw("
+                        CASE 
+                            WHEN status IN ('takeHome', 'deviceLoggedIn') THEN 0 
+                            ELSE 1 
+                        END
+                    ")
+                    ->orderBy('created_at', 'asc') // Maintain order by time
+                    ->simplePaginate(15)
             ]);
         }
+        
 
         public function create(){
             $employees = Employee::get();

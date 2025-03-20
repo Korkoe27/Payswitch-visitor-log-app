@@ -7,7 +7,7 @@
 
 
     <main class="p-5">
-        @if(\App\Models\User::hasPermission(auth()->id(), 'departments', 'create'))
+        @if(\App\Models\Roles::hasPermission(auth()->id(), 'departments', 'create'))
         <div class="flex justify-end">
             <a href="{{ url('create-department') }}" class="px-3 py-2 bg-red-500 rounded-lg text-white">Create Department</a>
         </div>
