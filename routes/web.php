@@ -7,12 +7,14 @@ use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\KeyController;
 use App\Http\Controllers\KeyEventController;
+use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\VisitorAccessCardController;
 use App\Http\Controllers\VisitorController;
 use App\Models\Device;
 use App\Models\Visitor;
 use App\Models\KeyEvent;
+use App\Models\Roles;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Log;
@@ -183,6 +185,14 @@ Route::get('/', function () {
 
 
 
+                //roles
+
+                Route::controller(RolesController::class)->group(function(){
+                        Route::get('roles','index')->middleware('module.permission:roles,view');
+                        Route::get('create-role','create')->middleware('module.permission:roles,create,modify,delete');
+                        Route::post('store-role','store')->middleware('module.permission:roles,create,modify,delete');
+                });
+
 
                 //Activity Logs
                 Route::controller(ActivitiesController::class)->group(function(){
@@ -206,10 +216,10 @@ Route::get('/', function () {
 
 
                 Route::controller(AssignUserController::class)->group(function(){
-                        Route::get('users','index');
-                        Route::get('create-user','create');
-                        Route::post('assign-user','store');
-                        Route::delete('revoke-access','destroy');
+                        Route::get('users','index')->middleware('module.permission:users,view');
+                        Route::get('create-user','create')->middleware('module.permission:users,create,modify,delete');
+                        Route::post('assign-user','store')->middleware('module.permission:users,create,modify,delete');
+                        Route::delete('revoke-access','destroy')->middleware('module.permission:users,create,modify,delete');
 
                 });
 

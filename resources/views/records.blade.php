@@ -5,5 +5,5 @@
     </x-slot:heading>
 
 
-    <main class="">lkdsjcbdsjkbcnld</main>
+    <main class=""></main>
 </x-layout>

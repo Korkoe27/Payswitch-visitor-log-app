@@ -1,118 +1,111 @@
 <x-layout>
-
     <x-slot:heading>
-        {{-- {{ $visitor->first_name  ?? 'New'}} {{ $visitor->last_name  ?? 'User'}} --}}
-
         Visit Details
     </x-slot:heading>
 
+    <div class="mx-5 mb-4 text-[#44546F] text-xs font-[700] bg-white border border-gray-200 rounded-lg">
+        <div class="border-b border-gray-200 rounded-t-lg bg-[#F1F1F1] p-3">
+            <h2 class="text-sm font-semibold text-[#172B4D]">Visitor Information</h2>
+        </div>
 
-    <div class="grid grid-cols-2">
-        <div class="p-4">
-            <div class="flex flex-col gap-4">
-                <div class="flex gap-4">
-                    <div class="w-1/2">
-                        <label for="first_name" class="font-bold">Visitor</label>
-                        <p>{{ $visitor->first_name }} {{ $visitor->last_name }}</p>
-                    </div>
-                    <div class="w-1/2">
-                        <label for="employee" class="font-bold">Visiting</label>
-                        <p>{{ $visitor->visitee->first_name }} {{ $visitor->visitee->last_name }}</p>
-                    </div>
-                </div>
-                <div class="flex gap-4">
-                    <div class="w-1/2">
-                        <label for="email" class="font-bold">Email</label>
-                        <p>{{ $visitor->email }}</p>
-                    </div>
-                    <div class="w-1/2">
-                        <label for="phone" class="font-bold">Phone</label>
-                        <p>{{ $visitor->phone_number }}</p>
-                    </div>
-                </div>
-                <div class="flex gap-4">
-                    <div class="w-1/2">
-                        <label for="company" class="font-bold">Company</label>
-                        <p>{{ $visitor->company_name }}</p>
-                    </div>
-                    <div class="w-1/2">
-                        <label for="purpose" class="font-bold">Purpose</label>
-                        <div class="capitalize">
-                            @switch($visitor['purpose'])
-                            @case('personal')
-                                <span class="text-green-500">{{ $visitor['purpose'] }}</span>
-                                @break
-                            @case('interview')
-                                <span class="text-yellow-500">{{ $visitor['purpose'] }}</span>
-                                @break
-                            @case('official')
-                                <span class="text-red-600">{{ $visitor['purpose'] }}</span>
-                                @break
-                            @default
-                                <span class="text-blue-600">{{ $visitor['purpose'] }}</span>
-                        @endswitch
-                        </div>
-                    </div>
-                    
-
-                </div>  
-                
-
-                @if($visitor->devices && count($visitor->devices) > 0)
-                <div class="flex gap-4">
-                    <div class="w-1/2">
-                        <label for="company" class="font-bold">Devices</label>
-                        @foreach(($visitor->devices) as $row)
-                            @foreach ($row as $device => $values)
-                                <p class="uppercase">{{$device}} {{ $values }}</p>
-                            @endforeach
-                        @endforeach
-                    </div>
-                </div>
-            @endif
-                @if(!empty($visitor->companions->values))
-                <div class="flex gap-4">
-                    <div class="w-1/2">
-                        <label for="company" class="font-bold">Companions</label>
-                        @foreach($visitor->companions as $row)
-                            @foreach($row as $companions => $values)
-                                <p class="uppercase"> {{ $values }}</p>
-                            @endforeach
-                        @endforeach
-                    </div>
-                </div>
-            @endif
-
-            <div class="w-1/2">
-                <label for="company" class="font-bold">Access Cards</label>
-                @if($access_cards->isNotEmpty()) 
-                    @foreach($access_cards as $card)
-                        <p class="uppercase">{{ $card->card_number ?? "N/A" }}</p>
-                    @endforeach
-                @else
-                    <p>No cards assigned</p>
-                @endif
-            </div>
-                <div class="flex gap-4">
-                    <div class="w-1/2">
-                        <label for="time_in" class="font-bold">Time In</label>
-                        <p>{{ $visitor->created_at->format('H:i') }}</p>
-                    </div>
-                </div>
-                <div class="flex gap-4">
-                    <div class="w-1/2">
-                        <label for="time_in" class="font-bold">Departed At</label>
-                        <p class="text-xl text-green-900">{{ $visitor->departed_at ? $visitor->departed_at->format('H:i') : 'Visit Ongoing' }}</p>
-                    </div>
-                </div>
-            
-
-
-
-            </div>
+        <div class="flex justify-between border-b border-gray-100 p-3">
+            <span class="text-[#848A9C] font-medium">Visitor:</span>
+            <span class="font-bold">{{ $visitor->first_name }} {{ $visitor->last_name }}</span>
+        </div>
+        <div class="flex justify-between border-b border-gray-100 p-3">
+            <span class="text-[#848A9C] font-medium">Email:</span>
+            <span class="">{{ $visitor->email }}</span>
+        </div>
+        <div class="flex justify-between border-b border-gray-100 p-3">
+            <span class="text-[#848A9C] font-medium">Phone:</span>
+            <span class="">{{ $visitor->phone_number }}</span>
+        </div>
+        <div class="flex justify-between border-b border-gray-100 p-3">
+            <span class="text-[#848A9C] font-medium">Visitee:</span>
+            <span class="">{{ $visitor->visitee->first_name }} {{ $visitor->visitee->last_name }}</span>
+        </div>
+        <div class="flex justify-between p-3">
+            <span class="text-[#848A9C] font-medium">Company:</span>
+            <span class="">{{ $visitor->company_name }}</span>
         </div>
     </div>
 
+    <div class="mx-5 mb-4 text-[#44546F] text-xs font-[700] bg-white border border-gray-200 rounded-lg">
+        <div class="border-b border-gray-200 rounded-t-lg bg-[#F1F1F1] p-3">
+            <h2 class="text-sm font-semibold text-[#172B4D]">Visit Details</h2>
+        </div>
 
+        <div class="flex justify-between border-b border-gray-100 p-3">
+            <span class="text-[#848A9C] font-medium">Purpose:</span>
+            <span class="font-bold capitalize 
+                @if($visitor->purpose == 'personal') text-green-500 bg-green-50 
+                @elseif($visitor->purpose == 'interview') text-amber-500 bg-amber-50 
+                @elseif($visitor->purpose == 'official') text-red-500 bg-red-100 
+                @else text-blue-500 bg-blue-100 
+                @endif px-3 py-1 rounded-full">
+                {{ $visitor->purpose }}
+            </span>
+        </div>
+        <div class="flex justify-between border-b border-gray-100 p-3">
+            <span class="text-[#848A9C] font-medium">Date/Time In:</span>
+            <span class="font-bold">{{ $visitor->created_at->format('D, d F Y H:i') }}</span>
+        </div>
+        <div class="flex justify-between p-3">
+            <span class="text-[#848A9C] font-medium">Departed:</span>
+            <span class="font-bold">
+                {{ $visitor->departed_at ? $visitor->departed_at->format('D, d F Y H:i') : 'Visit ongoing' }}
+            </span>
+        </div>
+    </div>
 
+    <div class="mx-5 mb-4 text-[#44546F] text-xs font-[700] bg-white border border-gray-200 rounded-lg">
+        <div class="border-b border-gray-200 rounded-t-lg bg-[#F1F1F1] p-3">
+            <h2 class="text-sm font-semibold text-[#172B4D]">Devices</h2>
+        </div>
+
+        @if(!empty($visitor->devices))
+            @foreach($visitor->devices as $device)
+                <div class="flex justify-between border-b border-gray-100 p-3">
+                    <span class="text-[#848A9C] font-medium">{{ $device['name'] }}:</span>
+                    <span class="font-bold">{{ $device['serial'] }}</span>
+                </div>
+            @endforeach
+        @else
+            <div class="p-3 text-gray-500">Did not bring any device.</div>
+        @endif
+    </div>
+
+    <div class="mx-5 mb-4 text-[#44546F] text-xs font-[700] bg-white border border-gray-200 rounded-lg">
+        <div class="border-b border-gray-200 rounded-t-lg bg-[#F1F1F1] p-3">
+            <h2 class="text-sm font-semibold text-[#172B4D]">Companions</h2>
+        </div>
+
+        @if(!empty($visitor->companions))
+            @foreach($visitor->companions as $companion)
+                <div class="flex justify-between border-b border-gray-100 p-3">
+                    <span class="text-[#848A9C] font-medium">Name:</span>
+                    <span class="font-bold uppercase">{{ $companion['name'] }}</span>
+                </div>
+            @endforeach
+        @else
+            <div class="p-3 text-gray-500">No companions.</div>
+        @endif
+    </div>
+
+    <div class="mx-5 mb-4 text-[#44546F] text-xs font-[700] bg-white border border-gray-200 rounded-lg">
+        <div class="border-b border-gray-200 rounded-t-lg bg-[#F1F1F1] p-3">
+            <h2 class="text-sm font-semibold text-[#172B4D]">Access Cards</h2>
+        </div>
+
+        @if(count($access_cards) > 0)
+            @foreach($access_cards as $card)
+                <div class="flex justify-between border-b border-gray-100 p-3">
+                    <span class="text-[#848A9C] font-medium">Card Number:</span>
+                    <span class="font-bold">{{ $card->card_number }}</span>
+                </div>
+            @endforeach
+        @else
+            <div class="p-3 text-gray-500">No cards assigned.</div>
+        @endif
+    </div>
 </x-layout>

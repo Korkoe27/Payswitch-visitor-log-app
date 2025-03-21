@@ -24,7 +24,7 @@
 
                    
                    <select class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-1/2" name="role" required >
-                         <option value="" selected disabled class="">Choose is their role?</option>
+                         <option value="" selected disabled class="">Choose their role?</option>
                      @foreach ($roles as $role)
                       <option value="{{$role->id}}" class="">{{$role->name}}</option>
                      @endforeach

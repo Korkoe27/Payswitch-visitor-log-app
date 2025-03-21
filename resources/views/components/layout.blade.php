@@ -172,9 +172,9 @@
         <header class="flex justify-between items-center w-full border-b border-[#C8DFFF] lg:px-10 lg:py-5">
                 <h1 class=" text-[#0F51AE] lg:text-2xl lg:font-bold">{{ $heading }}</h1>
 
-                <div class="lg:text-2xl flex lg:w-fit p-3 text-[#0F51AE] rounded-3xl font-medium">
-                    <span class="lg:text-3xl lg:w-fit p-3 text-[#0F51AE] rounded-3xl font-semibold" id="clock"></span>
+                <div class="lg:text-2xl flex items-center lg:w-fit p-3 text-[#0F51AE] rounded-3xl font-medium">
                     <span class="lg:text-2xl lg:w-fit p-3 text-[#0F51AE] rounded-3xl font-medium" id="date"></span>
+                    <span class="lg:text-3xl lg:w-fit p-3 text-[#0F51AE] rounded-3xl font-semibold" id="clock"></span>
                 </div>
             </header>
     

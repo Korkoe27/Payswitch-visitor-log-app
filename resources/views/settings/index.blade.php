@@ -30,7 +30,7 @@
         </div>
         <div class="flex flex-col items-center w-fit gap-2">
             <label for="" class="">Assign a New user</label>
-        <a href="{{ url('create-user') }}" class="px-5 py-2 bg-black text-white rounded-lg">New User</a>
+        <a href="{{ url('create-user') }}" class="bg-gradient-to-b px-5 w-fit text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4] flex items-center">New User</a>
         </div>
     </main>
 </x-layout>
