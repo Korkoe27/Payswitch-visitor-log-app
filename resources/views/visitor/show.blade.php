@@ -3,9 +3,9 @@
         Visit Details
     </x-slot:heading>
 
-    <div class="mx-5 mb-4 text-[#44546F] text-xs font-[700] bg-white border border-gray-200 rounded-lg">
+    <div class="p-10 w-1/2 text-[#44546F] text-xl font-bold bg-white rounded-lg">
         <div class="border-b border-gray-200 rounded-t-lg bg-[#F1F1F1] p-3">
-            <h2 class="text-sm font-semibold text-[#172B4D]">Visitor Information</h2>
+            <h2 class="lg:text-2xl text-xl font-semibold text-[#172B4D]">Visitor Information</h2>
         </div>
 
         <div class="flex justify-between border-b border-gray-100 p-3">
@@ -30,9 +30,9 @@
         </div>
     </div>
 
-    <div class="mx-5 mb-4 text-[#44546F] text-xs font-[700] bg-white border border-gray-200 rounded-lg">
+    <div class="p-10 w-1/2 text-[#44546F] text-xl font-bold bg-white rounded-lg">
         <div class="border-b border-gray-200 rounded-t-lg bg-[#F1F1F1] p-3">
-            <h2 class="text-sm font-semibold text-[#172B4D]">Visit Details</h2>
+            <h2 class="lg:text-2xl text-xl font-semibold text-[#172B4D]">Visit Details</h2>
         </div>
 
         <div class="flex justify-between border-b border-gray-100 p-3">
@@ -58,43 +58,56 @@
         </div>
     </div>
 
-    <div class="mx-5 mb-4 text-[#44546F] text-xs font-[700] bg-white border border-gray-200 rounded-lg">
+    <div class="p-10 w-1/2 text-[#44546F] text-xl font-bold bg-white rounded-lg">
         <div class="border-b border-gray-200 rounded-t-lg bg-[#F1F1F1] p-3">
-            <h2 class="text-sm font-semibold text-[#172B4D]">Devices</h2>
+            <h2 class="lg:text-2xl text-xl font-semibold text-[#172B4D]">Devices</h2>
         </div>
 
-        @if(!empty($visitor->devices))
-            @foreach($visitor->devices as $device)
-                <div class="flex justify-between border-b border-gray-100 p-3">
-                    <span class="text-[#848A9C] font-medium">{{ $device['name'] }}:</span>
-                    <span class="font-bold">{{ $device['serial'] }}</span>
-                </div>
-            @endforeach
-        @else
-            <div class="p-3 text-gray-500">Did not bring any device.</div>
-        @endif
+        @if (!empty($visitor->devices))
+        @foreach ($visitor->devices as $device)
+            @php $device = (object) $device; @endphp
+            <div class="flex justify-between border-b border-gray-100 p-3">
+                <span class="text-[#848A9C] font-medium">{{ $device->name }}:</span>
+                @if (empty($device->serial))
+            <div class="p-3 text-red-500">Did not bring any device.</div>
+                @else
+                <span class="font-bold">{{ $device->serial }}</span>
+                @endif
+            </div>
+        @endforeach
+    @else
+    @endif
+    
     </div>
 
-    <div class="mx-5 mb-4 text-[#44546F] text-xs font-[700] bg-white border border-gray-200 rounded-lg">
+    <div class="p-10 w-1/2 text-[#44546F] text-xl font-bold bg-white rounded-lg">
         <div class="border-b border-gray-200 rounded-t-lg bg-[#F1F1F1] p-3">
-            <h2 class="text-sm font-semibold text-[#172B4D]">Companions</h2>
+            <h2 class="lg:text-2xl text-xl font-semibold text-[#172B4D]">Companions</h2>
         </div>
 
-        @if(!empty($visitor->companions))
-            @foreach($visitor->companions as $companion)
-                <div class="flex justify-between border-b border-gray-100 p-3">
-                    <span class="text-[#848A9C] font-medium">Name:</span>
-                    <span class="font-bold uppercase">{{ $companion['name'] }}</span>
-                </div>
-            @endforeach
-        @else
-            <div class="p-3 text-gray-500">No companions.</div>
-        @endif
+        @if (!empty($visitor->companions))
+        @foreach ($visitor->companions as $companion)
+            @php $companion = (object) $companion; @endphp
+            <div class="flex justify-between border-b border-gray-100 p-3">
+                <span class="text-[#848A9C] font-medium">Name:</span>
+    
+                @if (empty($companion->name))
+                    <span class="text-red-500">Came alone</span>
+                @else
+                    <span class="font-bold uppercase">{{ $companion->name }}</span>
+                @endif
+            </div>
+        @endforeach
+    @else
+        <div class="p-3 text-gray-500">No companions.</div>
+    @endif
+    
+    
     </div>
 
-    <div class="mx-5 mb-4 text-[#44546F] text-xs font-[700] bg-white border border-gray-200 rounded-lg">
+    <div class="p-10 w-1/2 text-[#44546F] text-xl font-bold bg-white rounded-lg">
         <div class="border-b border-gray-200 rounded-t-lg bg-[#F1F1F1] p-3">
-            <h2 class="text-sm font-semibold text-[#172B4D]">Access Cards</h2>
+            <h2 class="lg:text-2xl text-xl font-semibold text-[#172B4D]">Access Cards</h2>
         </div>
 
         @if(count($access_cards) > 0)

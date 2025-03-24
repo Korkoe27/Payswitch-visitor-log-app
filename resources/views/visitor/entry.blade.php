@@ -9,7 +9,7 @@
 <div class="h-full px-10 overflow-y-auto w-full">
    <!-- Simplicity is the ultimate sophistication. - Leonardo da Vinci -->
 
-   @if (session('error'))
+   {{-- @if (session('error'))
    <script>
        document.addEventListener("DOMContentLoaded", function () {
            Swal.fire({
@@ -21,7 +21,7 @@
            });
        });
    </script>
-@endif 
+@endif  --}}
 
 
            <div class="w-full  md:w-1/2 lg:w-1/3">

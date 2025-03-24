@@ -9,15 +9,23 @@ use App\Models\Visitor;
 use App\Models\VisitorAccessCard;
 use Carbon\Carbon;
 use Exception;
-use OTPHP\TOTP;
+// use App\Services\OtpService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+
+use Illuminate\Support\Facades\Http;
 
 class VisitorController extends Controller
 {
 
 
+    // private $otpService;
+
+    // public function __construct(OtpService $otpService)
+    // {
+    //     $this->otpService = $otpService;
+    // }
     
 
     public function index(){
@@ -174,7 +182,6 @@ class VisitorController extends Controller
             ->where('visitor_id', $visitor->id)
             ->get();
 
-            // dd($access_cards);
     
         return view('visitor.show', compact('visitor', 'access_cards'));
     }
@@ -242,25 +249,88 @@ class VisitorController extends Controller
             }
 
 
+            public function oldVisitorSignIn($visitor){
+                $visitor =Visitor::findOrFail($visitor);
+                $employees = Employee::get();
+                return view('visitor.old-visitor-sign-in',compact('visitor','employees'));
+            }
+
+
             public function oldVisitor(Request $request)
             {
-                // Validate the request
                 $request->validate([
                     'phone_number' => 'required'
                 ]);
             
-                // Fetch visitor
                 $visitor = Visitor::where('phone_number', $request->phone_number)->first();
-
             
-                if ($visitor) {
-                    $employees = Employee::get();
-                    return view('visitor.old-visitor-sign-in',compact('visitor','employees'));
-                    // return redirect('old-visitor')->with('visitor', $visitor);
-                } else {
-                    return redirect('create-visit')->with('error', 'First Time Visiting? Please Sign up.');
 
+                $headers = [
+                    'Content-Type: application/json',
+                    'Authorization: Basic '  . base64_encode('Testfa5348423c6b6533e0b04a7ed496d29f:975kp*4ZuLAE0%$R@Xeot^3#')
+                ];
+
+
+                $authkey = base64_encode('Testfa5348423c6b6533e0b04a7ed496d29f:975kp*4ZuLAE0%$R@Xeot^3#');
+                
+                if ($visitor) {
+                    try {
+                        Log::debug("Auth Key: ". $authkey);
+                        $response = Http::withHeaders($headers)->post('https://smpp.theteller.net/send/single', [
+                            "phonenumber" => "233558731186",
+                            "sender"=>"Payswitch",
+                            "message"=>"Your OTP is here"
+                        ]);
+                        Log::debug("Response: ". $response->data());
+                        if ($response->successful()) {
+                            session(['otp_key' => $response['key'], 'phonenumber' => $request->phone_number]);
+                            return response()->json(['success' => true, 'message' => 'OTP sent successfully.']);
+                        }
+                    } catch (Exception $e) {
+                        Log::error('OTP sending failed: ' . $e->getMessage());
+                        return response()->json(['success' => false, 'message' => 'Failed to send OTP.']);
+                    }
                 }
+            
+                return response()->json([
+                    'success' => false,
+                    'redirect' => url('create-visit'),
+                    'message' => 'First time visiting? Please sign up.'
+                ]);
+            }
+        
+            public function verifyOtp(Request $request)
+            {
+                $request->validate(['otp' => 'required']);
+            
+                $phone_number = session('phone_number');
+                $otpKey = session('otp_key');
+            
+                if (!$phone_number || !$otpKey) {
+                    return response()->json(['success' => false, 'message' => 'Session expired. Try again.'], 400);
+                }
+            
+                try {
+                    $response = Http::post('https://smpp.theteller.net/pin/verify', [
+                        'phone_number' => $phone_number,
+                        'otp' => $request->otp,
+                        'key' => $otpKey
+                    ]);
+            
+                    if ($response->successful()) {
+                        session()->forget(['otp_key', 'phone_number']);
+                        $visitor = Visitor::where('phone_number', $phone_number)->first();
+                        return response()->json([
+                            'success' => true,
+                            'redirect' => route('old-visitor', $visitor->id),
+                            'message' => 'OTP verified successfully!'
+                        ]);
+                    }
+                } catch (Exception $e) {
+                    Log::error('OTP verification failed: ' . $e->getMessage());
+                }
+            
+                return response()->json(['success' => false, 'message' => 'Invalid OTP. Please try again.'], 400);
             }
             
 

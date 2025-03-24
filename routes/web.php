@@ -101,19 +101,22 @@ Route::get('/', function () {
 
                         Route::get('visits', 'index');
                         
-                        Route::post('visit', 'store');
-
+                        Route::get('departure',  'departure');
+                        
                         Route::get('create-visit',  'create');
-
-                        // Route::get('old-visitor',  'oldVisitorSignIn')->name('old-visitor');
-
+                        
+                        Route::get('old-visitor',  'oldVisitorSignIn')->name('old-visitor');
+                        
                         Route::get('check-visitor',  'checkVisitor');
-
-                        Route::post('find-visitor','oldVisitor');
-
+                        
+                        
                         Route::get('visit/{visitor}',  'show');
 
-                        Route::get('departure',  'departure');
+                        Route::post('verify-otp', 'verifyOtp')->name('verify-otp');
+
+                        Route::post('find-visitor','oldVisitor')->name('find-visitor');
+                        
+                        Route::post('visit', 'store');
 
 
                         Route::patch('exit', 'exit');

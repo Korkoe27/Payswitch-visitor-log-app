@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Services;
+
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Config;
+
+
+class OtpService{
+    private $baseUrl;
+    private $authHeader;
+
+
+
+    public function __construct(){
+        $this->baseUrl = Config::get('otp.base_url');
+        $this->authHeader = Config::get('otp.auth_header');
+
+    }
+
+
+    public function sendOtp($phone_number){
+        $response = Http::withHeaders([
+            'Authorization' => $this->authHeader,
+            'Content-Type' => 'appliaction/json',
+        ])->post("{$this->baseUrl}/pin",[
+            'phone_number'=>$phone_number,
+        ]);
+        return $response->json();
+    }
+
+    public function verifyOtp($phone_number, $key, $code){
+        $response = Http::withHeaders([
+            'Authorization' => $this->authHeader,
+            'Content-Type' => 'appliaction/json',
+        ])->post("{$this->baseUrl}/pin/verify",[
+            'phone_number'=>$phone_number,
+            'key'=>$key,
+            'code'=>$code
+        ]);
+
+        return $response->json();
+    }
+}

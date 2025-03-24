@@ -8,14 +8,6 @@
         <form action="{{ url('visit') }}" class="flex-col flex gap-10" method="post">
 
             @csrf
-        {{-- <div class="flex flex-col">
-            <div class="">
-                <h4>{{ $visitor->first_name }}  {{ $visitor->last_name }}</h4>
-                <h4 class="">{{ $visitor->company_name }}</h4>  
-                <h4 class="">{{ $visitor->email }}</h4>
-                <h4 class="">{{ $visitor->phone_number }}</h4>
-            </div>
-      </div> --}}
 
       
 

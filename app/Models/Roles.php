@@ -42,9 +42,9 @@ class Roles extends Model
         ->where('name','=',$moduleName)
         ->get();
 
-        Log::debug("Module: " . $moduleName);
-        Log::debug($check);
-        Log::debug($permissionColumn);
+        // Log::debug("Module: " . $moduleName);
+        // Log::debug($check);
+        // Log::debug($permissionColumn);
       return ($check->value($permissionColumn) == 1) ?true: false;
 
         
