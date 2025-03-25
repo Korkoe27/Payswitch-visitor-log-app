@@ -9,7 +9,9 @@ class ActivitiesController extends Controller
 {
     public function index(){
         return view('logs.index',[
-            'logs'=>Activities::with('user')->simplePaginate(10),
+            'logs'=>Activities::with('user')
+            ->orderBy('created_at','desc')
+            ->simplePaginate(10),
         ]);
     }
 }

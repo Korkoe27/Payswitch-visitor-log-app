@@ -35,7 +35,7 @@
                </div>
             </div>
                    <div class="">
-           <form action="{{ url('visit') }}" method="POST" class="flex flex-col h-1/2 p-10 overflow-auto lg:grid lg:grid-cols-2">
+           <form action="{{ url('visit') }}" method="POST" class="flex flex-col py-4 h-1/2 overflow-auto lg:grid lg:grid-cols-2">
 
                @csrf
 
@@ -71,7 +71,7 @@
                       <label for="phone_number" class=" block text-base font-medium text-black">
                       Phone Number <span class="text-red-400">*</span>
                       </label>
-                      <input type="text" id="phone_number" required placeholder="024 000 0000" name="phone_number" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+                      <input type="text" id="phone_number" value="{{ $phone_number ?? old('phone_number') }}" required placeholder="024 000 0000" name="phone_number" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
                    </div>
 
                    @error('phone_number')

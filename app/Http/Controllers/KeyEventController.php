@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Activities;
-use App\Models\Employee;
-use App\Models\Key;
-use App\Models\KeyEvent;
+use App\Models\{Activities, Employee, Key, KeyEvent};
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class KeyEventController extends Controller
 {
@@ -29,15 +27,20 @@ class KeyEventController extends Controller
     
         public function logKey() {
 
+            Log::debug('Trying to pick a key');
+            
             request()->validate([
                 'picked_by' => 'required|exists:employees,id',
                 'key_number' => 'required',
             ]);
-        
-
+            
+            Log::debug("The key number is: ". request('key_number'));
+            
             $pickedKey = Key::findOrFail(request('key_number'));
             $employee = Employee::findOrFail(request('picked_by'));
-
+            
+            Log::debug($pickedKey);
+            Log::debug($employee);
             
             $employeeName = $employee->first_name . ' ' . $employee->last_name;
 

@@ -32,5 +32,14 @@
             <label for="" class="">Assign a New user</label>
         <a href="{{ url('create-user') }}" class="bg-gradient-to-b px-5 w-fit text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4] flex items-center">New User</a>
         </div>
+        <div class="flex flex-col items-center w-fit gap-2">
+            <label for="" class="">Create a new Role</label>
+            <a href="{{ url('create-role') }}" 
+               class="bg-gradient-to-b px-5 w-fit text-xl rounded-lg py-2 text-white 
+                      from-red-500 to-red-700 flex items-center">
+                New Role
+            </a>
+        </div>
+        
     </main>
 </x-layout>

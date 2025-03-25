@@ -15,11 +15,23 @@ class RolesController extends Controller
     }
 
 
+
+
     public function create(){
         return view('roles.create');
     }
 
     public function store(){
-    
+        request()->validate([
+            'name'=>'required',
+            'description'=>''
+        ]);
+
+        Roles::create([
+            'name'=>request('name'),
+            'description'=>request('description')
+        ]);
+
+        return redirect('/roles');
     }
 }

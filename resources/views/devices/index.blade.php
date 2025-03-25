@@ -11,9 +11,7 @@
     @if(\App\Models\Roles::hasPermission(auth()->id(), 'visits', 'create'))
 
     <div class="flex justify-end ">
-        <a href="{{url('log')}}" class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4] flex items-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
+        <a href="{{url('log')}}" class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4] flex items-center">
           Log Device
         </a>
     </div>
@@ -27,7 +25,7 @@
                 <th scope="col" class="px-6 lg:text-lg py-3">Staff</th>
                 <th scope="col" class="px-6 lg:text-lg py-3">Date</th>
                 <th scope="col" class="px-6 lg:text-lg py-3">Time</th>
-                <th class="px-6 py-6" scope="col"></th>
+                <th class="px-6 py-6" scope="col">Action</th>
             </tr>
         </thead>
         <tbody class="text-base">

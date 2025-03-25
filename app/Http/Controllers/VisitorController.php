@@ -2,31 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AccessCards;
-use App\Models\Activities;
-use App\Models\Employee;
-use App\Models\Visitor;
-use App\Models\VisitorAccessCard;
+
+use App\Models\{AccessCards, Visitor,Employee, VisitorAccessCard, Activities};
 use Carbon\Carbon;
 use Exception;
-// use App\Services\OtpService;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\{DB,Log,Http};
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-
-use Illuminate\Support\Facades\Http;
 
 class VisitorController extends Controller
 {
 
 
-    // private $otpService;
-
-    // public function __construct(OtpService $otpService)
-    // {
-    //     $this->otpService = $otpService;
-    // }
-    
 
     public function index(){
 
@@ -38,9 +24,11 @@ class VisitorController extends Controller
     }
 
     
-    public function create(){
+    public function create(Request $request){
         $employees = Employee::get();
-        return view('visitor.entry', compact('employees'));
+        $phone_number = $request->query('phone_number');
+        // dd($phone_number);
+        return view('visitor.entry', compact('employees','phone_number'));
 
     }
 
@@ -49,10 +37,10 @@ class VisitorController extends Controller
         
 
         $availableCards = VisitorAccessCard::where('status', 'available')->get();
-
-
+        
+        
         // dd($availableCards);
-
+        
         function getCardId($index, $availableCards){
             Log::debug("Size Of Available Cards: ". sizeof($availableCards));
             Log::debug("index + 1: " . $index+1);
@@ -62,27 +50,43 @@ class VisitorController extends Controller
                 }else{
                     return 0;
                 }
-
-
+                
+                
             }   catch (Exception $exception){
 
                 Log::debug("Exception");
-                    return 0;
+                return 0;
             }
         }
-
+        
         try{
-    $validatedData = request()->validate([
-        'full_name' => 'required',
-        'email' => '',
-        'phone_number' => 'required',
-        'employee' => 'required',
-        'company_name' => '',
-        'purpose' => 'required',
-        'devices' => 'nullable|array',
-        'companions' => 'nullable|array',
-    ]);
+            $validatedData = request()->validate([
+                'full_name' => 'required',
+                'email' => '',
+                'phone_number' => 'required',
+                'employee' => 'required',
+                'company_name' => '',
+                'purpose' => 'required',
+                'devices' => 'nullable|array',
+                'companions' => 'nullable|array',
+            ]);
+            
+            $phone = request()->phone_number;
+            
+            $formattedPhone = preg_replace('/^0/','233',$phone);
+            
+            
+            // $checkVisitor = Visitor::where('phone_number', request()->phone)->first();
 
+            $checkVisitor = DB::table('visits')->where('phone_number', '=', request()->phone_number)->count();
+
+            Log::debug($checkVisitor);
+
+            if($checkVisitor > 0){
+                $visitorStatus = 'oldVisitor';
+            } else{
+                $visitorStatus = 'newVisitor';
+            }
 
 
     $name = explode(' ', string: $validatedData['full_name']);
@@ -102,12 +106,13 @@ class VisitorController extends Controller
         'first_name' => $firstName,
         'last_name' => $lastName,
         'email' => $validatedData['email'],
-        'phone_number' => $validatedData['phone_number'],
+        'phone_number' => $formattedPhone,
         'employee_Id' => $validatedData['employee'],
         'company_name' => $validatedData['company_name'],
         'purpose' => $validatedData['purpose'],
         'devices' => $devicesJson,
         'status' => 'ongoing',
+        'visitorStatus' => $visitorStatus,
         'companions' => $companionJson,
     ]);
 
@@ -187,15 +192,79 @@ class VisitorController extends Controller
     }
 
 
-    public function departure(Visitor $visitor){
+    public function departure(Request $request, Visitor $visitor){
 
+        Log::debug("visitor: " . base64_decode($request->visitor));
 
-        return view('visitor.exit', ['visitor' => $visitor]);
+        $decodedId = base64_decode($request->visitor);
+        $visitor = Visitor::findOrFail(base64_decode($request->visitor));
+
+        // Log::debug("visitor: " . $visitor);
+        if($visitor->visitorStatus == 'newVisitor'){
+            // Log::debug("new visitor");
+            return view('visitor.exit', ['visitor' => $visitor]);
+        }else{
+
+            Log::debug("old visitor");
+            return $this->exitOldVisitor($visitor);
+        }
     }
 
-            public function exit(Request $request, Visitor $visitor){
+    public function exitOldVisitor($visitor){
+        
+        // Log::debug($visitor);
+        // $visitor_id = base64_decode($visitor);
+
+        // $oldVisitor = Visitor::findOrFail($visitor_id);
+
+        // Log::debug($oldVisitor);
 
 
+        $visitor->update([
+            'departed_at' => Carbon::now(),
+            'status' => 'departed'
+        ]);
+
+        
+                
+
+        $access_cards = DB::table('access_cards')
+        ->where('visitor_id', $visitor->id)
+        ->get();
+
+    if($access_cards->count()>0){
+        foreach($access_cards as $card){
+            $card_number = $card->card_number;
+            if($card_number != NULL){
+                DB::table('visitor_access_cards')
+                    ->where('card_number', $card_number)
+                    ->update(['status'=>'available']);
+            }
+        }
+    }
+
+
+
+Activities::log(
+    action: ' Visitor Departed',
+    description: $visitor->first_name . ' ' . $visitor->last_name . ' departed.'
+);
+
+return redirect('/')->with('success', 'Visitor record updated successfully!');
+    }
+
+            public function exit(Visitor $visitor){
+
+
+
+                
+                $visitor_id = base64_decode(request('masked_id'));
+                $visitor = Visitor::findOrFail(id: $visitor_id);
+                
+                Log::debug("got here");
+
+
+                if($visitor->visitorStatus == 'newVisitor'){
                 request()->validate([
                     'rating'=> '',
                     'visitor_experience' => '',
@@ -203,11 +272,24 @@ class VisitorController extends Controller
                 ]);
 
 
+            $visitor->update([
+                'rating' => request('rating'),
+                'visitor_experience' => request('visitor_experience'),
+                'marketing_consent' => request('marketing_consent'),
+                'departed_at' =>Carbon::now(),
+                'status' => 'departed',
+                'visitorStatus' => 'oldVisitor'
+            ]);
+
+                }   else{
+                    $visitor->update([
+                        'departed_at' => Carbon::now(),
+                        'status' => 'departed'
+                    ]);
+                }
+
 
                 
-
-                $visitor_id = base64_decode(request('masked_id'));
-                $visitor = Visitor::findOrFail(id: $visitor_id);
 
                 $access_cards = DB::table('access_cards')
                     ->where('visitor_id', $visitor_id)
@@ -224,15 +306,7 @@ class VisitorController extends Controller
                     }
                 }
 
-                    // Log::debug('Access Cards: '. $access_cards);
 
-            $visitor->update([
-                'rating' => request('rating'),
-                'visitor_experience' => request('visitor_experience'),
-                'marketing_consent' => request('marketing_consent'),
-                'departed_at' =>Carbon::now(),
-                'status' => 'departed'
-            ]);
 
             Activities::log(
                 action: ' Visitor Departed',
@@ -253,8 +327,11 @@ class VisitorController extends Controller
                 $visitor =Visitor::findOrFail($visitor);
                 $employees = Employee::get();
                 return view('visitor.old-visitor-sign-in',compact('visitor','employees'));
-            }
 
+            }
+        
+
+     
 
             public function oldVisitor(Request $request)
             {
@@ -262,77 +339,124 @@ class VisitorController extends Controller
                     'phone_number' => 'required'
                 ]);
             
+                Log::debug("Phone Number: ". $request->phone_number);
+                
                 $visitor = Visitor::where('phone_number', $request->phone_number)->first();
-            
-
-                $headers = [
-                    'Content-Type: application/json',
-                    'Authorization: Basic '  . base64_encode('Testfa5348423c6b6533e0b04a7ed496d29f:975kp*4ZuLAE0%$R@Xeot^3#')
-                ];
-
-
-                $authkey = base64_encode('Testfa5348423c6b6533e0b04a7ed496d29f:975kp*4ZuLAE0%$R@Xeot^3#');
                 
                 if ($visitor) {
                     try {
-                        Log::debug("Auth Key: ". $authkey);
-                        $response = Http::withHeaders($headers)->post('https://smpp.theteller.net/send/single', [
-                            "phonenumber" => "233558731186",
-                            "sender"=>"Payswitch",
-                            "message"=>"Your OTP is here"
-                        ]);
-                        Log::debug("Response: ". $response->data());
+                        // Credentials from cURL example
+                        $credentials = base64_encode('Testfa5348423c6b6533e0b04a7ed496d29f:975kp*4ZuLAE0%$R@Xeot^3#');
+                        
+                        $response = Http::withHeaders([
+                            'Authorization' => 'Basic ' . $credentials,
+                            'Content-Type' => 'application/json'
+                            ])->post('https://smpp.theteller.net/send/pin', [
+                                'phonenumber' => $request->phone_number
+                            ]);
+                            Log::debug("Visitor: ". json_encode($visitor));
+            
+                        Log::debug("Raw Response: ". $response->body());
+            
+                        $responseData = $response->json();
+                        Log::debug("Response Data: ". json_encode($responseData));
+            
+                        // Adjust the response handling based on the actual response structure
                         if ($response->successful()) {
-                            session(['otp_key' => $response['key'], 'phonenumber' => $request->phone_number]);
-                            return response()->json(['success' => true, 'message' => 'OTP sent successfully.']);
+                            // Modify session storage based on actual response
+                            session([
+                                'phonenumber' => $request->phone_number,
+                                'otp_key' => $responseData['key'] ?? null // Adjust this based on actual response
+                            ]);
+            
+                            return response()->json([
+                                'success' => true, 
+                                'message' => 'OTP sent successfully.',
+                                'data' => $responseData // Include full response data
+                            ]);
                         }
+            
+                        return response()->json([
+                            'success' => false, 
+                            'message' => $responseData['message'] ?? 'Failed to send code.',
+                            'error' => $responseData
+                        ], 400);
+            
                     } catch (Exception $e) {
                         Log::error('OTP sending failed: ' . $e->getMessage());
-                        return response()->json(['success' => false, 'message' => 'Failed to send OTP.']);
+                        return response()->json([
+                            'success' => false, 
+                            'message' => 'An unexpected error occurred: ' . $e->getMessage()
+                        ], 500);
                     }
                 }
-            
+                
                 return response()->json([
                     'success' => false,
-                    'redirect' => url('create-visit'),
+                    'redirect' => route('create-visit', ['phone_number' => $request->phone_number]),
                     'message' => 'First time visiting? Please sign up.'
                 ]);
             }
-        
+            
+
+
+
+
             public function verifyOtp(Request $request)
             {
                 $request->validate(['otp' => 'required']);
             
-                $phone_number = session('phone_number');
+                $phone_number = session('phonenumber');
                 $otpKey = session('otp_key');
+
+
+                Log::debug("Phone Number: ". $phone_number);
+                Log::debug("OTP Key: ". $otpKey);
             
                 if (!$phone_number || !$otpKey) {
                     return response()->json(['success' => false, 'message' => 'Session expired. Try again.'], 400);
                 }
             
                 try {
-                    $response = Http::post('https://smpp.theteller.net/pin/verify', [
+                        $credentials = base64_encode('Testfa5348423c6b6533e0b04a7ed496d29f:975kp*4ZuLAE0%$R@Xeot^3#');
+                    
+                    $response = Http::withHeaders([
+                        'Authorization' => 'Basic ' . $credentials,
+                        'Content-Type' => 'application/json'
+                    ])->post('https://smpp.theteller.net/send/pin/verify', [
                         'phone_number' => $phone_number,
                         'otp' => $request->otp,
                         'key' => $otpKey
                     ]);
             
+                    $responseData = $response->json();
+                    Log::debug('OTP Verify Response: ' . json_encode($responseData));
+            
                     if ($response->successful()) {
-                        session()->forget(['otp_key', 'phone_number']);
+                        session()->forget(['otp_key', 'phonenumber']);
                         $visitor = Visitor::where('phone_number', $phone_number)->first();
                         return response()->json([
                             'success' => true,
                             'redirect' => route('old-visitor', $visitor->id),
-                            'message' => 'OTP verified successfully!'
+                            'message' => 'OTP verified successfully!',
+                            'data' => $responseData
                         ]);
                     }
+            
+                    return response()->json([
+                        'success' => false, 
+                        'message' => $responseData['message'] ?? 'Invalid OTP. Please try again.',
+                        'error' => $responseData
+                    ], 400);
+            
                 } catch (Exception $e) {
                     Log::error('OTP verification failed: ' . $e->getMessage());
+                    
+                    return response()->json([
+                        'success' => false, 
+                        'message' => 'An unexpected error occurred: ' . $e->getMessage()
+                    ], 500);
                 }
-            
-                return response()->json(['success' => false, 'message' => 'Invalid OTP. Please try again.'], 400);
             }
-            
-
         
 }

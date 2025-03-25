@@ -42,16 +42,18 @@
                       </select>
 
 
-                      <label for="" class="mb-[10px] block text-base font-medium text-black">
+                      <label for="" class="block text-base font-medium text-black">
                         Key you are picking.
                         </label>
-                      <select class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-1/2" name="key_number" required >
+                        <input type="text" name="key_number" placeholder="Enter the Key name." class="p-4 focus:border-blue-300 rounded-md outline-none text-black border border-gray-400 w-1/2" list="keys">
+                      <datalist id="keys" class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-1/2" name="key_number" required >
                             <option value="" selected disabled class="">What Key are you picking?</option>
                         @foreach ($keys as $key)
-                         <option value="{{$key->id}}" class="text-black">{{$key->key_name}}</option>
+                         <option value="{{$key->key_number}}" class="text-black">{{$key->key_name}}</option>
                         @endforeach
-                      </select>
+                      </datalist>
 
+                      <input type="hidden" name="key_id" id="key_id">
                    </div>
                 </div>
 
@@ -65,5 +67,17 @@
         </form>
     </aside>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const keyInput = document.getElementById("key_name");
+            const keyIdInput = document.getElementById("key_id");
+            const options = document.querySelectorAll("#keys option");
+    
+            keyInput.addEventListener("change", function () {
+                let match = Array.from(options).find(opt => opt.value === keyInput.value);
+                keyIdInput.value = match ? match.getAttribute("data-id") : "";
+            });
+        });
+    </script>
 
 </x-layout>

@@ -64,7 +64,10 @@ Route::get('/', function () {
         
         // Log::debug( $visitors);
         return view('index',[
-                'visitor' => Visitor::where('status', 'ongoing')->simplePaginate(5),
+                'visitor' => Visitor::where('status', 'ongoing')
+                ->whereDate('created_at', Carbon::today())
+                ->simplePaginate(5),
+
 
         'keys' => KeyEvent::with('employee')->where('status', 'picked')->simplePaginate(10),
         'all_keys' => Visitor::where('created_at', Carbon::today())->get(),
@@ -101,11 +104,11 @@ Route::get('/', function () {
 
                         Route::get('visits', 'index');
                         
-                        Route::get('departure',  'departure');
+                        Route::get('departure',  'departure')->name('departure');
                         
-                        Route::get('create-visit',  'create');
+                        Route::get('create-visit',  'create')->name('create-visit');
                         
-                        Route::get('old-visitor',  'oldVisitorSignIn')->name('old-visitor');
+                        Route::get('old-visitor/{visitor}',  'oldVisitorSignIn')->name('old-visitor');
                         
                         Route::get('check-visitor',  'checkVisitor');
                         
@@ -119,7 +122,7 @@ Route::get('/', function () {
                         Route::post('visit', 'store');
 
 
-                        Route::patch('exit', 'exit');
+                        Route::patch('exit/{visitor}', 'exit')->name('exit');
                 })->middleware('module.permission:visits,view,create,modify,delete');
 
 
@@ -192,7 +195,7 @@ Route::get('/', function () {
 
                 Route::controller(RolesController::class)->group(function(){
                         Route::get('roles','index')->middleware('module.permission:roles,view');
-                        Route::get('create-role','create')->middleware('module.permission:roles,create,modify,delete');
+                        Route::get('create-role','create')->middleware('module.permission:roles,view,create,modify,delete');
                         Route::post('store-role','store')->middleware('module.permission:roles,create,modify,delete');
                 });
 
@@ -219,10 +222,10 @@ Route::get('/', function () {
 
 
                 Route::controller(AssignUserController::class)->group(function(){
-                        Route::get('users','index')->middleware('module.permission:users,view');
-                        Route::get('create-user','create')->middleware('module.permission:users,create,modify,delete');
-                        Route::post('assign-user','store')->middleware('module.permission:users,create,modify,delete');
-                        Route::delete('revoke-access','destroy')->middleware('module.permission:users,create,modify,delete');
+                        Route::get('users','index')->middleware('module.permission:user,view');
+                        Route::get('create-user','create')->middleware('module.permission:user,create,modify,delete');
+                        Route::post('assign-user','store')->middleware('module.permission:user,create,modify,delete');
+                        Route::delete('revoke-access','destroy')->middleware('module.permission:user,create,modify,delete');
 
                 });
 

@@ -18,17 +18,17 @@
         <table class="w-full text-sm text-left text-gray-500">
             <thead class="text-xs text-black uppercase bg-gray-50">
                 <tr>
-                    <th scope="col" class="px-6 lg:text-xl py-3">
+                    <th scope="col" class="px-6 text-lg lg:text-xl py-3">
                     Name
                     </th>
-                    <th scope="col" class="px-6 lg:text-xl py-3">
+                    <th scope="col" class="px-6 text-lg lg:text-xl py-3">
                         Dept
                     </th>
-                    <th scope="col" class="px-6 lg:text-xl py-3">
+                    <th scope="col" class="px-6 text-lg lg:text-xl py-3">
                         Role
                     </th>
 
-                    <th className="px-6 py-6 lg:text-xl">
+                    <th className="px-6 py-6 text-lg lg:text-xl">
                       Action
                     </th>
                 </tr>
