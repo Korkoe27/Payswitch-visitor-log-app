@@ -10,7 +10,7 @@
 
         <div class="flex justify-between border-b border-gray-100 p-3">
             <span class="text-[#848A9C] font-medium">Visitor:</span>
-            <span class="font-bold">{{ $visitor->first_name }} {{ $visitor->last_name }}</span>
+            <span class="font-bold">{{ $visitor->full_name }}</span>
         </div>
         <div class="flex justify-between border-b border-gray-100 p-3">
             <span class="text-[#848A9C] font-medium">Email:</span>

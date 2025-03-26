@@ -5,8 +5,8 @@
     </x-slot:heading>
 
 
-    <div id="visitors-table" class="sm:rounded-lg p-5">
-        <table class="w-full text-sm text-left text-gray-500">
+    <div id="visitors-table" class="rounded-lg  space-y-4  p-5">
+        <table class="w-full text-left text-gray-500">
 
             @if(\App\Models\Roles::hasPermission(auth()->id(), 'staff', 'create'))
             <div class="flex justify-end">
@@ -22,15 +22,15 @@
                     <th scope="col" class="px-6 text-lg py-3">Name</th>
                     <th scope="col" class="px-6 text-lg py-3">Visiting</th>
                     <th scope="col" class="px-6 text-lg py-3">Purpose</th>
-                    <th scope="col" class="px-6 text-lg py-3">Date / Time In</th>
-                    <th scope="col" class="px-6 text-lg py-3">Date / Time Out</th>
+                    <th scope="col" class="px-6 text-lg py-3">Arrived</th>
+                    <th scope="col" class="px-6 text-lg py-3">Departed</th>
                     <th class="px-6 text-lg py-6 text-center" scope="col">Action</th>
                 </tr>
             </thead>
             <tbody class=" lg:text-lg  text-black">
                 @foreach ($visitor as $person)
                     <tr class="odd:bg-white even:bg-gray-50 lg:text-lg border-b">
-                        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">{{ $person?->first_name }} {{ $person?->last_name }}</th>
+                        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">{{ $person?->full_name }}</th>
                         <td class="px-6 lg:text-xl  py-4">{{ $person->visitee ? $person->visitee->first_name . ' ' . $person->visitee->last_name : 'N/A' }}</td>
                         <td class="px-6 py-4 capitalize">
                             @switch($person['purpose'])

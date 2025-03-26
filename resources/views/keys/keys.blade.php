@@ -46,9 +46,9 @@
                     @php
                     $employee = \App\Models\Employee::find($event->returned_by);
                 @endphp
-                    <td class="px-6 py-4">{{ $event?->created_at}}</td>
-                    <td class="px-6 py-4">{{ $employee ? $employee->first_name . " " . $employee->last_name : 'Not Submitted yet'}}</td>
-                    <td class="px-6 py-4">
+                    <td class="px-6 py-4 text-lg text-black">{{ $event?->created_at}}</td>
+                    <td class="px-6 py-4 text-lg text-black">{{ $employee ? $employee->first_name . " " . $employee->last_name : 'Not Submitted yet'}}</td>
+                    <td class="px-6 py-4 text-lg text-black">
                         {{ $event?->returned_at ?? "Not Submitted yet" }}
                     </td>
 

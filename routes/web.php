@@ -1,23 +1,10 @@
 <?php
 
-use App\Http\Controllers\ActivitiesController;
-use App\Http\Controllers\AssignUserController;
-use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\DeviceController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\KeyController;
-use App\Http\Controllers\KeyEventController;
-use App\Http\Controllers\RolesController;
-use App\Http\Controllers\UserAuthController;
-use App\Http\Controllers\VisitorAccessCardController;
-use App\Http\Controllers\VisitorController;
-use App\Models\Device;
-use App\Models\Visitor;
-use App\Models\KeyEvent;
-use App\Models\Roles;
+use App\Http\Controllers\{ActivitiesController,AssignUserController,DepartmentController,DeviceController,EmployeeController,KeyController,KeyEventController,RolesController,UserAuthController,VisitorAccessCardController,VisitorController};
+
+use App\Models\{Device,Visitor,KeyEvent,Roles};
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\{Log,Route};
 /*
 |--------------------------------------------------------------------------
 | Web Routes

@@ -168,9 +168,9 @@
         </div>
     </nav>
 
-    <main class="lg:w-full  min-h-screen flex flex-col">
+    <main class="w-full  min-h-screen flex flex-col">
         <!-- Top Section -->
-        <header class="flex justify-between items-center w-full border-b border-[#C8DFFF] lg:px-10 lg:py-5">
+        <header class="flex justify-between items-center w-full border-b border-[#C8DFFF] px-5 lg:px-10 lg:py-5">
                 <h1 class=" text-[#0F51AE] lg:text-2xl lg:font-bold">{{ $heading }}</h1>
 
                 <div class="lg:text-2xl flex items-center lg:w-fit p-3 text-[#0F51AE] rounded-3xl font-medium">

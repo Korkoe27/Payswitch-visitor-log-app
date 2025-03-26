@@ -120,7 +120,7 @@
             <tbody class="text-base">
                 @foreach ($visitor as $person)
                     <tr class="odd:bg-white even:bg-gray-50 border-b">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $person['first_name'] }} {{ $person['last_name'] }}</th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $person->full_name }}</th>
                         <td class="px-6 py-4">{{ $person->visitee ? $person->visitee->first_name . ' ' . $person->visitee->last_name : 'N/A' }}</td>
                         <td class="px-6 py-4 capitalize">
                             @switch($person['purpose'])
@@ -131,7 +131,7 @@
                                     <span class="text-amber-600 bg-amber-100 py-1 px-2 rounded-2xl">{{ $person['purpose'] }}</span>
                                     @break
                                 @case('official')
-                                    <span class="text-red-600 bg-red-100 rounded-2xl">{{ $person['purpose'] }}</span>
+                                    <span class="text-red-600 bg-red-100 py-1 p-2 rounded-2xl">{{ $person['purpose'] }}</span>
                                     @break
                                 @default
                                     <span class="text-blue-600 bg-blue-100 rounded-2xl py-1 px-2">{{ $person['purpose'] }}</span>

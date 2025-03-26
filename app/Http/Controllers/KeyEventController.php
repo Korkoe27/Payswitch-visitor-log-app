@@ -27,31 +27,32 @@ class KeyEventController extends Controller
     
         public function logKey() {
 
-            Log::debug('Trying to pick a key');
-            
+            Log::debug('pick key');
             request()->validate([
                 'picked_by' => 'required|exists:employees,id',
-                'key_number' => 'required',
+                'key_name' => 'required',
             ]);
-            
-            Log::debug("The key number is: ". request('key_number'));
-            
-            $pickedKey = Key::findOrFail(request('key_number'));
+            Log::debug('staff ' . request('picked_by'));
+
+            $pickedKey = Key::where('key_name', request('key_name'))->firstOrFail();
+
+            $key_number = $pickedKey->key_id;
+
+
+            Log::debug('key details: ' . $pickedKey);
+        
+
             $employee = Employee::findOrFail(request('picked_by'));
             
-            Log::debug($pickedKey);
-            Log::debug($employee);
-            
-            $employeeName = $employee->first_name . ' ' . $employee->last_name;
-
             // dd('Hello there');
             // dd($employee);
         
-            $activeKeyEvent =   KeyEvent::where('key_number',request('key_number'))
+            $activeKeyEvent =   KeyEvent::where('key_number',$key_number)
             ->where('status','picked')
             ->whereNull('returned_at')
             ->first();
-        
+            
+            Log::debug('Active key details: ' . $activeKeyEvent);
             if ($activeKeyEvent) {
                 return redirect()->back()->with('error', "Key has already been picked.");
             }
@@ -62,14 +63,10 @@ class KeyEventController extends Controller
                 'picked_at' => Carbon::now(),
                 'status' => 'picked'
             ]);
-
-            Activities::log(
-                action: 'Logged Key',
-                description: $employeeName . ' ' . ' picked the ' . $pickedKey->key_name . ' key.'            
-            );
         
             return redirect('/');
         }
+        
         
 
 

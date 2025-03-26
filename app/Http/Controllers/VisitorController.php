@@ -88,12 +88,6 @@ class VisitorController extends Controller
                 $visitorStatus = 'newVisitor';
             }
 
-
-    $name = explode(' ', string: $validatedData['full_name']);
-
-    $firstName = $name[0];
-    $lastName = $name[1];
-
     $devicesJson = request()->has('devices') ? ($validatedData['devices']) : null;
 
     $companionJson = request()->has('companions') ? ($validatedData['companions']):null;
@@ -103,8 +97,7 @@ class VisitorController extends Controller
 
 
     $visitor = Visitor::create([
-        'first_name' => $firstName,
-        'last_name' => $lastName,
+        'full_name' => $validatedData['full_name'],
         'email' => $validatedData['email'],
         'phone_number' => $formattedPhone,
         'employee_Id' => $validatedData['employee'],
@@ -179,7 +172,6 @@ class VisitorController extends Controller
 
         }
     }
-
 
     public function show(Visitor $visitor)
     {
