@@ -24,7 +24,7 @@
                     <th scope="col" class="px-6 text-lg py-3">Purpose</th>
                     <th scope="col" class="px-6 text-lg py-3">Arrived</th>
                     <th scope="col" class="px-6 text-lg py-3">Departed</th>
-                    <th class="px-6 text-lg py-6 text-center" scope="col">Action</th>
+                    <th class="px-6 text-lg py-6" scope="col">Action</th>
                 </tr>
             </thead>
             <tbody class=" lg:text-lg  text-black">
@@ -60,11 +60,13 @@
                             <a href="{{ url('visit/' . $person->id) }}" class="font-medium text-blue-600 text-lg hover:underline">View</a>
                         </td>
 
+                        @if(\App\Models\Roles::hasPermission(auth()->id(), 'visits', 'create'))
                         @if ($person->status === 'ongoing')
                         <td class="px-3 py-4">
 
                             <a href="departure?visitor={{base64_encode($person->id)}}" class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">Sign Out</a>
                         </td>
+                        @endif
                         @endif
 
                     </tr>

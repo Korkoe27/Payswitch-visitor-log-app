@@ -15,7 +15,7 @@
                 Staff
                 </label>
                 <div class="flex-col flex gap-4">
-                   <select class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-1/2" name="user" required >
+                   <select class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-1/2" name="employee_id" required >
                          <option value="" selected disabled class="">Choose a staff</option>
                      @foreach ($employees as $employee)
                       <option value="{{$employee->id}}" class="">{{$employee->first_name}} {{$employee->last_name}}</option>
@@ -23,7 +23,7 @@
                    </select>
 
                    
-                   <select class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-1/2" name="role" required >
+                   <select class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-1/2" name="role_id" required >
                          <option value="" selected disabled class="">Choose their role?</option>
                      @foreach ($roles as $role)
                       <option value="{{$role->id}}" class="">{{$role->name}}</option>

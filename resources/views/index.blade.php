@@ -42,7 +42,9 @@
                 </h1>
 
                 <div class="flex justify-between">
+                    @if(\App\Models\Roles::hasPermission(auth()->id(), 'visits', 'create'))
                 <a href="{{ url('check-visitor') }}" class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4]">Log Visitor</a>
+                @endif
                     <a href="{{ url('visits') }}" class="flex items-center text-green-700 font-bold text-xl">All visits
 
                         
@@ -70,7 +72,9 @@
                     <span class="lg:text-6xl font-bold">{{ $keys ? count($keys) : 0 }}</span>
                 </h1>
                 <div class="flex justify-between">
+                    @if(\App\Models\Roles::hasPermission(auth()->id(), 'visits', 'create'))
                     <a href="{{ url('pick-key') }}" class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4]">Log Key</a>
+                    @endif
                     <a href="{{ url('keys') }}" class="flex items-center text-green-700 font-bold text-xl">Keys
 
                         
@@ -91,7 +95,9 @@
                 <h1 class="lg:text-6xl font-bold">{{ $devices ? count($devices) : 0 }}</h1>
                 
                 <div class="flex justify-between">
+                    @if(\App\Models\Roles::hasPermission(auth()->id(), 'visits', 'create'))
                     <a href="{{ url('log') }}" class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4]">Log Device</a>
+                    @endif
                     <a href="{{ url('device-logs') }}" class="flex items-center text-green-700 font-bold text-xl">Devices
 
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -141,9 +147,12 @@
                         <td class="px-6 py-4">
                             <a href="{{ url('visit/' . $person->id) }}" class="font-medium text-blue-600 text-lg hover:underline">View</a>
                         </td>
+
+                        @if(\App\Models\Roles::hasPermission(auth()->id(), 'visits', 'create'))
                         <td class="px-3 py-4">
                             <a href="departure?visitor={{base64_encode($person->id)}}" class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">Sign Out</a>
                         </td>
+                        @endif
                     </tr>
                 @endforeach
             </tbody>

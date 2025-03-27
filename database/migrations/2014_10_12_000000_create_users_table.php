@@ -17,13 +17,18 @@ return new class extends Migration
             $table->foreignId('role_id')->constrained('roles');
 
             $table->string('name');
+            $table->string('password_reset_token')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });
+
+        
     }
+
+    
 
     /**
      * Reverse the migrations.

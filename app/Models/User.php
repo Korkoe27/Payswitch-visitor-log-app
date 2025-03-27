@@ -36,6 +36,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'password_reset_token',
     ];
 
     /**
@@ -52,17 +53,6 @@ class User extends Authenticatable
         return $this->belongsTo(Roles::class, 'role_id');
     }
 
-
-
-    // public static function hasPermission($userId,$moduleName, $action): bool{
-    //     $permissionColumn = "can_$action";
-
-    //     return User::find($userId)
-    //     ->role()
-    //     ->where('name', $moduleName)
-    //     ->wherePivot($permissionColumn, 1)
-    //     ->exists();
-    // }
 
 
 }

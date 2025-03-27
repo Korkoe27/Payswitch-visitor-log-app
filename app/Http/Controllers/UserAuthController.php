@@ -13,7 +13,7 @@ class UserAuthController extends Controller
 {
     public function login(Request $request){
 
-        Log::debug($request->all());
+        // Log::debug($request->all());
         $attributes = request()->validate([
             'email'=>   ['required', 'email'],
             'password'=> ['required'],

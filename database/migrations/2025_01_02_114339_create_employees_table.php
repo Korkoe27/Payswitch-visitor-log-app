@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->string(column: 'employee_number')->unique();
+            $table->boolean('is_user')->default(false);
             $table->string(column: 'first_name');
             $table->string(column: 'other_name')->nullable();
             $table->string(column: 'last_name');
