@@ -11,16 +11,14 @@ use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\URL;
 
 class AssignUser extends Mailable
 {
     use Queueable, SerializesModels;
-
-
     public $user;
-    public $token;
+    // public $token;
     public $resetUrl;
-
     /**
      * Create a new message instance.
      */
@@ -28,11 +26,20 @@ class AssignUser extends Mailable
     {
         //
         $this->user = $user;
-        $this->token = $token;
-        $this->resetUrl = route('reset-password', [
-            'token' => $token,
-            'email' => $user->email
-        ]);
+        // $this->token = $token;
+        // $this->resetUrl = route('reset-password', [
+        //     'token' => $token,
+        //     'email' => $user->email
+        // ]);
+
+        $this->resetUrl = URL::temporarySignedRoute(
+            'password.reset',
+            now()->addMinutes(60),
+            [
+                'token'=>$token,
+                'email'=>$user->email
+            ]
+            );
 
         Log::debug($this->resetUrl);
     }
@@ -57,12 +64,11 @@ class AssignUser extends Mailable
             view: 'users.mail',
             with:[
                 'user'=>$this->user,
-                'token'=>$this->token,
+                // 'token'=>$this->token,
                 'resetUrl'=>$this->resetUrl
             ]
         );
     }
-
     /**
      * Get the attachments for the message.
      *

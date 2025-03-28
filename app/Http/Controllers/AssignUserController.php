@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Mail\AssignUser;
-use App\Models\{Employee, Roles, User};
+use App\Models\{Activities, Employee, Roles, User};
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Illuminate\Support\Facades\Password;
@@ -51,20 +51,13 @@ class AssignUserController extends Controller
             'role_id'=> 'required|exists:roles,id',
         ]);
 
-
-
-        Log::debug($request->all());
         
-        
+        Log::debug($request->all());        
         try{
-            
             return DB::transaction(function () use ($request){
-                
                 $employee = Employee::findOrFail($request->employee_id);
-                
-                $token =Str::random(60);
-                
-                
+                $role = Employee::findOrFail($request->role_id);
+                // $token =Str::random(60);
                 $user = User::create([
                     'name' => trim(implode(' ', [
                         $employee->first_name, 
@@ -74,19 +67,27 @@ class AssignUserController extends Controller
                     'email' => $employee->email,
                     'role_id' => $request->input('role_id'),
                     'password' => Hash::make(Str::random(16)),
-                    'password_reset_token' => $token,
+                    // 'password_reset_token' => $token,
                 ]);
                 
+
+                $token = Password::createToken($user);
+
+                Log::debug("new token" . $token);
+
                 Log::debug("NEW USER: " . $user);
 
                 Mail::to($user->email)->send(new AssignUser($user, $token));
 
+                Log::debug('Mail Sent');
 
         $employee->update(['is_user' => true]);
 
-
-
-
+        
+        Activities::log(
+            action: 'Added a new user',
+            description: 'Assigned ' . $role->name . ' role to ' . $employee->first_name . ' ' . $employee->last_name
+        );
 
         return redirect()->back()->with('success', 'User created successfully. An invitation email has been sent.');
 
@@ -94,11 +95,8 @@ class AssignUserController extends Controller
         }catch (\Exception $e){
 
             Log::error('User creation failed: ' . $e->getMessage());
-
             // return redirect('/')->with('error', 'An error occurred. Please try again later.');
         }
-
-
     }
 
 
@@ -107,8 +105,6 @@ class AssignUserController extends Controller
 
 
     public function showResetForm(Request $request, $token){
-
-
         Log::debug("Token: " . $token);
         // dd($request->all());
         return view('auth.reset-password',[
@@ -117,16 +113,15 @@ class AssignUserController extends Controller
         ]);
     }
 
-
     //reset password
 
     public function resetPassword(Request $request){
 
         // dd($request->all());
         $validated = $request->validate([
-           'token'=>'required',
-           'email' => 'required|email',
-           'password'=>[
+        'token'=>'required',
+        'email' => 'required|email',
+        'password'=>[
             'required',
             'confirmed',
             PasswordRules::min(8)
@@ -134,18 +129,16 @@ class AssignUserController extends Controller
             ->mixedCase()
             ->numbers()
             ->symbols()
-           ],
+        ],
         ]);
-
-
         Log::debug("Validated Data: " , $validated);
 
         $status = Password::reset(
             $request->only('email','password','password_confirmation','token'),
-            function($user) use ($request){
+            function    ($user, $password){
                 $user->forceFill([
-                    'password'=>Hash::make($request->password),
-                    'password_reset_token'=>null,
+                    'password'=>Hash::make($password),
+                    // 'password_reset_token'=>null,
                 ])->save();
 
                 event(new PasswordReset($user));
@@ -154,11 +147,15 @@ class AssignUserController extends Controller
 
         Log::debug("Status: " . $status);
 
+        // return $status == Password::PASSWORD_RESET
+        // ? redirect()
+        // ->route('login')
+        // ->with('status', __($status))
+        // : back()->withErrors(['email' => [__($status)]]);
+
         return $status == Password::PASSWORD_RESET
-        ? redirect()
-        ->route('login')
-        ->with('status', __($status))
-        : back()->withErrors(['email' => [__($status)]]);
+            ? redirect()->route('login')->with('status', __($status))
+            :   back()->withErrors(['email'=> [__($status)]]);
     }
 
     

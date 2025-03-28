@@ -21,20 +21,18 @@ use Illuminate\Support\Facades\{Log,Route};
 
 //auth
 
-Route::middleware('guest')->group(function(){
-
-
-        Route::get('/reset-password/{token}', [AssignUserController::class, 'showResetForm'])->name('reset-password');
-
-        Route::post('password-reset',[AssignUserController::class,'resetPassword'])->name('password-reset');
-
-
-        Route::view('login', 'auth.login')->name(name: 'login');
-
-
+Route::middleware('guest')->group(function () {
+        // Updated password reset routes
+        Route::get('/reset-password/{token}', [AssignUserController::class, 'showResetForm'])
+            ->name('password.reset'); // Changed to standard name
+        
+        Route::post('/reset-password', [AssignUserController::class, 'resetPassword'])
+            ->name('password.update'); // Changed to standard name
+        
+        // Your existing auth routes
+        Route::view('login', 'auth.login')->name('login');
         Route::post('login', [UserAuthController::class, 'login']);
-
-});
+    });
 
 Route::middleware('auth')->group(function(){
 

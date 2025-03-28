@@ -28,7 +28,7 @@
             <h1 class="text-center font-bold lg:text-3xl md:text-2xl text-xl text-[#201f21]">
                 Reset your Password
             </h1>
-            <form action="{{ url('password-reset') }}" method="POST" class="flex flex-col md:gap-10 gap-8">
+            <form action="{{ route('password.update') }}" method="POST" class="flex flex-col md:gap-10 gap-8">
                 @csrf
 
 

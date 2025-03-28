@@ -28,7 +28,8 @@ class UserAuthController extends Controller
         request()->session()->regenerate();
 
         Activities::log(
-            action: 'login'
+            action: 'login',    
+            description: ' logged in!'
         );
 
         return redirect('/');
