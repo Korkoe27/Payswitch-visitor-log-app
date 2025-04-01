@@ -5,7 +5,7 @@
     </x-slot:heading>
 
     <main class="p-5">
-        @if(\App\Models\Roles::hasPermission(auth()->id(), 'staff', 'create'))
+        @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'staff', 'create'))
 
         <div class="flex justify-self-end md:px-6 ">
             <a href="{{url('create-access-card')}}" class="flex bg-green-900 w-full rounded-md items-center text-white md:p-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">

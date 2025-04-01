@@ -64,7 +64,10 @@ class KeyEventController extends Controller
                 'status' => 'picked'
             ]);
         
-            return redirect('/');
+            return redirect('/')->with([
+                'success'=>true,
+                'success_type'=>'key_pickup'
+            ]);
         }
         
         

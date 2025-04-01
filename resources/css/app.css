@@ -8,3 +8,8 @@
 *{
     font-family: Urbanist, sans-serif;
 }
+
+@font-face {
+    font-family: Urbanist, sans-serif;
+    src: url(./Urbanist);
+}

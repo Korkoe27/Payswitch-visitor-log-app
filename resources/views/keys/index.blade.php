@@ -7,7 +7,7 @@
 
 
     <main class="p-5">
-        @if(\App\Models\Roles::hasPermission(auth()->id(), 'keys', 'create'))
+        @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'keys', 'create'))
         <div class="flex justify-end p-5 items-center">
             <a href="{{ url('create-key') }}" class="px-3 text-white py-2 rounded-md bg-green-500">Create New Key</a>
         </div>

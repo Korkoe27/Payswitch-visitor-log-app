@@ -74,7 +74,10 @@
                     description: $employeeName . ' logged their device!'
                 );
 
-                return redirect('/')->with('success', 'Device logged successfully.');
+                return redirect('/')->with([
+                    'sucess' => true,
+                    'sucess_type' => 'device_logged'
+                ]);
                 // return redirect()->back()->with('success', 'Device logged successfully.');
             } catch (\Exception $e) {
                 return redirect()->back()->withErrors(['error' => 'An error occurred while logging the device.']);

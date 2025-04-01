@@ -6,7 +6,7 @@
 
 
 
-    <section class="flex-col flex  w-1/3 p-10 gap-4">
+    <section class="flex-col flex   lg:w-1/3 p-10 gap-4">
         <form action="{{ url('assign-user') }}" method="POST" class="flex-col flex gap-4">
             @csrf
 
@@ -18,7 +18,7 @@
                    <select class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-1/2" name="employee_id" required >
                          <option value="" selected disabled class="">Choose a staff</option>
                      @foreach ($employees as $employee)
-                      <option value="{{$employee->id}}" class="">{{$employee->first_name}} {{$employee->last_name}}</option>
+                      <option value="{{$employee->id}}" class=" odd:bg-transparent even:bg-white/50">{{$employee->first_name}} {{$employee->last_name}}</option>
                      @endforeach
                    </select>
 

@@ -13,6 +13,8 @@ class VisitorController extends Controller
 {
 
 
+    private $baseUrl = 'https://smpp.theteller.net';
+
 
     public function index(){
 
@@ -165,7 +167,10 @@ class VisitorController extends Controller
             description: $countVisitors . " person(s) logged."
         );
 
-    return redirect('/')->with('success', 'Visitor record created successfully!');
+    return redirect('/')->with([
+        'success'=>true,
+        'success_type'=>"visitor_arrival"
+    ]);
 
         }   catch(Exception $e){
             return redirect()->back()->withErrors(['error' => 'An error occurred while creating the visitor record.']);
@@ -242,7 +247,11 @@ Activities::log(
     description: $visitor->first_name . ' ' . $visitor->last_name . ' departed.'
 );
 
-return redirect('/')->with('success', 'Visitor record updated successfully!');
+return redirect('/')->with([
+    'success' => 'Visitor record updated successfully!', 
+    'thank_visitor' => true,
+    'sucess_type'=>'visitor_departure'
+]);
     }
 
             public function exit(Visitor $visitor){
@@ -305,7 +314,10 @@ return redirect('/')->with('success', 'Visitor record updated successfully!');
                 description: $visitor->first_name . ' ' . $visitor->last_name . ' departed.'
             );
 
-            return redirect('/')->with('success', 'Visitor record updated successfully!');
+            return redirect('/')->with([
+                'success'=>true,
+                'success_type'=>"visitor_departure"
+            ]);
 
 
             }
@@ -338,16 +350,16 @@ return redirect('/')->with('success', 'Visitor record updated successfully!');
                 if ($visitor) {
                     try {
                         // Credentials from cURL example
-                        $credentials = base64_encode('Testfa5348423c6b6533e0b04a7ed496d29f:975kp*4ZuLAE0%$R@Xeot^3#');
+                        $credentials = 'VGVzdGZhNTM0ODQyM2M2YjY1MzNlMGIwNGE3ZWQ0OTZkMjlmOjk3NWtwKjRadUxBRTAlJFJAWGVvdF4zIw==';
                         
                         $response = Http::withHeaders([
                             'Authorization' => 'Basic ' . $credentials,
                             'Content-Type' => 'application/json'
-                            ])->post('https://smpp.theteller.net/send/pin', [
-                                'phonenumber' => $request->phone_number
-                            ]);
-                            Log::debug("Visitor: ". json_encode($visitor));
+                        ])->post('https://smpp.theteller.net/send/pin', [
+                            'phonenumber' => $request->phone_number
+                        ]);
             
+                        Log::debug("Visitor: ". json_encode($visitor));
                         Log::debug("Raw Response: ". $response->body());
             
                         $responseData = $response->json();
@@ -366,6 +378,13 @@ return redirect('/')->with('success', 'Visitor record updated successfully!');
                                 'message' => 'OTP sent successfully.',
                                 'data' => $responseData // Include full response data
                             ]);
+                        } else{
+                            
+                return response()->json([
+                    'success' => false,
+                    'redirect' => route('create-visit', ['phone_number' => $request->phone_number]),
+                    'message' => 'Oops! We could not find your details please sign in.'
+                ]);
                         }
             
                         return response()->json([
@@ -389,6 +408,70 @@ return redirect('/')->with('success', 'Visitor record updated successfully!');
                     'message' => 'First time visiting? Please sign up.'
                 ]);
             }
+            // public function oldVisitor(Request $request)
+            // {
+            //     $request->validate([
+            //         'phone_number' => 'required'
+            //     ]);
+            
+            //     Log::debug("Phone Number: ". $request->phone_number);
+                
+            //     $visitor = Visitor::where('phone_number', $request->phone_number)->first();
+                
+            //     if ($visitor) {
+            //         try {
+            //             // Credentials from cURL example
+            //             // $credentials = base64_encode('Testfa5348423c6b6533e0b04a7ed496d29f:975kp*4ZuLAE0%$R@Xeot^3#');
+                        
+            //             $response = Http::withHeaders([
+            //                 'Authorization' => 'Basic ' . "VGVzdGZhNTM0ODQyM2M2YjY1MzNlMGIwNGE3ZWQ0OTZkMjlmOjk3NWtwKjRadUxBRTAlJFJAWGVvdF4zIw==",
+            //                 'Content-Type' => 'application/json'
+            //                 ])->post('https://smpp.theteller.net/send/pin', [
+            //                     'phonenumber' => $request->phone_number
+            //                 ]);
+            //                 Log::debug("Visitor: ". json_encode($visitor));
+            
+            //             Log::debug("Raw Response: ". $response->body());
+            
+            //             $responseData = $response->json();
+            //             Log::debug("Response Data: ". json_encode($responseData));
+            
+            //             // Adjust the response handling based on the actual response structure
+            //             if ($response->successful()) {
+            //                 // Modify session storage based on actual response
+            //                 session([
+            //                     'phonenumber' => $request->phone_number,
+            //                     'otp_key' => $responseData['key'] ?? null // Adjust this based on actual response
+            //                 ]);
+            
+            //                 return response()->json([
+            //                     'success' => true, 
+            //                     'message' => 'OTP sent successfully.',
+            //                     'data' => $responseData // Include full response data
+            //                 ]);
+            //             }
+            
+            //             return response()->json([
+            //                 'success' => false, 
+            //                 'message' => $responseData['message'] ?? 'Failed to send code.',
+            //                 'error' => $responseData
+            //             ], 400);
+            
+            //         } catch (Exception $e) {
+            //             Log::error('OTP sending failed: ' . $e->getMessage());
+            //             return response()->json([
+            //                 'success' => false, 
+            //                 'message' => 'An unexpected error occurred: ' . $e->getMessage()
+            //             ], 500);
+            //         }
+            //     }
+                
+            //     return response()->json([
+            //         'success' => false,
+            //         'redirect' => route('create-visit', ['phone_number' => $request->phone_number]),
+            //         'message' => 'First time visiting? Please sign up.'
+            //     ]);
+            // }
             
 
 

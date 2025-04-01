@@ -24,8 +24,8 @@
             <img src="{{ asset('small-logo.png') }}" class="lg:hidden w-20" alt="">
         </div>
 
-        <div class="flex lg:p-10 h-full justify-between  md:py-4  flex-col">
-            <ul class="flex flex-col md:p-3 lg:p-0 justify-between">
+        <div class="flex lg:p-10 p-4 h-full justify-between   md:py-4  flex-col">
+            <ul class="flex flex-col gap-10 lg:gap-0 lg:p-0 justify-between">
                 <li class="">
                     <x-nav-link href="{{ url('/') }}" :active="request()->is('/')">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -37,7 +37,7 @@
                         <span class="hidden lg:flex">Dashboard</span>
                     </x-nav-link>
                 </li>
-                @if(\App\Models\Roles::hasPermission(auth()->id(), 'visits', 'view'))
+                @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'visits', 'view'))
                 <li ctrue   {{-- <li class="text-[#529AFF] font-semibold pt-4 text-lg">Tables</li> --}}
                 <li>
                 <x-nav-link href="{{ url('visits') }}" :active="request()->is('visits')">
@@ -73,7 +73,7 @@
 
 
                 @endif
-                @if(\App\Models\Roles::hasPermission(auth()->id(), 'staff', 'view'))
+                @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'staff', 'view'))
                 <li class="text-[#529AFF] hidden lg:block font-semibold text-lg">Records</li>
                 <li class="">
                     <x-nav-link href="{{ url('staff') }}" :active="request()->is('staff')">
@@ -86,7 +86,7 @@
                 </li>
                 @endif
                 {{-- @if(true) --}}
-                @if(\App\Models\Roles::hasPermission(auth()->id(), 'reports', 'view'))
+                @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'reports', 'view'))
                 <li class="">
                     <x-nav-link href="{{ url('records') }}" :active="request()->is('records')">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -101,7 +101,7 @@
 
                 @endif
 
-                @if(\App\Models\Roles::hasPermission(auth()->id(), 'logs', 'view'))
+                @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'logs', 'view'))
                 <li class="">
                     <x-nav-link href="{{ url('logs') }}" :active="request()->is('logs')">
                         <svg width="20" stroke="currentColor" class="size-9 lg:size-6" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -115,7 +115,7 @@
                 </li>
                 @endif
 
-                @if(\App\Models\Roles::hasPermission(auth()->id(), 'user', 'create'))
+                @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'user', 'create'))
                 <li class="">
                     <x-nav-link href="{{ url('users') }}" :active="request()->is('users')">
                         <svg width="24" height="24"  class="size-9 lg:size-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -126,7 +126,7 @@
                 </li>
                 @endif
 
-                @if(\App\Models\Roles::hasPermission(auth()->id(), 'settings', 'view'))
+                @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'settings', 'view'))
                 <li class="">
                     <x-nav-link href="{{ url('settings') }}" :active="request()->is('settings')">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -152,36 +152,47 @@
                     </svg>
                     
                     
-                <span class="text-2xl font-semibold hidden lg:flex text-[#C8DFFF]">{{ Auth::user()->name }}</span>
+                    @php
+
+                 ;
+
+                    $username = explode(" ", Auth::user()->name);
+
+                    // dd();
+
+
+                    @endphp
+                <span class="text-2xl font-semibold hidden lg:flex text-[#C8DFFF]">{{ $username[0] }}</span>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9 18L15 12L9 6" stroke="#C8DFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     
+
                     
                     
                     
 
                 </div>
-    <form action="{{ url('logout') }}" method="POST" class="hidden w-full logout-button">
+    <form action="{{ url('logout') }}" method="POST" class="hidden w-full absolute logout-button">
             @csrf
-            <button class="w-full  lg:p-3 bg-blue-500 flex items-center text-white rounded-xl">
+            <button class="w-1/12 relative bottom-14 p-2  lg:p-3 bg-blue-500 flex items-center text-white rounded-xl">
                 <svg width="20" stroke="#C8DFFF" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9M16 17L21 12M21 12L16 7M21 12H9"  stroke="#C8DFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 Logout
             </button>
-            </aside>
-
+            
         </form>
+    </aside>
         </div>
     </nav>
 
     <main class="w-full  min-h-screen flex flex-col">
         <!-- Top Section -->
-        <header class="flex justify-between items-center w-full border-b border-[#C8DFFF] px-5 lg:px-10 lg:py-5">
-                <h1 class=" text-[#0F51AE] lg:text-2xl lg:font-bold">{{ $heading }}</h1>
+        <header class="flex justify-between items-center w-full border-b border-[#C8DFFF] px-10 py-5">
+                <h1 class=" text-[#0F51AE] lg:text-2xl  text-xl font-bold">{{ $heading }}</h1>
 
-                <div class="lg:text-2xl flex items-center lg:w-fit p-3 text-[#0F51AE] rounded-3xl font-medium">
+                <div class="lg:text-2xl text-xl flex items-center lg:w-fit p-3 text-[#0F51AE] rounded-3xl font-medium">
                     <span class="lg:text-2xl lg:w-fit p-3 text-[#0F51AE] rounded-3xl font-medium" id="date"></span>
                     <span class="lg:text-3xl lg:w-fit p-3 text-[#0F51AE] rounded-3xl font-semibold" id="clock"></span>
                 </div>

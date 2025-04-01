@@ -35,12 +35,12 @@
                     <label for="" class="block text-base font-medium text-black">
                         Who are you?
                         </label>
-                    <input type="text" list="staff" placeholder="Type in your name" class="p-4 focus:border-blue-300 rounded-md outline-none text-black border border-gray-400 w-1/2" name="picked_by">
-                    <datalist id="staff" class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-1/2" name="picked_by" required >
+                    <select id="staff" class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-1/2" name="picked_by" required >
+                        <option value="" selected disabled class="">Select your name</option>
                         @foreach ($employees as $employee)
-                    <option value="{{$employee->id}}" class="">{{$employee->first_name}} {{$employee->last_name}}</option>
+                    <option value="{{$employee->id}}" class="text-blue-500 lg:text-xl text-lg">{{$employee->first_name}} {{$employee->last_name}}</option>
                         @endforeach
-                    </datalist>
+                    </select>
 
 
                       <label for="" class="block text-base font-medium text-black">

@@ -8,7 +8,7 @@
     <div id="visitors-table" class="rounded-lg  space-y-4  p-5">
         <table class="w-full text-left text-gray-500">
 
-            @if(\App\Models\Roles::hasPermission(auth()->id(), 'staff', 'create'))
+            @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'staff', 'create'))
             <div class="flex justify-end">
                 <a href="{{ url('check-visitor') }}" class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4]">Log Visitor</a>
                 
@@ -60,7 +60,7 @@
                             <a href="{{ url('visit/' . $person->id) }}" class="font-medium text-blue-600 text-lg hover:underline">View</a>
                         </td>
 
-                        @if(\App\Models\Roles::hasPermission(auth()->id(), 'visits', 'create'))
+                        @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'visits', 'create'))
                         @if ($person->status === 'ongoing')
                         <td class="px-3 py-4">
 

@@ -7,6 +7,22 @@
 
 
     
+    @if(session('departed'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            title: 'Thank You!',
+            text: 'Thank you for visiting us today. We hope to see you again soon!',
+            icon: 'success',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Have a great day!'
+        }).then(() => {
+            // Redirect to homepage after they dismiss the alert
+            window.location.href = '{{ url("/") }}';
+        });
+    });
+</script>
+@endif
 
      <form action="{{ url('exit/'.$visitor['id'])}}" method="POST" class="flex flex-col gap-y-10 h-full gap-4 m-auto justify-center items-center w-full">
         @csrf

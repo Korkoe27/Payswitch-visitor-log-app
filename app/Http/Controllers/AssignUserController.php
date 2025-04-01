@@ -56,7 +56,7 @@ class AssignUserController extends Controller
         try{
             return DB::transaction(function () use ($request){
                 $employee = Employee::findOrFail($request->employee_id);
-                $role = Employee::findOrFail($request->role_id);
+                $role = Roles::findOrFail($request->role_id);
                 // $token =Str::random(60);
                 $user = User::create([
                     'name' => trim(implode(' ', [
@@ -71,11 +71,14 @@ class AssignUserController extends Controller
                 ]);
                 
 
+
+
                 $token = Password::createToken($user);
 
                 Log::debug("new token" . $token);
 
                 Log::debug("NEW USER: " . $user);
+                Log::debug("Role Info : " . $role);
 
                 Mail::to($user->email)->send(new AssignUser($user, $token));
 
