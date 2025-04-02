@@ -17,7 +17,7 @@
     </div>
    
     @endif
-    <table class="w-full text-sm text-left text-gray-500">
+    <table class="w-full text-sm text-left text-gray-500" id="devices">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
                 <th scope="col" class="px-6 lg:text-lg py-3">Serial Number</th>
@@ -60,5 +60,9 @@
     </table>
 </div> 
 
-
+<script>
+    $(document).ready( function () {
+    $('#devices').DataTable();
+} );
+</script>
 </x-layout>

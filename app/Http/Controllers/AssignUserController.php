@@ -161,5 +161,32 @@ class AssignUserController extends Controller
             :   back()->withErrors(['email'=> [__($status)]]);
     }
 
+
+
+    public function destroy($id){
+        try{
+            $user = User::findOrFail($id);
+            $user->delete();
+
+
+            Activities::log(
+                action: 'Deleted a user',
+                description:    'Revoked ' . $user->name . '`s access to the platform'
+            );
+
+
+
+            return response()->json([
+                'success' => true,
+                'message' => 'User deleted successfully'
+            ], 200);
+        }   catch(\Exception $e){
+            return response()->json([
+                'success'=>false,
+                'error'=>'Failed to delete user'
+            ],  500);
+        }
+    }
+
     
 }

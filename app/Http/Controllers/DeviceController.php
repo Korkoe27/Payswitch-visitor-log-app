@@ -25,7 +25,7 @@
                         END
                     ")
                     ->orderBy('created_at', 'asc') // Maintain order by time
-                    ->simplePaginate(15)
+                    ->get()
             ]);
         }
         

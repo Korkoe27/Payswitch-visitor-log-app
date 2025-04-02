@@ -12,7 +12,7 @@
             </div>
 
             @endif
-        <table class="w-full text-sm text-left text-gray-500">
+        <table class="w-full text-sm text-left text-gray-500" id="keys">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
                 <th scope="col" class="px-6 lg:text-lg py-3">Key</th>
@@ -64,5 +64,11 @@
     </table>
 
     </main>
+
+    <script>
+        $(document).ready( function () {
+    $('#keys').DataTable();
+} );
+    </script>
     
 </x-layout>

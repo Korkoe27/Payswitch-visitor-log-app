@@ -21,9 +21,25 @@
              <button class="bg-gradient-to-b px-10  text-2xl w-fit rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4]" type="submit">Submit</button>
         </form>
     </main>
-<script>
+
+
+
+    <script>
+    
+
     document.getElementById('find-visitor').addEventListener('submit', async function (e) {
     e.preventDefault();
+
+    // Show initial loading spinner
+    Swal.fire({
+        title: 'Processing...',
+        html: '<div class="flex justify-center"><div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"></div></div>',
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
 
     let phoneNumber = document.getElementById('phone_number');
     let phone_number = phoneNumber.value
@@ -43,20 +59,23 @@
         });
 
         let data = response.data;
+        // Close the loading spinner
+        Swal.close();
 
         if (data.success) {
             const { value: otp } = await Swal.fire({
                 icon: "info",
                 title: "Enter OTP",
                 input: "text",
-                inputLabel: "OTP has been sent to your phone",
+                inputLabel: "A code has been sent to your phone",
                 text: data.message, // Display the message from the server
                 showCancelButton: true,
                 confirmButtonText: "Verify",
                 preConfirm: async (otp) => {
+                    // Show loading spinner during OTP verification
+                    Swal.showLoading();
                     try {
-
-                        console.log("trying OTP")
+                        console.log("trying OTP");
                         let verifyResponse = await axios.post("{{ route('verify-otp') }}", {
                             otp: otp
                         }, {
@@ -65,15 +84,15 @@
                             }
                         });
 
-
-
                         let result = verifyResponse.data;
 
                         if (!result.success) {
+                            Swal.hideLoading();
                             Swal.showValidationMessage(result.message);
                         }
                         return result;
                     } catch (error) {
+                        Swal.hideLoading();
                         Swal.showValidationMessage(
                             error.response?.data?.message || 
                             "An error occurred. Please try again."
@@ -90,7 +109,17 @@
                     timer: 2000, // Auto close after 2 seconds
                     showConfirmButton: false
                 }).then(() => {
-                    window.location.href = otp.redirect;
+                    // Show spinner during redirect
+                    Swal.fire({
+                        title: 'Redirecting...',
+                        html: '<div class="flex justify-center"><div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"></div></div>',
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                            window.location.href = otp.redirect;
+                        }
+                    });
                 });
             }
 
@@ -103,7 +132,17 @@
                 timer: 2000, // Auto close after 2 seconds
                 showConfirmButton: false
             }).then(() => {
-                window.location.href = data.redirect;
+                // Show spinner during redirect
+                Swal.fire({
+                    title: 'Redirecting...',
+                    html: '<div class="flex justify-center"><div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"></div></div>',
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                        window.location.href = data.redirect;
+                    }
+                });
             });
         } else {
             // Handle other error scenarios
@@ -117,6 +156,8 @@
         }
 
     } catch (error) {
+        // Close loading spinner on error
+        Swal.close();
         console.error("Error:", error);
         Swal.fire({
             icon: "error",
@@ -127,7 +168,7 @@
         });
     }
 });
-</script>
+    </script>
     
 
 </x-layout>

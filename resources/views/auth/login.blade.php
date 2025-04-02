@@ -73,7 +73,7 @@
 
 
     <script>
-        $(document).ready(function () {
+ $(document).ready(function () {
             let passwordField = $("#password");
             let showPasswordIcon = $("svg:first-of-type");
             let hidePasswordIcon = $("svg:last-of-type");
@@ -91,6 +91,40 @@
                 hidePasswordIcon.hide();
                 showPasswordIcon.show();
             });
+
+            // Sweet Alert Toast Function
+            function showToast(icon, title, text) {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                });
+
+                Toast.fire({
+                    icon: icon,
+                    title: title,
+                    text: text
+                });
+            }
+
+            // Check for session flash messages
+            @if(session('success'))
+                showToast('success', 'Success!', "{{ session('success') }}");
+            @endif
+
+            @if(session('error'))
+                showToast('error', 'Error!', "{{ session('error') }}");
+            @endif
+
+            @if($errors->any())
+                showToast('error', 'Error!', "{{ $errors->first() }}");
+            @endif
         });
     </script>
 </body>

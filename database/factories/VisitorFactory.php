@@ -21,9 +21,10 @@ class VisitorFactory extends Factory
     public function definition(): array
     {
         return [
-            'first_name' => fake()->firstName(),
-            // 'other_name' => fake()->firstName(),
-            'last_name' => fake()->lastName(),
+            // 'first_name' => fake()->firstName(),
+            // // 'other_name' => fake()->firstName(),
+            // 'last_name' => fake()->lastName(),
+            'full_name'=>fake()->name(),
             'email' => fake()->safeEmail(),
             'phone_number' => fake()->phoneNumber(),
             'employee_Id' => Employee::inRandomOrder()->first()->id,

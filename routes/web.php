@@ -54,9 +54,9 @@ Route::get('/', function () {
         ->with(['key', 'employee'])
         ->simplePaginate(10);
 
-        // $visitors = Visitor::where('status', 'ongoing')->simplePaginate(5);
+        $all_visits = Visitor::where('status', 'ongoing')->get();
         
-        // Log::debug( $visitors);
+        Log::debug( count($all_visits));
         return view('index',[
                 'visitor' => Visitor::where('status', 'ongoing')
                 ->whereDate('created_at', Carbon::today())
@@ -66,7 +66,7 @@ Route::get('/', function () {
         'keys' => KeyEvent::with('employee')->where('status', 'picked')->simplePaginate(10),
         'all_keys' => Visitor::where('created_at', Carbon::today())->get(),
         
-        ],compact('devices','keys'));
+        ],compact('devices','keys','all_visits'));
 
 
 })->name('/');
@@ -191,6 +191,7 @@ Route::get('/', function () {
                         Route::get('roles','index')->middleware('module.permission:roles,view');
                         Route::get('create-role','create')->middleware('module.permission:roles,view,create,modify,delete');
                         Route::post('store-role','store')->middleware('module.permission:roles,create,modify,delete');
+                        Route::delete('delete-role','destroy')->middleware('module.permission:roles,create,modify,delete');
                 });
 
 
@@ -219,7 +220,7 @@ Route::get('/', function () {
                         Route::get('users','index')->middleware('module.permission:user,view');
                         Route::get('create-user','create')->middleware('module.permission:user,create,modify,delete');
                         Route::post('assign-user','store')->middleware('module.permission:user,create,modify,delete');
-                        Route::delete('revoke-access','destroy')->middleware('module.permission:user,create,modify,delete');
+                        Route::delete('/revoke-access/{id}','destroy')->middleware('module.permission:user,create,modify,delete');
 
                 });
 

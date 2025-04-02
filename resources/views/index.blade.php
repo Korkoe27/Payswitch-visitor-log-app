@@ -6,29 +6,37 @@
 
 
     @if(session('success'))
+
+    @php
+        $imageUrl = asset('PS-logo.png');
+    @endphp
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            let title = 'Success!';
-            let text = 'The operation completed successfully.';
+            // let title = 'Success!';
+            // let text = 'The operation completed successfully.';
+            let imageUrl = `{{ $imageUrl }}`;
             
             @if(session('success_type') == 'visitor_departure')
-                title = 'Good Bye!';
-                text = 'Thank you for visiting us today. We hope to see you again soon!';
+                let title = 'Good Bye!';
+                let text = 'Thank you for visiting us today. We hope to see you again soon!';
             @elseif(session('success_type') == 'visitor_arrival')
-                title = 'Welcome to PaySwitch!';
-                text = 'We are happy to have you. Enjoy your visit';
+                let title = 'Welcome to PaySwitch!';
+                let text = 'We are happy to have you. Enjoy your visit';
             @elseif(session('success_type') == 'key_pickup')
-                title = 'Key Logged!';
-                text = 'The key pickup has been recorded successfully.';
+                let title = 'Key Logged!';
+                let text = 'The key pickup has been recorded successfully.';
             @elseif(session('success_type') == 'device_logged')
-                title = 'Device Logged!';
-                text = 'The device has been logged successfully.';
+                let title = 'Device Logged!';
+                let text = 'The device has been logged successfully.';
             @endif
             
             Swal.fire({
                 title: title,
                 text: text,
-                icon: 'success',
+                imageUrl: imageUrl,
+                imageWidth: 150,
+                imageHeight: 100,
+                // icon: 'success',
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'OK'
             }).then(() => {
@@ -72,7 +80,7 @@
                 </h3>
                 
                 <h1 class="">
-                    <span class="lg:text-6xl font-bold text-5xl">{{ $visitor ? count($visitor) : 0 }}</span>
+                    <span class="lg:text-6xl font-bold text-5xl">{{ $all_visits ? count($all_visits) : 0 }}</span>
                 </h1>
 
                 <div class="flex justify-between gap-3 lg:gap-0">
@@ -158,6 +166,9 @@
                 </tr>
             </thead>
             <tbody class="text-base">
+                @if (!$visitor)
+                    <h1 class="text-center text-black">No data</h1>
+                @endif
                 @foreach ($visitor as $person)
                     <tr class="odd:bg-white even:bg-gray-50 border-b">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $person->full_name }}</th>
@@ -235,6 +246,41 @@
             });
         });
     });
+
+
+    function showToast(icon, title, text) {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+
+                Toast.fire({
+                    icon: icon,
+                    title: title,
+                    text: text
+                });
+            }
+
+            // Check for session flash messages
+            @if(session('success'))
+                showToast('success', 'Success!', "{{ session('success') }}");
+            @endif
+
+            @if(session('error'))
+                showToast('error', 'Error!', "{{ session('error') }}");
+            @endif
+
+            @if($errors->any())
+                showToast('error', 'Error!', "{{ $errors->first() }}");
+            @endif
+        });
 </script>
 
 </x-layout>

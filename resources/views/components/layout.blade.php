@@ -9,6 +9,8 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
     @vite('resources/css/app.css')
     <title>Visitor Log</title>
 </head>
@@ -86,7 +88,7 @@
                 </li>
                 @endif
                 {{-- @if(true) --}}
-                @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'reports', 'view'))
+                {{-- @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'reports', 'view'))
                 <li class="">
                     <x-nav-link href="{{ url('records') }}" :active="request()->is('records')">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -99,7 +101,7 @@
                     </x-nav-link>
                 </li>
 
-                @endif
+                @endif --}}
 
                 @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'logs', 'view'))
                 <li class="">

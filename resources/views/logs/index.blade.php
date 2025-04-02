@@ -6,8 +6,8 @@
 
 
 
-    <main class="">
-        <table class="w-full text-sm text-left text-gray-500">
+    <main class="p-10">
+        <table class="w-full text-sm text-left text-gray-500" id="logs">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
                     <th scope="col" class="px-6 py-3 lg:text-xl text-lg ">User</th>
@@ -35,12 +35,16 @@
         
         
         </table>
-        <div class="px-6 py-4">
-            {{ $logs->links() }}
-        </div> 
+
 
     </main>
 
+
+    <script>
+        $(document).ready( function () {
+    $('#logs').DataTable();
+} );
+    </script>
 
 
 </x-layout>

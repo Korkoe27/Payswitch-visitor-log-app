@@ -12,7 +12,7 @@
       
 
       <div class="hidden">
-            <input type="hidden" name="full_name"value="{{ $visitor->first_name }}  {{ $visitor->last_name }}">
+            <input type="hidden" name="full_name"value="{{ $visitor->full_name}}">
             <input type="hidden" name="company_name" value="{{ $visitor->company_name }}">
             <input type="hidden" name="email" value="{{ $visitor->email }}">
             <input type="hidden" name="phone_number" value="{{ $visitor->phone_number }}">
@@ -22,7 +22,7 @@
       <div class="bg-[#F2F8FF] rounded-xl p-5 justify-between flex">
          {{-- <div class="flex"> --}}
             <div class="w-3/4 flex-col gap-5 justify-between flex lg:p-5">
-                <h4 class="lg:text-4xl font-bold text-blue-800">{{ $visitor->first_name }}  {{ $visitor->last_name }}</h4>
+                <h4 class="lg:text-4xl font-bold text-blue-800">{{ $visitor->full_name}}</h4>
 
 
                <span class="">

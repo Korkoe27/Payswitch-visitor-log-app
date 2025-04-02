@@ -14,7 +14,11 @@ class UserAuthController extends Controller
     public function login(Request $request){
 
         // Log::debug($request->all());
-        $attributes = request()->validate([
+
+        try{
+
+        
+        $attributes = $request->validate([
             'email'=>   ['required', 'email'],
             'password'=> ['required'],
         ]);
@@ -32,7 +36,18 @@ class UserAuthController extends Controller
             description: ' logged in!'
         );
 
-        return redirect('/');
+        return response()->json([
+            'success'=>true,
+            'message'=>'Welcome back! You have successfully logged in',
+            'redirect'=>route('/')
+        ]);
+
+    } catch (ValidationException $e) {
+        return back()->withErrors($e->errors())->withInput();
+    } catch (\Exception $e) {
+        Log::error('Login error: ' . $e->getMessage());
+        return back()->with('error', 'An unexpected error occurred. Please try again.');
+    }
     }
 
     public function logout(Request $request){

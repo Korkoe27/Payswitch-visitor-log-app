@@ -11,7 +11,7 @@ class ActivitiesController extends Controller
         return view('logs.index',[
             'logs'=>Activities::with('user')
             ->orderBy('created_at','desc')
-            ->simplePaginate(10),
+            ->get(),
         ]);
     }
 }
