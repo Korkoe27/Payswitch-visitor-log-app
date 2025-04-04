@@ -28,7 +28,6 @@ class EmployeeFactory extends Factory
             'last_name' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
             'phone_number' => fake()->phoneNumber(),
-            'vehicle_number' => fake()->numerify('GR-###-##'),
             'department_id' => Department::inRandomOrder()->first()->id, // Assign an existing department
             'job_title' => fake()->jobTitle(),
             'gender' => fake()->randomElement(['male', 'female']),

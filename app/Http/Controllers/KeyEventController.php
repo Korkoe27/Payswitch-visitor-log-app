@@ -25,24 +25,23 @@ class KeyEventController extends Controller
         return view('keys.create',compact('employees','keys'));
         }
     
-        public function logKey() {
+        public function logKey(Request $request) {
 
             Log::debug('pick key');
-            request()->validate([
+            $request->validate([
                 'picked_by' => 'required|exists:employees,id',
-                'key_name' => 'required',
+                'key_number' => 'required|exists:keys,id',
             ]);
-            Log::debug('staff ' . request('picked_by'));
+            Log::debug('staff ' . $request->picked_by);
+            Log::debug('key ' . $request->key_number);
 
-            $pickedKey = Key::where('key_name', request('key_name'))->firstOrFail();
+            // Log::debug('key details: ' . $pickedKey);
+            $key_number = $request->key_id;
 
-            $key_number = $pickedKey->key_id;
 
-
-            Log::debug('key details: ' . $pickedKey);
         
 
-            $employee = Employee::findOrFail(request('picked_by'));
+            $employee = Employee::findOrFail($request->picked_by);
             
             // dd('Hello there');
             // dd($employee);

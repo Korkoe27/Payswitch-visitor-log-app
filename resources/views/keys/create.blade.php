@@ -46,12 +46,12 @@
                       <label for="" class="block text-base font-medium text-black">
                         Key you are picking.
                         </label>
-                        <input type="text" name="key_name" placeholder="Enter the Key name." class="p-4 focus:border-blue-300 rounded-md outline-none text-black border border-gray-400 w-1/2" list="keys">
-                      <datalist id="keys" class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-1/2" name="key_name" required >
+                      <select id="keys" class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-1/2" name="key_number" required >
+                        <option value="" selected disabled class="">Select Key</option>
                         @foreach ($keys as $key)
-                         <option value="{{$key->key_name}}" class="text-black"></option>
+                         <option value="{{$key->id}}" class=" odd:text-blue-500 even:text-green-500">{{$key->key_name}}</option>
                         @endforeach
-                      </datalist>
+                      </select>
 
                    </div>
                 </div>

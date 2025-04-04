@@ -434,33 +434,41 @@ return redirect('/')->with([
                 try {
                         $credentials = base64_encode('Testfa5348423c6b6533e0b04a7ed496d29f:975kp*4ZuLAE0%$R@Xeot^3#');
                     
+
+                        $data_request = [
+                            'phonenumber' => $phone_number,
+                            'code' => $request->otp,
+                            'key' => $otpKey
+                        ];
+
+                        Log::debug("Data request: ", $data_request);
+
                     $response = Http::withHeaders([
                         'Authorization' => 'Basic ' . $credentials,
                         'Content-Type' => 'application/json'
-                    ])->post('https://smpp.theteller.net/send/pin/verify', [
-                        'phone_number' => $phone_number,
-                        'otp' => $request->otp,
-                        'key' => $otpKey
-                    ]);
+                    ])->post('https://smpp.theteller.net/send/pin/verify', $data_request);
+
+                    Log::debug("response: " . $response);
             
-                    $responseData = $response->json();
-                    Log::debug('OTP Verify Response: ' . json_encode($responseData));
-            
-                    if ($response->successful()) {
+                    // $responseData = $response->json();
+                    // Log::debug('OTP Verify Response: ' . json_encode($responseData));
+                    
+                    $response_obj = json_decode($response);
+                    if ($response_obj->status == 200) {
                         session()->forget(['otp_key', 'phonenumber']);
                         $visitor = Visitor::where('phone_number', $phone_number)->first();
                         return response()->json([
                             'success' => true,
                             'redirect' => route('old-visitor', $visitor->id),
                             'message' => 'OTP verified successfully!',
-                            'data' => $responseData
+                            'data' => $response
                         ]);
                     }
             
                     return response()->json([
                         'success' => false, 
-                        'message' => $responseData['message'] ?? 'Invalid OTP. Please try again.',
-                        'error' => $responseData
+                        'message' => $response['message'] ?? 'Invalid OTP. Please try again.',
+                        'error' => $response
                     ], 400);
             
                 } catch (Exception $e) {

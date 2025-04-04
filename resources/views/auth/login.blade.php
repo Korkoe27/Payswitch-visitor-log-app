@@ -51,10 +51,10 @@
                 </div>
                 </div>
 
-                <label for="saveLogins" class="flex gap-4 items-center">
+                {{-- <label for="saveLogins" class="flex gap-4 items-center">
                     <input type="checkbox" name="" id="">
                     Save my logins
-                </label>
+                </label> --}}
 
                 <button type="submit" class="md:w-[420px] wifull rounded p-3 bg-gradient-to-b from-[#247efc] to-[#0c66e4] text-white ">Login</button>
             </form>

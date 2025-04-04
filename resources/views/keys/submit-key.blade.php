@@ -8,7 +8,14 @@
 
     <main class="w-1/2 flex flex-col gap-4 p-10">
         <aside class="w-fit">
-            <h4 class="text-xl font-light">You are returning the <span class="text-red-500 font-bold text-xl">{{$keyEvent?->key()->first()?->key_name}}</span> Key.</h4>
+
+
+            @php
+            
+                $key = App\Models\Key::findOrFail($keyEvent->key_number);
+
+            @endphp
+            <h4 class="text-xl font-light">You are returning the <span class="text-red-500 font-bold text-xl">{{$key->key_name}}</span> Key.</h4>
         </aside>
         <form action="{{ url('return-key/'.$keyEvent['id']) }}" class="flex w-1/2  gap-y-4 flex-col" method="POST">
 
@@ -23,7 +30,7 @@
             @endforeach
           </select>
 
-          <button class="bg-blue-600 text-lg w-1/2 rounded-lg text-white p-3" type="button" onclick="confirmReturn(this)" data-key-id="{{ $keyEvent?->id }}" data-key-name="{{ $keyEvent?->key()->first()?->key_name }}">Return Key</button>
+          <button class="bg-blue-600 text-lg w-1/2 rounded-lg text-white p-3" type="button" onclick="confirmReturn(this)" data-key-id="{{ $keyEvent?->id }}" data-key-name="{{ $key->key_name }}">Return Key</button>
         </form>
     </main>
 
@@ -91,6 +98,7 @@
             }
         }
         </script>
+        
         
 
 

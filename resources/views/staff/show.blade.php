@@ -35,6 +35,7 @@
       <dt class="text-sm font-medium text-gray-600">Employee Number</dt>
       <dd class="text-lg font-semibold text-blue-600">{{ $employees->employee_number  ?? 'N/A'}}</dd>
     </div>
+
     <div class="flex flex-col text-right">
         <dt class="text-sm font-medium text-gray-600">Phone Number</dt>
         <dd class="text-lg font-semibold text-blue-600">{{ $employees->phone_number  ?? 'N/A'}}</dd>

@@ -86,7 +86,7 @@
 
 
         public function signOutDevice(Device $device){
-            // dd($device->status);
+            dd($device->status);
             if($device->status == 'takeHome'){
                 $status = 'returned';
                 $device->update([

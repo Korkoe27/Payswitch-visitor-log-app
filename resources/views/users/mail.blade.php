@@ -6,23 +6,20 @@
     <title>User Account Created</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 grid h-screen mx-auto place-content-center">
     <div class="max-w-2xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden my-10">
         <div class="p-6">
-            <div class="flex items-center mb-6">
-                <svg class="w-12 h-12 text-blue-500 mr-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.001 5.001 0 0010 15a5.001 5.001 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd" />
-                </svg>
-                <h1 class="text-2xl font-bold text-gray-800">User Account Created</h1>
-            </div>
-Copy        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+            <div class="flex flex-col items-center justify-center ">
+                <img src="{{ asset('PS-logo.png') }}" alt="" class="lg:w-1/2 md:w-1/3">
+                <h1 class="text-2xl font-bold text-blue-400">Account Created</h1>
+            </div>        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
             <p class="text-blue-700 font-medium">
                 Dear {{ $user->name }},
             </p>
         </div>
 
         <div class="space-y-4 text-gray-700">
-            <p>
+            <p class="p-5 text-center">
                 Your user account for the PaySwitch Visitor Management System has been created. 
                 To complete your account setup, please reset your password by clicking the button below.
             </p>

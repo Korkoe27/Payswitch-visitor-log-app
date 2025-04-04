@@ -16,9 +16,14 @@
             <span class="text-[#848A9C] font-medium">Email:</span>
             <span class="">{{ $visitor->email }}</span>
         </div>
+
+        @php
+        $number = str_replace('233', '0',$visitor->phone_number);
+        // dd($number)
+      @endphp
         <div class="flex justify-between border-b border-gray-100 p-3">
             <span class="text-[#848A9C] font-medium">Phone:</span>
-            <span class="">{{ $visitor->phone_number }}</span>
+            <span class="">{{ $number }}</span>
         </div>
         <div class="flex justify-between border-b border-gray-100 p-3">
             <span class="text-[#848A9C] font-medium">Visitee:</span>

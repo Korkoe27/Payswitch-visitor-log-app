@@ -30,7 +30,7 @@ class EmployeeController extends Controller
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'other_name' => '',
-                'employee_number' => 'required',
+                // 'employee_number' => 'required',
                 'email' => 'email',
                 'phone_number' => 'required',
                 'department_id' => 'required|exists:departments,id',
@@ -50,7 +50,7 @@ class EmployeeController extends Controller
                 'email' => request('email'),
                 'phone_number' => request('phone_number'),
                 'department_id' => request('department_id'),
-                'vehicle_number' => request('vehicle_number'),
+                // 'vehicle_number' => request('vehicle_number'),
                 'job_title' => request('job_title'),
                 'access_card_number' => request('access_card_number'),
                 'gender' => request('gender')

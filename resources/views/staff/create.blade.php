@@ -99,17 +99,6 @@
                 </select>
              </div>
              </div>
-            <div class="w-full px-4 md:w-1/2 lg:w-1/2">
-                <div class="mb-12">
-                   <label for="vehicle_number" class="mb-[10px] block text-base font-medium text-black">
-                   Vehicle Number
-                   </label>
-                   <input type="text" placeholder="GR 123 25" id="vehicle_number" name="vehicle_number" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
-                </div>
-                {{-- @error('vehicle_number')
-                <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
-                @enderror --}}
-             </div>
 
 
             <div class="w-full px-4 md:w-1/2 lg:w-1/2">
@@ -138,11 +127,11 @@
                 <h3 class="mb-4 font-semibold text-gray-900">Gender</h3>
              <div class="flex w-full px-4 md:w-1/2 lg:w-1/2">
                 <div class="flex items-center me-4">
-                    <input id="inline-radio" type="radio" value="female" name="gender" required class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="inline-radio" class="ms-2 text-sm font-medium text-gray-900 ">Female</label>
+                    <input id="inline-radio" type="radio" value="female" name="gender" required class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <label for="inline-radio" class="ms-2 text- font-medium text-gray-900 ">Female</label>
                 </div>
-                <div class="flex items-center me-4">
-                    <input id="inline-2-radio" type="radio" value="male" name="gender" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                <div class="flex items-center">
+                    <input id="inline-2-radio" type="radio" value="male" name="gender" class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500  focus:ring-2">
                     <label for="inline-2-radio" class="ms-2 text-sm font-medium text-gray-900">Male</label>
                 </div>
              </div>             
