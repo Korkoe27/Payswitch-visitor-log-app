@@ -1,3 +1,14 @@
+{{-- @php
+    session_start();
+
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== TRUE) {
+  header('login');
+  exit;
+} else{
+  header('/');
+}
+@endphp --}}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -250,7 +261,52 @@ setInterval(updateClock, 1000);
                 logoutButton.classList.toggle('hidden');
             });
         });
-        </script>
+
+
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+    // Your existing showToast function
+    function showToast(icon, title, text) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+
+        Toast.fire({
+            icon: icon,
+            title: title,
+            text: text
+        });
+    }
+
+    // Check for session flash messages
+    @if(session('success'))
+        // Check if this is a login success message
+        @if(strpos(session('success'), 'Welcome back') !== false)
+            showToast('success', 'Logged In!', "{{ session('success') }}");
+        @else
+            showToast('success', 'Success!', "{{ session('success') }}");
+        @endif
+    @endif
+
+    @if(session('error'))
+        showToast('error', 'Error!', "{{ session('error') }}");
+    @endif
+
+    @if($errors->any())
+        showToast('error', 'Error!', "{{ $errors->first() }}");
+    @endif
+});
+    </script>
+
 
 
 </body>

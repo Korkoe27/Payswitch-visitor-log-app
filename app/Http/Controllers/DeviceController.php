@@ -84,27 +84,44 @@
             }
         }
 
-
-        public function signOutDevice(Device $device){
-            dd($device->status);
-            if($device->status == 'takeHome'){
-                $status = 'returned';
-                $device->update([
-                    'status' => $status,
-                    'returned_at' => Carbon::now(),
+        public function signOutDevice(Device $device)
+        {
+            try {
+                // Remove the dd() as it stops execution
+                // dd($device->status);
+                
+                if($device->status == 'takeHome'){
+                    $status = 'returned';
+                    $device->update([
+                        'status' => $status,
+                        'returned_at' => Carbon::now(),
+                    ]);
+                    $message = 'Device returned successfully.';
+                } else {
+                    $status = 'signed_out';
+                    $device->update([
+                        'status' => $status,
+                        'signed_out_at' => Carbon::now(),
+                    ]);
+                    $message = 'Device signed out successfully.';
+                }
+                
+                Activities::log(
+                    action: 'Updated Device Log'
+                );
+                
+                // Return JSON response for AJAX request
+                return response()->json([
+                    'success' => true,
+                    'message' => $message,
+                    'device' => $device
                 ]);
-            }else{
-                $status = (string) 'signed_out';
-
-                $device->update([
-                    'status' => $status,
-                    'signed_out_at' => Carbon::now(),
-                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error processing request: ' . $e->getMessage()
+                ], 500);
             }
-            Activities::log(
-                action: 'Updated Device Log'
-            );
-            return redirect()->back()->with('success', 'Device signed out successfully.');
         }
 
     }

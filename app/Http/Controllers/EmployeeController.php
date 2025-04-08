@@ -40,6 +40,11 @@ class EmployeeController extends Controller
                 'gender'=> 'required',
         
             ]);
+
+            $phone = request()->phone_number;
+            
+            $formattedPhone = preg_replace('/^0/','233',$phone);
+            
         
         
             Employee::create([
@@ -48,7 +53,7 @@ class EmployeeController extends Controller
                 'other_name' => request('other_name'),
                 'employee_number' => request('employee_number'),
                 'email' => request('email'),
-                'phone_number' => request('phone_number'),
+                'phone_number' => $formattedPhone,
                 'department_id' => request('department_id'),
                 // 'vehicle_number' => request('vehicle_number'),
                 'job_title' => request('job_title'),

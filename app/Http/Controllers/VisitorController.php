@@ -360,12 +360,12 @@ return redirect('/')->with([
                 if ($visitor) {
                     try {
                         // Credentials from cURL example
-                        $credentials = base64_encode('Testfa5348423c6b6533e0b04a7ed496d29f:975kp*4ZuLAE0%$R@Xeot^3#');
+                        $credentials = base64_encode(config('otp.username') . ':' . config('otp.password'));
                         
                         $response = Http::withHeaders([
                             'Authorization' => 'Basic ' . $credentials,
                             'Content-Type' => 'application/json'
-                            ])->post('https://smpp.theteller.net/send/pin', [
+                            ])->post(config('otp.base_url').'/pin', [
                                 'phonenumber' => $request->phone_number
                             ]);
                             Log::debug("Visitor: ". json_encode($visitor));
@@ -432,9 +432,8 @@ return redirect('/')->with([
                 }
             
                 try {
-                        $credentials = base64_encode('Testfa5348423c6b6533e0b04a7ed496d29f:975kp*4ZuLAE0%$R@Xeot^3#');
+                        $credentials = base64_encode(config('otp.username') . ':' . config('otp.password'));
                     
-
                         $data_request = [
                             'phonenumber' => $phone_number,
                             'code' => $request->otp,
@@ -446,7 +445,7 @@ return redirect('/')->with([
                     $response = Http::withHeaders([
                         'Authorization' => 'Basic ' . $credentials,
                         'Content-Type' => 'application/json'
-                    ])->post('https://smpp.theteller.net/send/pin/verify', $data_request);
+                    ])->post(config('otp.base_url').'/pin/verify', $data_request);
 
                     Log::debug("response: " . $response);
             

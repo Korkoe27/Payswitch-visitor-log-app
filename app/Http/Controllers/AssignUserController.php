@@ -58,6 +58,12 @@ class AssignUserController extends Controller
                 $employee = Employee::findOrFail($request->employee_id);
                 $role = Roles::findOrFail($request->role_id);
                 // $token =Str::random(60);
+
+
+
+                if($role->name !== 'security'){
+
+
                 $user = User::create([
                     'name' => trim(implode(' ', [
                         $employee->first_name, 
@@ -94,6 +100,36 @@ class AssignUserController extends Controller
 
         return redirect()->back()->with('success', 'User created successfully. An invitation email has been sent.');
 
+
+                } else{
+
+
+                    $username = Str::lower($employee->first_name . $employee->last_name) . mt_rand(1000, 9999);
+                    $user = User::create([
+                        'name' => trim(implode(' ', [
+                            $employee->first_name, 
+                            $employee->other_name ?? '', 
+                            $employee->last_name
+                        ])),
+                        'username' => $username,
+                        'role_id' => $request->input('role_id'),
+                        'password' => Hash::make('NewSecurity@1234'),
+                        // 'password_reset_token' => $token,
+                    ]);
+
+                    Log::debug("NEW USER: " . $user);
+
+                    $employee->update(['is_user' => true]);
+
+        
+                    Activities::log(
+                        action: 'Added a new user',
+                        description: 'Assigned ' . $role->name . ' role to ' . $employee->first_name . ' ' . $employee->last_name
+                    );
+            
+                    return redirect()->back()->with('success', 'Security User created successfully. ');
+
+                }
         });
         }catch (\Exception $e){
 

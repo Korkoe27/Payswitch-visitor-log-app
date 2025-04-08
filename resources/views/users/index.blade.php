@@ -10,7 +10,7 @@
     <main class="p-5">
         @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'keys', 'create'))
         <div class="flex justify-end p-5 items-center">
-            <a href="{{ url('create-user') }}" class="px-3 text-white py-2 rounded-md bg-green-500">Create New User</a>
+            <a href="{{ url('create-user') }}" class="bg-gradient-to-b lg:px-10 px-3 lg:text-xl text-lg rounded-lg lg:py-2 py-1 text-white from-[#247EFC] to-[#0C66E4]">Create New User</a>
         </div>
 
         @endif
@@ -28,13 +28,12 @@
                 @foreach ($users as $user)
                     <tr class="odd:bg-white even:bg-gray-50 border-b">
                         <th scope="row" class="px-6 py-4 text-base lg:text-xl font-medium text-gray-900 whitespace-nowrap">{{ $user?->name }}</th>
-                        <th scope="row" class="px-6 py-4 text-base font-medium text-gray-900 lg:text-lg whitespace-nowrap">{{ $user?->role?->name }} </th>
+                        <th scope="row" class="px-6 py-4 text-base font-medium text-gray-900 lg:text-lg uppercase whitespace-nowrap">{{ $user?->role?->name }} </th>
                         <td class="px-3 py-4">
-                            @if ($user?->role?->name !== 'Admin')
+                            @if ($user?->role?->name !== 'admin')
                                 
                             <button type="button"  data-user-id="{{ $user?->id }}" data-user-name="{{ $user?->name }}" onclick="confirmDelete({{ $user?->id }})"
-                                class="delete-btn bg-gradient-to-b px-5 w-fit text-xl rounded-lg py-2 text-white 
-                                from-red-500 to-red-700 flex items-center"
+                                class="font-medium text-red-500 px-3 py-1 text-lg rounded-lg border border-red-400"
                                 >Delete User</button>
                                 @endif
                             </td>

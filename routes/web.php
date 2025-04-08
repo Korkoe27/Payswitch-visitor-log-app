@@ -25,6 +25,9 @@ Route::middleware('guest')->group(function () {
         // Updated password reset routes
         Route::get('/reset-password/{token}', [AssignUserController::class, 'showResetForm'])
             ->name('password.reset'); // Changed to standard name
+
+        
+        Route::get('/newUser',[AssignUserController::class, 'newUser'])->name('newUser');
         
         Route::post('/reset-password', [AssignUserController::class, 'resetPassword'])
             ->name('password.update'); // Changed to standard name
@@ -127,12 +130,14 @@ Route::get('/', function () {
 
                 Route::controller(KeyEventController::class)->group(function(){
 
-                        Route::get('keys', 'pickedKeys');
+                        Route::get('keys', 'pickedKeys')->name('keys');
                         Route::get('pick-key', 'pickKey');
 
                         Route::post('log-key',  'logKey');
 
                         Route::get('submit-key/{keyEvent}', 'submitKey');
+
+                        Route::post('confirmKey','verifyOtp')->name('confirmKey');
 
                         Route::patch('return-key/{keyEvent}',  'returnKey');
 

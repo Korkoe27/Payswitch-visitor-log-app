@@ -24,11 +24,14 @@
 </script>
 @endif
 
-     <form action="{{ url('exit/'.$visitor['id'])}}" method="POST" class="flex flex-col gap-y-10 h-full gap-4 m-auto justify-center items-center w-full">
+<main class="flex-col flex justify-center items-center py-64 m-auto">
+
+     <form action="{{ url('exit/'.$visitor['id'])}}" method="POST" class="w-full flex-col flex m-auto justify-center items-center gap-10">
+     {{-- <form action="{{ url('exit/'.$visitor['id'])}}" method="POST" class="flex flex-col gap-y-10 h-full gap-4 m-auto justify-center items-center w-full"> --}}
         @csrf
         @method('PATCH')
         
-        <p class="font-semibold text-xl">How was your experience visiting us?</p>
+        <p class="font-semibold text-xl lg:text-2xl">How was your experience visiting us? <span class="text-gray-400">(optional)</span></p>
 
         <input type="hidden" name="masked_id" value="{{ request()->query('visitor')}}">
         
@@ -75,14 +78,16 @@
         </div>
 
         <div class="">
-            <label for="marketing_consent" class="text-sm lg:text-base">
+            <label for="marketing_consent" class="text-lg flex gap-2 lg:text-lg">
                 <input type="checkbox" value="1" name="marketing_consent" id="marketing-consent">
                 Select this box to receive updates and marketing from Payswitch.
             </label>
         </div>
 
-        <button class="bg-blue-400 p-3 text-white rounded-lg" type="submit">Submit</button>
+        <button class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4] flex items-center" type="submit">Sign Out</button>
     </form>
+</main>
+
 
     <script>
     document.addEventListener("DOMContentLoaded", function () {

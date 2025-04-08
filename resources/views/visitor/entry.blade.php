@@ -29,7 +29,7 @@
                <div class="flex bg-white flex-col w-full h-full gap-10">
                                  <div class="w-full  lg:w-1/2">
                    <div class="">
-                      <label for="first_name" class=" block text-base font-medium text-black">
+                      <label for="first_name" class=" block text-lg lg:text-xl font-medium text-black">
                        Full Name <span class="text-red-400">*</span>
                       </label>
                       <input type="text" name="full_name" required id="full_name" placeholder="Jane Doe" class="rounded-md p-4 bg-transparent focus:border-blue-500 outline-none w-full border" />
@@ -42,8 +42,8 @@
 
                <div class="w-full lg:w-1/2">
                    <div class="">
-                      <label for="email" class=" block text-base font-medium text-black">
-                      Email
+                      <label for="email" class=" block lg:text-xl text-lg font-medium text-black">
+                      Email <span class="text-gray-400 lg:text-lg">(optional)</span>
                       </label>
                       <input type="email" placeholder="name@email.com" name="email" id="email" class="rounded-md p-4 bg-transparent focus:border-blue-500 outline-none w-full border" />
                    </div>
@@ -54,7 +54,7 @@
 
                 <div class="w-full   lg:w-1/2">
                    <div class="">
-                      <label for="phone_number" class=" block text-base font-medium text-black">
+                      <label for="phone_number" class="flex items-center lg:text-xl text-lg font-medium text-black">
                       Phone Number <span class="text-red-400">*</span>
                       </label>
                       <input type="text" id="phone_number" value="{{ $phone_number ?? old('phone_number') }}" required placeholder="024 000 0000" name="phone_number" class="rounded-md p-4 bg-transparent focus:border-blue-500 outline-none w-full border" />
@@ -68,8 +68,8 @@
 
                 <div class="w-full   lg:w-1/2">
                    <div class="">
-                     <label for="employee" class=" block text-base font-medium text-black">
-                        Who are you visiting?
+                     <label for="employee" class=" flex items-center lg:text-xl text-lg font-medium text-black">
+                        Who are you visiting?<span class="text-red-400"> *</span>
                         </label>
                         <select name="employee" id="employee" class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-full"  required >
                          <option value="" selected disabled class="">Visitee</option>
@@ -97,8 +97,8 @@
 
                <div class="flex h-full w-full flex-col gap-10">
                   <div class="w-full   lg:w-1/2">
-                   <div class=">
-                      <label for="purpose" class=" block text-base font-medium text-black">
+                   <div class="">
+                      <label for="purpose" class="flex items-center lg:text-xl text-lg font-medium text-black">
                       Purpose of Visit <span class="text-red-400">*</span>
                       </label>
                       <div class="">
@@ -119,8 +119,8 @@
 
                 <div class="w-full   lg:w-1/2">
                    <div class="">
-                      <label for="company_name" class="block text-base font-medium text-black">
-                      Company Name
+                      <label for="company_name" class=" flex items-center lg:text-xl text-lg font-medium text-black">
+                      Company Name <span class="text-gray-400">(optional)</span>
                       </label>
                       <input type="text" placeholder="Company you represent." id="company_name" name="company_name" class="rounded-md p-4 bg-transparent focus:border-blue-500 outline-none w-full border" />
                    </div>
@@ -131,7 +131,7 @@
 
                 <div class="w-full   lg:w-1/2 flex flex-col gap-1">
 
-                 <label for="hasDevice" class="block text-base font-medium text-black">Do you have an electronic Device?</label>
+                 <label for="hasDevice" class="flex items-center lg:text-xl text-lg font-medium text-black">Do you have an electronic Device? <span class="text-red-400">*</span></label>
                     <div class="flex items-center gap-4 py-4" >
 
                        <label for="default-radio-1" class="flex items-center gap-2 lg:text-xl text-lg font-medium text-gray-900">
@@ -179,7 +179,7 @@
 
                 <div class="w-full   lg:w-1/2 flex flex-col gap-1">
 
-                 <label for="hasDevice" class="block text-base font-medium text-black">Did you come with companions</label>
+                 <label for="hasDevice" class="flex items-center lg:text-xl text-lg font-medium text-black">Did you come with companions <span class="text-red-400">*</span></label>
                     <div class="flex items-center gap-4 py-4" >
 
                        <label for="companions-radio-1" class="flex items-center gap-2 lg:text-xl text-lg font-medium text-gray-900">

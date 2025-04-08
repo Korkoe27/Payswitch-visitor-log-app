@@ -15,7 +15,7 @@
 
                 <div class="mb-12 w-full relative">                
                     @if (session()->has('error'))
-                    {{-- <p class="">{{ session()->get('error') }}</p> --}}
+                    <p class="">{{ session()->get('error') }}</p>
 
 
                     <div class="flex items-center absolute top-0 gap-4 justify-evenly h-fit  bottom-0 lg:left-[700px] w-fit left-1/2 lg:w-[25rem]  p-4 rounded-lg shadow-md ">
@@ -38,7 +38,7 @@
                     <select id="staff" class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-1/2" name="picked_by" required >
                         <option value="" selected disabled class="">Select your name</option>
                         @foreach ($employees as $employee)
-                    <option value="{{$employee->id}}" class="text-blue-500 lg:text-xl text-lg">{{$employee->first_name}} {{$employee->last_name}}</option>
+                    <option value="{{$employee->id}}" id="employeeName" class="text-blue-500 lg:text-xl text-lg">{{$employee->first_name}} {{$employee->last_name}}</option>
                         @endforeach
                     </select>
 
@@ -49,7 +49,7 @@
                       <select id="keys" class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-1/2" name="key_number" required >
                         <option value="" selected disabled class="">Select Key</option>
                         @foreach ($keys as $key)
-                         <option value="{{$key->id}}" class=" odd:text-blue-500 even:text-green-500">{{$key->key_name}}</option>
+                         <option value="{{$key->id}}" id="keyName" class=" odd:text-blue-500 even:text-green-500">{{$key->key_name}}</option>
                         @endforeach
                       </select>
 
@@ -66,17 +66,92 @@
         </form>
     </aside>
 
-    {{-- <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const keyInput = document.getElementById("key_name");
-            const keyIdInput = document.getElementById("key_id");
-            const options = document.querySelectorAll("#keys option");
-    
-            keyInput.addEventListener("change", function () {
-                let match = Array.from(options).find(opt => opt.value === keyInput.value);
-                keyIdInput.value = match ? match.getAttribute("data-id") : "";
-            });
-        });
-    </script> --}}
 
+    
 </x-layout>
+
+
+<script>
+    // Use an event listener instead of inline onclick
+document.addEventListener('DOMContentLoaded', function() {
+    const keyForm = document.querySelector('form[action*="log-key"]');
+    const staff = document.getElementById('staff');
+    const selectedStaff = staff.options[staff.selectedIndex];
+    const keys = document.getElementById('keys');
+    const selectedKey = keys.options[keys.selectedIndex];
+    const keyName = selectedKey ? selectedKey.textContent.trim() : '';
+    const employeeName = selectedKey ? selectedKey.textContent.trim() : '';
+
+    console.log(keyName);
+    console.log(employeeName);
+    if (keyForm) {
+        keyForm.addEventListener('submit', async function(event) {
+            event.preventDefault(); // This prevents the form from submitting normally
+            
+            // Get form data
+            const formData = new FormData(this);
+
+            // For debugging - show form data
+            for (let pair of formData.entries()) {
+                console.log(pair[0] + ': ' + pair[1]);
+            }
+
+            // Wait for confirmation before proceeding
+            const result = await Swal.fire({
+                title: "Confirm Key Pickup",
+                text: `Are you sure you want to pick this key?`,
+                icon: "info",
+                showCancelButton: true, 
+                confirmButtonColor: "#28A745",
+                cancelButtonColor: "#D33",
+                confirmButtonText: "Yes, pick it!",
+                cancelButtonText: "Cancel"
+            });
+
+            // If user cancels, don't proceed
+            if (!result.isConfirmed) {
+                return;
+            }
+
+            // Submit using axios if confirmed
+            try {
+                const response = await axios.post(this.action, formData);
+                
+                if (response.data.success) {
+                    // Show SweetAlert on success
+                    await Swal.fire({
+                        title: 'Key Pickup Successful👍',
+                        text: response.data.message,
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                    
+                    // Redirect to homepage
+                    window.location.href = 'keys';
+                } else{
+                    await Swal.fire({
+                        title: 'Key picked!',
+                        text: response.data.message,
+                        icon: 'warning',
+                        confirmButtonText: 'OK'
+                    });
+                    window.location.href = '/';
+                }
+            } catch (error) {
+                // Handle errors
+                let errorMessage = 'An error occurred';
+                if (error.response && error.response.data && error.response.data.error) {
+                    errorMessage = error.response.data.error;
+                }
+                
+                await Swal.fire({
+                    title: 'Error!',
+                    text: errorMessage,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
+    }
+});
+</script>

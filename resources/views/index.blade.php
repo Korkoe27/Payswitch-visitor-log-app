@@ -80,7 +80,7 @@
                 </h3>
                 
                 <h1 class="">
-                    <span class="lg:text-6xl font-bold text-5xl">{{ $all_visits ? count($all_visits) : 0 }}</span>
+                    <span class="lg:text-6xl font-bold text-5xl">{{ $visitor ? count($visitor) : 0 }}</span>
                 </h1>
 
                 <div class="flex justify-between gap-3 lg:gap-0">
@@ -155,13 +155,13 @@
     
     <div id="visitors-table" class="sm:rounded-lg p-10">
         <table class="w-full text-sm text-left text-gray-500">
-            <h2 class="font-bold p-4 lg:text-2xl">Ongoing Visits</h2>
+            <h2 class="font-bold p-4 lg:text-3xl text-xl">Ongoing Visits</h2>
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
-                    <th scope="col" class="px-6 py-3">Name</th>
-                    <th scope="col" class="px-6 py-3">Visiting</th>
-    <th scope="col" class="px-6 py-3">Purpose</th>
-                    <th scope="col" class="px-6 py-3">Time In</th>
+                    <th scope="col" class="px-6 lg:text-2xl py-3">Name</th>
+                    <th scope="col" class="px-6 lg:text-2xl py-3">Visiting</th>
+    <th scope="col" class="px-6 lg:text-2xl py-3">Purpose</th>
+                    <th scope="col" class="px-6 lg:text-2xl py-3">Time In</th>
                     <th class="px-6 py-6" scope="col"></th>
                 </tr>
             </thead>
@@ -171,33 +171,33 @@
                 @endif
                 @foreach ($visitor as $person)
                     <tr class="odd:bg-white even:bg-gray-50 border-b">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $person->full_name }}</th>
-                        <td class="px-6 py-4">{{ $person->visitee ? $person->visitee->first_name . ' ' . $person->visitee->last_name : 'N/A' }}</td>
-                        <td class="px-6 py-4 capitalize">
+                        <th scope="row" class="px-6 py-4 lg:text-xl text-lg font-medium text-black whitespace-nowrap">{{ $person->full_name }}</th>
+                        <td class="px-6 lg:text-xl text-black text-lg py-4">{{ $person->visitee ? $person->visitee->first_name . ' ' . $person->visitee->last_name : 'N/A' }}</td>
+                        <td class="px-6 py-4 text-xl capitalize">
                             @switch($person['purpose'])
                                 @case('personal')
-                                    <span class="text-green-700 bg-green-200 py-1 px-2 rounded-2xl">{{ $person['purpose'] }}</span>
+                                    <span class="text-green-700 bg-green-200 text-xl  py-1 px-3 rounded-2xl">{{ $person['purpose'] }}</span>
                                     @break
                                 @case('interview')
-                                    <span class="text-amber-600 bg-amber-100 py-1 px-2 rounded-2xl">{{ $person['purpose'] }}</span>
+                                    <span class="text-amber-600 bg-amber-100 text-xl py-1 px-3 rounded-2xl">{{ $person['purpose'] }}</span>
                                     @break
                                 @case('official')
-                                    <span class="text-red-600 bg-red-100 py-1 p-2 rounded-2xl">{{ $person['purpose'] }}</span>
+                                    <span class="text-red-600 bg-red-100 text-xl py-1 px-3 rounded-2xl">{{ $person['purpose'] }}</span>
                                     @break
                                 @default
-                                    <span class="text-blue-600 bg-blue-100 rounded-2xl py-1 px-2">{{ $person['purpose'] }}</span>
+                                    <span class="text-blue-600 bg-blue-100 text-xl rounded-2xl  py-1 px-3">{{ $person['purpose'] }}</span>
                             @endswitch
                         </td>
-                        <td class="px-6 py-4">{{ $person?->created_at?->format('H:i') }}</td>
-                        <td class="px-6 py-4">
-                            <a href="{{ url('visit/' . $person->id) }}" class="font-medium text-blue-600 text-lg hover:underline">View</a>
+                        <td class="px-6 lg:text-xl text-lg py-4">{{ $person?->created_at?->format('H:i') }}</td>
+                        <td class="px-6 py-4 flex items-center justify-between">
+                            <a href="{{ url('visit/' . $person->id) }}" class="font-medium text-blue-600 text-xl lg:text-2xl hover:underline">View</a>
+                        @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'visits', 'create'))
+                        {{-- <td class="px-3 py-4"> --}}
+                            <a href="departure?visitor={{base64_encode($person->id)}}" class="font-medium text-red-500 px-3 py-1 text-lg rounded-lg border border-red-400">Sign Out</a>
+                        {{-- </td> --}}
+                        @endif
                         </td>
 
-                        @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'visits', 'create'))
-                        <td class="px-3 py-4">
-                            <a href="departure?visitor={{base64_encode($person->id)}}" class="font-medium text-red-500 p-[5px] rounded-lg border border-red-400">Sign Out</a>
-                        </td>
-                        @endif
                     </tr>
                 @endforeach
             </tbody>

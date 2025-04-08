@@ -33,7 +33,7 @@
     // Show initial loading spinner
     Swal.fire({
         title: 'Processing...',
-        html: '<div class="flex justify-center"><div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"></div></div>',
+        // html: '<div class="flex justify-center"><div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"></div></div>',
         showConfirmButton: false,
         allowOutsideClick: false,
         didOpen: () => {
@@ -112,7 +112,7 @@
                     // Show spinner during redirect
                     Swal.fire({
                         title: 'Redirecting...',
-                        html: '<div class="flex justify-center"><div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"></div></div>',
+                        // html: '<div class="flex justify-center"><div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"></div></div>',
                         showConfirmButton: false,
                         allowOutsideClick: false,
                         didOpen: () => {
@@ -135,7 +135,7 @@
                 // Show spinner during redirect
                 Swal.fire({
                     title: 'Redirecting...',
-                    html: '<div class="flex justify-center"><div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"></div></div>',
+                    // html: '<div class="flex justify-center"><div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"></div></div>',
                     showConfirmButton: false,
                     allowOutsideClick: false,
                     didOpen: () => {

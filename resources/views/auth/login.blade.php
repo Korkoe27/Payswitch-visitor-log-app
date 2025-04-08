@@ -1,3 +1,18 @@
+@php
+    
+session_start();
+if (isset($_SESSION['logged_in'])) {
+  // User is already logged in, redirect to homepage
+  header("/");
+  exit();
+}
+@endphp
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,8 +46,8 @@
             <form action="{{ url('login') }}" method="POST" class="flex flex-col md:gap-10 gap-8">
                 @csrf
                 <div class="lg:w-96">
-                    <label for="email" class="capitalize text-[#44546f] font-semibold text-lg">email</label>
-                    <input type="email" required name="email" value="{{ old('email') }}" id="email" class="w-full rounded p-2 border outline-none border-[#091e4223] md:p-3 lg:w-[420px]  bg-white" placeholder="aaron@payswitch.com.gh">
+                    <label for="email" class="capitalize text-[#44546f] font-semibold text-lg">Email / Username</label>
+                    <input type="text" required name="email" value="{{ old('email') }}" id="email" class="w-full rounded p-2 border outline-none border-[#091e4223] md:p-3 lg:w-[420px]  bg-white" placeholder="aaron@payswitch.com.gh">
                 </div>
                 <div class="lg:w-96">
                     <label for="password" class="capitalize text-base text-[#44546f] font-semibold">password</label>
@@ -91,6 +106,11 @@
                 hidePasswordIcon.hide();
                 showPasswordIcon.show();
             });
+
+            history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+        };
 
             // Sweet Alert Toast Function
             function showToast(icon, title, text) {

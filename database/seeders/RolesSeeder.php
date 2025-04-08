@@ -14,19 +14,19 @@ class RolesSeeder extends Seeder
     public function run(): void
     {
         Roles::create([
-            'name' => 'Admin',
+            'name' => 'admin',
             'description'=> 'Has full access'
         ]);
         Roles::create([
-            'name' => 'HR',
+            'name' => 'hr',
             'description'=> 'has access to daily events'
         ]);
         Roles::create([
-            'name' => 'Security',
+            'name' => 'security',
             'description'=> 'has access to basic features'
         ]);
         Roles::create([
-            'name' => 'Support',
+            'name' => 'support',
             'description'=> 'has access to logs and reports'
         ]);
     }
