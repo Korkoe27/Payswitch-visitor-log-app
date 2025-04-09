@@ -27,7 +27,10 @@ Route::middleware('guest')->group(function () {
             ->name('password.reset'); // Changed to standard name
 
         
-        Route::get('/newUser',[AssignUserController::class, 'newUser'])->name('newUser');
+        Route::get('/newUser/{username}',[AssignUserController::class, 'newUser'])->name('newUser');
+
+        Route::post('/newUser', [AssignUserController::class, 'newUserStore'])
+            ->name('newUser.store'); // Changed to standard name
         
         Route::post('/reset-password', [AssignUserController::class, 'resetPassword'])
             ->name('password.update'); // Changed to standard name

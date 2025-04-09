@@ -42,6 +42,41 @@ class AssignUserController extends Controller
     }
 
 
+    public function newUser($username){
+        return view('auth.reset-pwd',compact('username'));
+    }
+
+
+    public function newUserStore(){
+        // dd(request()->all());
+        $validated = request()->validate([
+            'username'=>'required',
+            'password'=>[
+                'required',
+                'confirmed',
+                PasswordRules::min(8)
+                ->letters()
+                ->mixedCase()
+                ->numbers()
+                ->symbols()
+            ],
+        ]);
+
+        Log::debug("Validated Data: " , $validated);
+
+
+        $user = User::where('username',request()->username)->firstOrFail();
+
+
+        $user->update([
+            'password'=>Hash::make(request()->password),
+        ]);
+
+
+        return redirect('/')->with('success','Password updated successfully');
+    }
+
+
 
     //store the user and send an email to reset password
 

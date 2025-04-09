@@ -36,8 +36,9 @@ class UserAuthController extends Controller
 
         if($request->password == 'NewSecurity@1234'){
             
-            return redirect()->withErrors([
-                'password'=>'New User! Please reset your password'
+            return redirect("/newUser/{$user->username}")
+            ->withErrors([
+                'password'=>'Your password is set to default. Please create a new password'
             ]);
         }
 
