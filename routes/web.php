@@ -107,6 +107,8 @@ Route::get('/', function () {
                         Route::get('departure',  'departure')->name('departure');
                         
                         Route::get('create-visit',  'create')->name('create-visit');
+
+                        Route::get('visitor/{visitor}', 'display')->name('display');
                         
                         Route::get('old-visitor/{visitor}',  'oldVisitorSignIn')->name('old-visitor');
                         

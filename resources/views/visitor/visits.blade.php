@@ -13,14 +13,14 @@
         <div class="px-10">
         <table class="w-full text-left bg-gray-50 display  text-gray-500 px-10" id="visits">
             <thead class="text-xs text-gray-700 lg:p-10 uppercase bg-gray-50">
-                <tr>
+                <tr class="">
                     <th scope="col" class="px-6 text-lg py-3">Name</th>
                     <th scope="col" class="px-6 text-lg py-3">Visiting</th>
                     <th scope="col" class="px-6 text-lg py-3">Purpose</th>
                     <th scope="col" class="px-6 text-lg py-3">Arrived</th>
                     <th scope="col" class="px-6 text-lg py-3">Departed</th>
-                    <th scope="col" class="px-6 text-lg py-3"></th>
-                    <th scope="col" class="px-6 text-lg py-3"></th>
+                    <th scope="col" class="px-6 text-lg py-3">Actions</th>
+                    {{-- <th scope="col" class="px-6 text-lg py-3"></th> --}}
                 </tr>
             </thead>
             <tbody class="lg:text-lg bg-gray-50  text-black px-10">
@@ -46,21 +46,22 @@
                         <td class="px-6 text-left py-4 text-black">{{ $person?->created_at?->format('M, D Y : H:i') }}</td>
                         <td class="px-6 py-4 text-left text-black">
                             @if ($person?->departed_at === null)
-                                <span class="text-red-600 font-medium lg:text-xl italic">Ongoing</span>
+                                <span class="text-amber-600 font-medium lg:text-xl italic">Still Ongoing...</span>
                             @else
                                 {{ $person?->departed_at?->format('D, M Y : H:i') }}
                             @endif
                         </td>
-                        <td class="px-3 py-4">
+                        <td class="px-10 flex gap-14 py-4">
+                            <a href="{{ url('visit/' . $person->id) }}" class="font-medium text-blue-600 text-lg hover:underline">View</a>
+
                             @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'visits', 'create') && $person->status === 'ongoing')
                                 <a href="departure?visitor={{base64_encode($person->id)}}" class="font-medium underline-offset-4 text-red-500 rounded-lg underline">Sign Out</a>
                             @else
                                 &nbsp;
                             @endif
                         </td>
-                        <td class="px-6 py-4">
-                            <a href="{{ url('visit/' . $person->id) }}" class="font-medium text-blue-600 text-lg hover:underline">View</a>
-                        </td>
+                        {{-- <td class="px-6 py-4">
+                        </td> --}}
                     </tr>
                 @endforeach
             </tbody>

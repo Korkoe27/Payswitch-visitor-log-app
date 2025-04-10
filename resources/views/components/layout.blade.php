@@ -157,46 +157,37 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== TRUE) {
 
             </ul>
 
-            <aside class="flex h-fit">
-
-            <div class="  flex items-center gap-2  rounded-lg userDiv cursor-pointer">
-                <svg width="18" height="18" viewBox="0 0 135 122" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M106.838 121.876C123.413 109.586 134.167 89.8065 134.167 67.5C134.167 30.2208 104.132 0 67.0833 0C30.0342 0 0 30.2208 0 67.5C0 89.7364 10.6859 109.462 27.1726 121.76C29.0585 101.422 46.1699 85.5 67 85.5C87.8697 85.5 105.007 101.483 106.838 121.876ZM90 53.5C90 66.2025 79.7025 76.5 67 76.5C54.2975 76.5 44 66.2025 44 53.5C44 40.7975 54.2975 30.5 67 30.5C79.7025 30.5 90 40.7975 90 53.5Z" fill="#C8DFFF"/>
+            <aside class="flex h-fit relative">
+                <div id="userDropupButton" class="flex items-center gap-2 rounded-lg cursor-pointer">
+                    <svg width="18" height="18" viewBox="0 0 135 122" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M106.838 121.876C123.413 109.586 134.167 89.8065 134.167 67.5C134.167 30.2208 104.132 0 67.0833 0C30.0342 0 0 30.2208 0 67.5C0 89.7364 10.6859 109.462 27.1726 121.76C29.0585 101.422 46.1699 85.5 67 85.5C87.8697 85.5 105.007 101.483 106.838 121.876ZM90 53.5C90 66.2025 79.7025 76.5 67 76.5C54.2975 76.5 44 66.2025 44 53.5C44 40.7975 54.2975 30.5 67 30.5C79.7025 30.5 90 40.7975 90 53.5Z" fill="#C8DFFF"/>
                     </svg>
-                    
                     
                     @php
-
-                 ;
-
                     $username = explode(" ", Auth::user()->name);
-
-                    // dd();
-
-
                     @endphp
-                <span class="text-2xl font-semibold hidden lg:flex text-[#C8DFFF]">{{ $username[0] }}</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 18L15 12L9 6" stroke="#C8DFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    
+                    <span class="text-2xl font-semibold hidden lg:flex text-[#C8DFFF]">{{ $username[0] }}</span>
+                    
+                    <!-- Change arrow direction to point up -->
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 6L15 12L9 18" stroke="#C8DFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    
-
-                    
-                    
-                    
-
                 </div>
-    <form action="{{ url('logout') }}" method="POST" class="hidden w-full absolute logout-button">
-            @csrf
-            <button class="w-1/12 relative bottom-14 p-2  lg:p-3 bg-blue-500 flex items-center text-white rounded-xl">
-                <svg width="20" stroke="#C8DFFF" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9M16 17L21 12M21 12L16 7M21 12H9"  stroke="#C8DFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                Logout
-            </button>
-            
-        </form>
-    </aside>
+                
+                <!-- Dropup menu -->
+                <div id="userDropup" class="absolute bottom-full mb-2 hidden rounded-lg shadow-lg w-fit">
+                    <form action="{{ url('logout') }}" method="POST">
+                        @csrf
+                        <button class="p-2 lg:p-3 bg-blue-500 flex items-center gap-2 text-white rounded-xl">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9M16 17L21 12M21 12L16 7M21 12H9" stroke="#C8DFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Logout
+                        </button>
+                    </form>
+                </div>
+            </aside>
         </div>
     </nav>
 
@@ -253,15 +244,22 @@ setInterval(updateClock, 1000);
 
 
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const userDiv = document.querySelector('.userDiv');
-            const logoutButton = document.querySelector('.logout-button');
-        
-            userDiv.addEventListener('click', function() {
-                logoutButton.classList.toggle('hidden');
-            });
-        });
-
+document.addEventListener('DOMContentLoaded', function() {
+    const userDropupButton = document.getElementById('userDropupButton');
+    const userDropup = document.getElementById('userDropup');
+    
+    // Toggle dropup menu when clicking the button
+    userDropupButton.addEventListener('click', function() {
+        userDropup.classList.toggle('hidden');
+    });
+    
+    // Close dropup when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!userDropupButton.contains(event.target) && !userDropup.contains(event.target)) {
+            userDropup.classList.add('hidden');
+        }
+    });
+});
 
 
 

@@ -12,8 +12,8 @@
     @endphp
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // let title = 'Success!';
-            // let text = 'The operation completed successfully.';
+            let title = 'Success!';
+            let text = 'The operation completed successfully.';
             let imageUrl = `{{ $imageUrl }}`;
             
             @if(session('success_type') == 'visitor_departure')
@@ -280,7 +280,9 @@
             @if($errors->any())
                 showToast('error', 'Error!', "{{ $errors->first() }}");
             @endif
-        });
+        // });
+
+    
 </script>
 
 </x-layout>

@@ -13,7 +13,7 @@ class VisitorController extends Controller
 {
 
 
-    private $baseUrl = 'https://smpp.theteller.net';
+    // private $baseUrl = 'https://smpp.theteller.net';
 
 
     public function index(){
@@ -92,9 +92,21 @@ class VisitorController extends Controller
 
     $devicesJson = request()->has('devices') ? ($validatedData['devices']) : null;
 
-    $companionJson = request()->has('companions') ? ($validatedData['companions']):null;
+    $companionJson = $validatedData['companions'] ?? [];
 
-    $countVisitors = count($companionJson)+1;
+    // Filter out items where both name and phone_number are null
+    $validCompanions = array_filter($companionJson, function($companion) {
+        return !empty($companion['name']) || !empty($companion['phone_number']);
+    });
+
+
+
+    $countCompanions = count($validCompanions);
+
+    Log::debug('Companions count: ' . $countCompanions);
+
+
+    $countVisitors = $countCompanions + 1;
 
 
 

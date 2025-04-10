@@ -179,7 +179,7 @@
 
                 <div class="w-full   lg:w-1/2 flex flex-col gap-1">
 
-                 <label for="hasDevice" class="flex items-center lg:text-xl text-lg font-medium text-black">Did you come with companions <span class="text-red-400">*</span></label>
+                 <label for="companions" class="flex items-center lg:text-xl text-lg font-medium text-black">Did you come with companions <span class="text-red-400">*</span></label>
                     <div class="flex items-center gap-4 py-4" >
 
                        <label for="companions-radio-1" class="flex items-center gap-2 lg:text-xl text-lg font-medium text-gray-900">
