@@ -128,7 +128,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== TRUE) {
                 </li>
                 @endif
 
-                @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'user', 'create'))
+                @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'user', 'view'))
                 <li class="">
                     <x-nav-link href="{{ url('users') }}" :active="request()->is('users')">
                         <svg width="24" height="24"  class="size-9 lg:size-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -270,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function() {
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 3000,
+            timer: 5000,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.onmouseenter = Swal.stopTimer;

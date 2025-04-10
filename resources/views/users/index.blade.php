@@ -20,7 +20,9 @@
                     <th scope="col" class="px-6 text-lg lg:text-xl py-3">Name</th>
                     <th scope="col" class="px-6 text-lg lg:text-xl py-3">Role</th>
                     {{-- <th scope="col" class="px-6 py-3">Time In</th> --}}
+                    @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'keys', 'create'))
                     <th class="px-6 py-6" scope="col"></th>
+                    @endif
                 </tr>
             </thead>
 
@@ -29,6 +31,7 @@
                     <tr class="odd:bg-white even:bg-gray-50 border-b">
                         <th scope="row" class="px-6 py-4 text-base lg:text-xl font-medium text-gray-900 whitespace-nowrap">{{ $user?->name }}</th>
                         <th scope="row" class="px-6 py-4 text-base font-medium text-gray-900 lg:text-lg uppercase whitespace-nowrap">{{ $user?->role?->name }} </th>
+                        @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'keys', 'delete'))
                         <td class="px-3 py-4">
                             @if ($user?->role?->name !== 'admin')
                                 
@@ -37,6 +40,7 @@
                                 >Delete User</button>
                                 @endif
                             </td>
+                            @endif
                     </tr>
                 @endforeach
             </tbody>

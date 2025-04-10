@@ -362,7 +362,7 @@ class PermissionsSeeder extends Seeder
         Permission::create([
             'role_id'=>$support->id,
             'module_id'=>$keys->id,
-            'can_view'=>0,
+            'can_view'=>1,
             'can_create'=>0,
             'can_modify'=>0,
             'can_delete'=>0,
@@ -406,7 +406,7 @@ class PermissionsSeeder extends Seeder
         Permission::create([
             'role_id'=>$support->id,
             'module_id'=>$user_roles->id,
-            'can_view'=>0,
+            'can_view'=>1,
             'can_create'=>0,
             'can_modify'=>0,
             'can_delete'=>0

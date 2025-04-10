@@ -6,6 +6,7 @@ use App\Models\Activities;
 use App\Models\Department;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class EmployeeController extends Controller
 {
@@ -22,16 +23,16 @@ class EmployeeController extends Controller
         }
 
 
-        public function store(){
+        public function store(Request $request){
 
             // dd(request());
 
-            request()->validate([
+            $request->validate([
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'other_name' => '',
                 // 'employee_number' => 'required',
-                'email' => 'email',
+                'email' => 'email|unique:employees,email|nullable',
                 'phone_number' => 'required',
                 'department_id' => 'required|exists:departments,id',
                 'vehicle_number' => '',
@@ -41,6 +42,8 @@ class EmployeeController extends Controller
         
             ]);
 
+            Log::info('Request data:', $request->all());
+
             $phone = request()->phone_number;
             
             $formattedPhone = preg_replace('/^0/','233',$phone);
@@ -48,8 +51,8 @@ class EmployeeController extends Controller
         
         
             Employee::create([
-                'first_name' => request('first_name'),
-                'last_name' => request('last_name'),
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
                 'other_name' => request('other_name'),
                 'employee_number' => request('employee_number'),
                 'email' => request('email'),

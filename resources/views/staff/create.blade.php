@@ -31,7 +31,7 @@
                        </label>
                        <input type="text" placeholder="Abla" id="other_name" name="other_name" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-blue-400 active:border-blue-400 disabled:cursor-default" />
                     </div>
-                    @error('vehicle_number')
+                    @error('other_name')
                     <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
                     @enderror
                  </div>
@@ -42,7 +42,7 @@
                        </label>
                        <input type="text" placeholder="Doe" id="last_name" name="last_name" required class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-blue-400 active:border-blue-400 disabled:cursor-default" />
                     </div>
-                    @error('vehicle_number')
+                    @error('last_name')
                     <div class="text-red-500 italic font-normal text-lg lg:text-xl">{{ $message }}</div>
                     @enderror
                  </div>
@@ -53,7 +53,7 @@
                        </label>
                        <input type="text" placeholder="GR 1000 25" id="employee_number" required name="employee_number" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-black outline-none transition focus:border-blue-400 active:border-blue-400 disabled:cursor-default" />
                     </div>
-                    @error('vehicle_number')
+                    @error('employee_number')
                     <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
                     @enderror
                  </div>
@@ -64,7 +64,7 @@
                        </label>
                        <input type="text" placeholder="janedoe@payswitch.com.gh" id="email" name="email" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 active:border-blue-400 focus:border-blue-400 outline-none transition  disabled:cursor-default" />
                     </div>
-                    @error('vehicle_number')
+                    @error('email')
                     <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
                     @enderror
                  </div>
