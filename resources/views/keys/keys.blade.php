@@ -57,7 +57,7 @@ Keys
 
         @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'keys', 'view'))
         <div class="flex justify-end items-center">
-            <a href="{{ url('pick-key') }}" class="bg-gradient-to-b lg:px-10 px-3 lg:text-xl text-lg rounded-lg lg:py-2 py-1 text-white from-[#247EFC] to-[#0C66E4]">Log Key</a>
+            <a href="{{ url('pick-key') }}" class="bg-gradient-to-b px-10 lg:text-xl text-lg rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4]">Log Key</a>
         </div>
         
 @endif
@@ -67,9 +67,9 @@ Keys
                     <th scope="col" class="px-6 py-3 text-left text-lg lg:text-xl font-medium text-black uppercase tracking-wider">Key</th>
                     <th scope="col" class="px-6 py-3 text-left text-lg lg:text-xl font-medium text-black uppercase tracking-wider">Picked By</th>
                     <th scope="col" class="px-6 py-3 text-left text-lg lg:text-xl font-medium text-black uppercase tracking-wider">Status</th>
-                    <th scope="col" class="px-6 py-3 text-left text-lg lg:text-xl font-medium text-black uppercase tracking-wider">Date/Time picked</th>
+                    <th scope="col" class="px-6 py-3 text-left text-lg lg:text-xl font-medium text-black uppercase tracking-wider">Picked at</th>
                     <th scope="col" class="px-6 py-3 text-left text-lg lg:text-xl font-medium text-black uppercase tracking-wider">Returned by</th>
-                    <th scope="col" class="px-6 py-3 text-left text-lg lg:text-xl font-medium text-black uppercase tracking-wider">Date/Time returned</th>
+                    <th scope="col" class="px-6 py-3 text-left text-lg lg:text-xl font-medium text-black uppercase tracking-wider">Returned at</th>
                     <th scope="col" class="px-6 py-3 text-left text-lg lg:text-xl font-medium text-black uppercase tracking-wider">Action</th>
                 </tr>
             </thead>

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('role_id')->constrained('roles');
+            $table->foreignId('role_id')->constrained('roles')->onDelete('cascade');
             $table->foreignId('module_id')->constrained()->onDelete('cascade');
             $table->boolean('can_view');
             $table->boolean('can_create');

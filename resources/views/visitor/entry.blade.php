@@ -6,22 +6,22 @@
 
 
 
-<div class="lg:h-full h-fit lg:px-10 px-5 overflow-y-auto lg:w-full">
+<div class="lg:h-full h-fit lg:px-10 px-16 py-5  overflow-y-auto lg:w-full">
    <!-- Simplicity is the ultimate sophistication. - Leonardo da Vinci -->
 
 
-           <div class="w-full  lg:w-1/3">
-               <div class="py-5 border-blue-300 border-b">
+           <div class="w-full py-5  lg:w-1/3">
+               {{-- <div class=""> --}}
                   <h2 class="text-black text-3xl font-semibold ">
-                     Welcome to <span class="text-blue-300 font-bold">PaySwitch</span>
+                     Welcome to <span class="text-blue-600 font-bold">PaySwitch</span>
                   </h2>
                   <p class="text-black lg:text-lg font-medium">
                      Please sign in to continue.
                   </p>
-               </div>
+               {{-- </div> --}}
             </div>
                    {{-- <div class=""> --}}
-           <form action="{{ url('visit') }}" method="POST" class="flex  w-full gap-10 py-4 overflow-auto">
+           <form action="{{ url('visit') }}" method="POST" class="flex  w-full gap-10 py-10 overflow-auto">
 
                @csrf
 
@@ -71,7 +71,7 @@
                      <label for="employee" class=" flex items-center lg:text-xl text-lg font-medium text-black">
                         Who are you visiting?<span class="text-red-400"> *</span>
                         </label>
-                        <select name="employee" id="employee" class="p-4 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-full"  required >
+                        <select name="employee" id="employee" class="rounded-md p-4 bg-transparent focus:border-blue-500 outline-none w-full border"  required >
                          <option value="" selected disabled class="">Visitee</option>
                          @foreach ($employees as $employee)
                           <option value="{{$employee->id}}" class="dark:bg-dark-2">{{$employee->first_name}} {{$employee->last_name}}</option>
@@ -85,7 +85,7 @@
 
                 <div class="w-full">
                   <button type="submit"
-                      class="bg-gradient-to-b text-xl px-3 rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4]">
+                      class="bg-gradient-to-b px-14 lg:text-xl text-lg rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4]">
                       Submit
                   </button>
                </div>

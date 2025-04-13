@@ -7,13 +7,12 @@ use App\Mail\AssignUser;
 use App\Models\{Activities, Employee, Roles, User};
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Validation\Rules\Password as PasswordRules;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\{DB,Hash,Log,Mail};
+use Illuminate\Support\Facades\{DB,Hash,Auth,Log,Mail,Password};
 use Illuminate\Support\Str;
 
 class AssignUserController extends Controller
@@ -234,6 +233,55 @@ class AssignUserController extends Controller
 
 
 
+    public function changeRole(User $user)
+    {
+        $roles = Roles::get();
+    
+        return view('users.update', compact('roles', 'user'));
+    }
+    public function modify(Request $request, User $user)
+{
+    // Log incoming request data
+    Log::debug("Request Data:", $request->all());
+    Log::debug("User Data:", ['user' => $user]);
+    
+    // Validate input
+    $validated = $request->validate([
+        'role' => 'required|exists:roles,id',
+    ]);
+    Log::debug("Role: " . $validated['role']);
+    
+    // Convert to same type and strict comparison
+    if ((int)$user->role_id === (int)$validated['role']) {
+        return response()->json([
+            'success' => false,
+            'message' => 'No changes made. User already has this role.',
+        ]);
+    }
+    
+    // Log validated data
+    Log::debug("Validated Data:", $validated);
+    
+    // Update user role
+    $user->update([
+        'role_id' => $validated['role'],
+    ]);
+    
+    // Get the updated role name (after update)
+    $roleName = $user->role->name;
+    
+    // Log the activity
+    Activities::log(
+        action: 'Updated user role',
+        description: Auth::user()->name . ' updated ' . $user->name . '\'s role to ' . $roleName
+    );
+    
+    // Return a JSON success response
+    return response()->json([
+        'success' => true,
+        'message' => $user->name . '\'s role updated successfully.'
+    ]);
+}
     public function destroy($id){
         try{
             $user = User::findOrFail($id);

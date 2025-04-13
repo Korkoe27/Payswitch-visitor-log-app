@@ -201,7 +201,7 @@ Route::get('/', function () {
                         Route::get('roles','index')->middleware('module.permission:roles,view');
                         Route::get('create-role','create')->middleware('module.permission:roles,view,create,modify,delete');
                         Route::post('store-role','store')->middleware('module.permission:roles,create,modify,delete');
-                        Route::delete('delete-role','destroy')->middleware('module.permission:roles,create,modify,delete');
+                        Route::delete('/delete-role/{id}','delete')->middleware('module.permission:roles,delete');
                 });
 
 
@@ -214,11 +214,11 @@ Route::get('/', function () {
                 //access card
 
                 Route::controller(VisitorAccessCardController::class)->group(function(){
-                Route::get('create-access-card', 'create')->middleware('module.permission:settings,view,create,modify,delete');
+                        Route::get('create-access-card', 'create')->middleware('module.permission:settings,view,create,modify,delete');
 
-                Route::post('store-access-card',  'store')->middleware('module.permission:settings,view,create,modify,delete');
+                        Route::post('store-access-card',  'store')->middleware('module.permission:settings,create,modify,delete');
 
-                Route::get('access-cards','index')->middleware('module.permission:reports,view');
+                        Route::get('access-cards','index')->middleware('module.permission:reports,view');
                 });
 
 
@@ -229,7 +229,14 @@ Route::get('/', function () {
                 Route::controller(AssignUserController::class)->group(function(){
                         Route::get('users','index')->middleware('module.permission:user,view');
                         Route::get('create-user','create')->middleware('module.permission:user,create,modify,delete');
+
+                        Route::get('update/{user}','changeRole')->middleware('module.permission:user,create,modify,delete');
+
+
+                        Route::patch('user/{user}', 'modify')->middleware('module.permission:user,create,modify,delete');
+
                         Route::post('assign-user','store')->middleware('module.permission:user,create,modify,delete');
+
                         Route::delete('/revoke-access/{id}','destroy')->middleware('module.permission:user,create,modify,delete');
 
                 });

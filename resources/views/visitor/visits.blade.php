@@ -4,7 +4,7 @@
     </x-slot:heading>
 
     <div id="visitors-table" class="rounded-lg">
-        <div class="flex bg-gray-50 p-10 justify-end">
+        <div class="flex bg-gray-50 p-10  justify-end">
             @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'staff', 'create'))
                 <a href="{{ url('check-visitor') }}" class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4]">Log Visitor</a>
             @endif
@@ -12,7 +12,7 @@
             
         <div class="px-10">
         <table class="w-full text-left bg-gray-50 display  text-gray-500 px-10" id="visits">
-            <thead class="text-xs text-gray-700 lg:p-10 uppercase bg-gray-50">
+            <thead class="text-xs text-gray-700 p-10 uppercase bg-gray-50">
                 <tr class="">
                     <th scope="col" class="px-6 text-lg py-3">Name</th>
                     <th scope="col" class="px-6 text-lg py-3">Visiting</th>
@@ -25,7 +25,7 @@
             </thead>
             <tbody class="lg:text-lg bg-gray-50  text-black px-10">
                 @foreach ($visitor as $person)
-                    <tr class="odd:bg-white even:bg-gray-50 lg:p-10 lg:text-lg border-b">
+                    <tr class="odd:bg-white even:bg-gray-50 p-10 lg:text-lg border-b">
                         <td class="px-6 py-4 font-medium whitespace-nowrap">{{ $person?->full_name }}</td>
                         <td class="px-6 lg:text-xl py-4">{{ $person->visitee ? $person->visitee->first_name . ' ' . $person->visitee->last_name : 'N/A' }}</td>
                         <td class="px-6 py-4 capitalize">

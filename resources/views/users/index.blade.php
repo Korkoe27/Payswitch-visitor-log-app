@@ -1,63 +1,105 @@
 <x-layout>
 
     <x-slot:heading>
-        All Users
+        
+                <div class="flex items-center space-x-3">
+                    <div class="p-2 bg-blue-50 rounded-lg">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                    </div>All Users
+                </div>
     </x-slot:heading>
 
 
 
     
-    <main class="p-5">
-        @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'keys', 'create'))
-        <div class="flex justify-end p-5 items-center">
-            <a href="{{ url('create-user') }}" class="bg-gradient-to-b lg:px-10 px-3 lg:text-xl text-lg rounded-lg lg:py-2 py-1 text-white from-[#247EFC] to-[#0C66E4]">Create New User</a>
-        </div>
-
-        @endif
-        <table class="w-full text-sm text-left text-gray-500" id="users">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                <tr>
-                    <th scope="col" class="px-6 text-lg lg:text-xl py-3">Name</th>
-                    <th scope="col" class="px-6 text-lg lg:text-xl py-3">Role</th>
-                    {{-- <th scope="col" class="px-6 py-3">Time In</th> --}}
-                    @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'keys', 'create'))
-                    <th class="px-6 py-6" scope="col"></th>
-                    @endif
-                </tr>
-            </thead>
-
-            <tbody class="text-base">
-                @foreach ($users as $user)
-                    <tr class="odd:bg-white even:bg-gray-50 border-b">
-                        <th scope="row" class="px-6 py-4 text-base lg:text-xl font-medium text-gray-900 whitespace-nowrap">{{ $user?->name }}</th>
-                        <th scope="row" class="px-6 py-4 text-base font-medium text-gray-900 lg:text-lg uppercase whitespace-nowrap">{{ $user?->role?->name }} </th>
-                        @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'keys', 'delete'))
-                        <td class="px-3 py-4">
-                            @if ($user?->role?->name !== 'admin')
-                                
-                            <button type="button"  data-user-id="{{ $user?->id }}" data-user-name="{{ $user?->name }}" onclick="confirmDelete({{ $user?->id }})"
-                                class="font-medium text-red-500 px-3 py-1 text-lg rounded-lg border border-red-400"
-                                >Delete User</button>
-                                @endif
-                            </td>
+    <div class="min-h-screen bg-gray-50">
+        <main class="max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+            {{-- Header Section --}}
+            <div class="mb-8 flex justify-end items-center">
+                    {{-- <h1 class="text-2xl font-semibold text-gray-900">Users</h1> --}}
+                
+                @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'keys', 'create'))
+                    <a 
+                        href="{{ url('create-user') }}"
+                        class="inline-flex items-center px-4 py-2 bg-gradient-to-b from-blue-500 to-blue-600 text-white rounded-lg text-lg lg:text-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-200 shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    >
+                        Create New User
+                    </a>
+                @endif
+            </div>
+    
+            {{-- Table Section --}}
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <table class="min-w-full divide-y divide-gray-200" id="users">
+                    <thead>
+                        <tr class="bg-gray-50">
+                            <th scope="col" class="px-6 py-4 text-left text-xl lg:text-2xl font-semibold text-gray-900">Name</th>
+                            <th scope="col" class="px-6 py-4 text-left text-xl lg:text-2xl font-semibold text-gray-900">Role</th>
+                            @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'keys', 'create'))
+                                <th scope="col" class="px-6 py-4 text-right text-xl lg:text-2xl font-semibold text-gray-900">Actions</th>
                             @endif
-                    </tr>
-                @endforeach
-            </tbody>
-
-        
-        
-        </table>
-
-
-    </main>
-
-
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 bg-white">
+                        @foreach ($users as $user)
+                            <tr class="hover:bg-gray-50 transition-colors duration-150">
+                                <td class="px-6 py-4 whitespace-nowrap text-lg lg:text-xl font-medium text-gray-900">
+                                    {{ $user?->name }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-lg lg:text-xl text-gray-600 uppercase">
+                                    {{ $user?->role?->name }}
+                                </td>
+                                @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'keys', 'delete'))
+                                    @if($user?->role?->name !== 'admin')
+                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                            <div class="flex justify-end space-x-3">
+                                                <a
+                                                    href="{{ url('update/'.$user->id) }}"
+                                                    class="inline-flex items-center px-3 py-1.5 text-lg text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-md transition-colors duration-150"
+                                                >
+                                                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                                    </svg>
+                                                    Change role
+                                                </a>
+                                                <button
+                                                    type="button"
+                                                    onclick="confirmDelete({{ $user?->id }}, '{{ $user?->name }}')"
+                                                    data-user-id="{{ $user?->id }}"
+                                                    data-user-name="{{ $user?->name }}"
+                                                    class="inline-flex items-center px-3 py-1.5 text-lg text-red-600 hover:text-red-700 hover:bg-red-50 rounded-md transition-colors duration-150 border border-red-200"
+                                                >
+                                                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                    </svg>
+                                                    Delete User
+                                                </button>
+                                            </div>
+                                        </td>
+                                    @endif
+                                @endif
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    
 
     <script>
-        $(document).ready(function() {
-            $('#users').DataTable();
-        });
+
+
+
+
+        //change role
+
+
+
+
+        //delete user
 
         document.addEventListener("DOMContentLoaded", function(){
             document.querySelectorAll(".delete-btn").forEach(button => {

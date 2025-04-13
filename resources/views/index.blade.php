@@ -115,7 +115,7 @@
                 </h1>
                 <div class="flex justify-between">
                     @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'visits', 'create'))
-                    <a href="{{ url('pick-key') }}" class="bg-gradient-to-b lg:px-10 px-3 lg:text-xl text-lg rounded-lg lg:py-2 py-1 text-white from-[#247EFC] to-[#0C66E4]">Log Key</a>
+                    <a href="{{ url('pick-key') }}" class="bg-gradient-to-b lg:px-10 lg:text-xl text-lg rounded-lg lg:py-2 py-1 text-white from-[#247EFC] to-[#0C66E4]">Log Key</a>
                     @endif
                     <a href="{{ url('keys') }}" class="flex items-center text-green-700 font-bold text-xl">Keys
 
@@ -154,61 +154,77 @@
 
     
     <div id="visitors-table" class="sm:rounded-lg p-10">
-        <table class="w-full text-sm text-left text-gray-500">
-            <h2 class="font-bold p-4 lg:text-3xl text-xl">Ongoing Visits</h2>
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                <tr>
-                    <th scope="col" class="px-6 lg:text-2xl py-3">Name</th>
-                    <th scope="col" class="px-6 lg:text-2xl py-3">Visiting</th>
-    <th scope="col" class="px-6 lg:text-2xl py-3">Purpose</th>
-                    <th scope="col" class="px-6 lg:text-2xl py-3">Time In</th>
-                    <th class="px-6 py-6" scope="col"></th>
-                </tr>
-            </thead>
-            <tbody class="text-base">
-                @if (!$visitor)
-                    <h1 class="text-center text-black">No data</h1>
-                @endif
-                @foreach ($visitor as $person)
-                    <tr class="odd:bg-white even:bg-gray-50 border-b">
-                        <th scope="row" class="px-6 py-4 lg:text-xl text-lg font-medium text-black whitespace-nowrap">{{ $person->full_name }}</th>
-                        <td class="px-6 lg:text-xl text-black text-lg py-4">{{ $person->visitee ? $person->visitee->first_name . ' ' . $person->visitee->last_name : 'N/A' }}</td>
-                        <td class="px-6 py-4 text-xl capitalize">
-                            @switch($person['purpose'])
-                                @case('personal')
-                                    <span class="text-green-700 bg-green-200 text-xl  py-1 px-3 rounded-2xl">{{ $person['purpose'] }}</span>
-                                    @break
-                                @case('interview')
-                                    <span class="text-amber-600 bg-amber-100 text-xl py-1 px-3 rounded-2xl">{{ $person['purpose'] }}</span>
-                                    @break
-                                @case('official')
-                                    <span class="text-red-600 bg-red-100 text-xl py-1 px-3 rounded-2xl">{{ $person['purpose'] }}</span>
-                                    @break
-                                @default
-                                    <span class="text-blue-600 bg-blue-100 text-xl rounded-2xl  py-1 px-3">{{ $person['purpose'] }}</span>
-                            @endswitch
-                        </td>
-                        <td class="px-6 lg:text-xl text-lg py-4">{{ $person?->created_at?->format('H:i') }}</td>
-                        <td class="px-6 py-4 flex items-center justify-between">
-                            <a href="{{ url('visit/' . $person->id) }}" class="font-medium text-blue-600 text-xl lg:text-2xl hover:underline">View</a>
-                        @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'visits', 'create'))
-                        {{-- <td class="px-3 py-4"> --}}
-                            <a href="departure?visitor={{base64_encode($person->id)}}" class="font-medium text-red-500 px-3 py-1 text-lg rounded-lg border border-red-400">Sign Out</a>
-                        {{-- </td> --}}
-                        @endif
-                        </td>
-
+        @if ($visitor->isEmpty())
+            <table class="w-full text-sm text-left text-gray-500">
+                <thead class="text-xs text-gray-700 capitalize bg-gray-50">
+                    <tr>
+                        <th scope="col" class="px-6 lg:text-2xl py-3" colspan="5">
+                            <h2 class="font-bold lg:text-3xl  text-xl">Ongoing Visits</h2>
+                        </th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
-<div class="px-6 py-4">
-    {{ $visitor->links() }}
-</div> 
-
-
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="5" class="text-center lg:py-32 py-24">
+                            <h1 class="text-xl lg:text-3xl text-gray-600">No visits ongoing</h1>
+                            <p class="text-gray-500 text-lg">Log a visitor by clicking the Log Visitor Button</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        @else
+            <table class="w-full text-sm text-left text-gray-500">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                        <th scope="col" class="px-6 lg:text-2xl py-3" colspan="5">
+                            <h2 class="font-bold lg:text-3xl text-xl">Ongoing Visits</h2>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th scope="col" class="px-6 lg:text-2xl py-3">Name</th>
+                        <th scope="col" class="px-6 lg:text-2xl py-3">Visiting</th>
+                        <th scope="col" class="px-6 lg:text-2xl py-3">Purpose</th>
+                        <th scope="col" class="px-6 lg:text-2xl py-3">Time In</th>
+                        <th class="px-6 py-6" scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody class="text-base">
+                    @foreach ($visitor as $person)
+                        <tr class="odd:bg-white even:bg-gray-50 border-b">
+                            <th scope="row" class="px-6 py-4 lg:text-xl text-lg font-medium text-black whitespace-nowrap">{{ $person->full_name }}</th>
+                            <td class="px-6 lg:text-xl text-black text-lg py-4">{{ $person->visitee ? $person->visitee->first_name . ' ' . $person->visitee->last_name : 'N/A' }}</td>
+                            <td class="px-6 py-4 text-xl capitalize">
+                                @switch($person['purpose'])
+                                    @case('personal')
+                                        <span class="text-green-700 bg-green-200 text-xl py-1 px-3 rounded-2xl">{{ $person['purpose'] }}</span>
+                                        @break
+                                    @case('interview')
+                                        <span class="text-amber-600 bg-amber-100 text-xl py-1 px-3 rounded-2xl">{{ $person['purpose'] }}</span>
+                                        @break
+                                    @case('official')
+                                        <span class="text-red-600 bg-red-100 text-xl py-1 px-3 rounded-2xl">{{ $person['purpose'] }}</span>
+                                        @break
+                                    @default
+                                        <span class="text-blue-600 bg-blue-100 text-xl rounded-2xl py-1 px-3">{{ $person['purpose'] }}</span>
+                                @endswitch
+                            </td>
+                            <td class="px-6 lg:text-xl text-lg py-4">{{ $person?->created_at?->format('H:i') }}</td>
+                            <td class="px-6 py-4 flex items-center justify-between">
+                                <a href="{{ url('visit/' . $person->id) }}" class="font-medium text-blue-600 text-xl lg:text-2xl hover:underline">View</a>
+                                @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'visits', 'create'))
+                                    <a href="departure?visitor={{base64_encode($person->id)}}" class="font-medium text-red-500 px-3 py-1 text-lg rounded-lg border border-red-400">Sign Out</a>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            
+            <div class="px-6 py-4">
+                {{ $visitor->links() }}
+            </div>
+        @endif
     </div>
-
     @endif
 
 
@@ -253,7 +269,7 @@
                     toast: true,
                     position: 'top-end',
                     showConfirmButton: false,
-                    timer: 5000,
+                    timer: 8000,
                     timerProgressBar: true,
                     didOpen: (toast) => {
                             toast.onmouseenter = Swal.stopTimer;

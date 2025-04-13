@@ -196,9 +196,9 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== TRUE) {
         <header class="flex justify-between items-center w-full border-b border-[#C8DFFF] px-10 py-5">
                 <h1 class=" text-[#0F51AE] lg:text-2xl  text-xl font-bold">{{ $heading }}</h1>
 
-                <div class="lg:text-2xl text-xl flex items-center lg:w-fit p-3 text-[#0F51AE] rounded-3xl font-medium">
-                    <span class="lg:text-2xl lg:w-fit p-3 text-[#0F51AE] rounded-3xl font-medium" id="date"></span>
-                    <span class="lg:text-3xl lg:w-fit p-3 text-[#0F51AE] rounded-3xl font-semibold" id="clock"></span>
+                <div class="lg:text-2xl text-xl gap-10 flex justify-end items-center lg:w-fit text-[#0F51AE] rounded-3xl font-medium">
+                    <span class="lg:text-2xl lg:w-fit text-[#0F51AE] rounded-3xl font-medium" id="date"></span>
+                    <span class="lg:text-3xl lg:w-fit  text-[#0F51AE] rounded-3xl font-semibold" id="clock"></span>
                 </div>
             </header>
     
@@ -270,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function() {
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 5000,
+            timer: 8000,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.onmouseenter = Swal.stopTimer;

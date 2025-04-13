@@ -13,7 +13,7 @@
     </div>
   @endif
     <div class=" overflow-x-auto sm:rounded-lg p-10">
-        <table class="w-full text-sm text-left text-gray-500" id="staff">
+        <table class="w-full text-left text-gray-500" id="staff">
             <thead class="text-xs text-black uppercase bg-gray-50">
                 <tr>
                     <th scope="col" class="px-6 text-lg lg:text-xl py-3">
@@ -33,7 +33,7 @@
             </thead>
             <tbody class="text-base">
                 @foreach ($employees as $staff)
-                    <tr class="odd:bg-white even:bg-gray-50 border-b">
+                    <tr class="odd:bg-white even:bg-gray-50">
                         <!-- Full Name -->
                         <th scope="row" class="px-6 py-4 font-semibold text-gray-900 whitespace-nowrap">
                             {{ $staff?->first_name }} {{ $staff?->last_name }}
