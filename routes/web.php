@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{ActivitiesController,AssignUserController,DepartmentController,DeviceController,EmployeeController,KeyController,KeyEventController,RolesController,UserAuthController,VisitorAccessCardController,VisitorController};
+use App\Http\Controllers\{ActivitiesController,AssignUserController,DepartmentController,DeviceController,EmployeeController,KeyController,KeyEventController,RolesController,UserAuthController,PermissionController,VisitorAccessCardController,VisitorController};
 
 use App\Models\{Device,Visitor,KeyEvent,Roles};
 use Carbon\Carbon;
@@ -242,6 +242,16 @@ Route::get('/', function () {
                 });
 
 
+                //permissions
+
+                Route::controller(PermissionController::class)->group(function(){
+                        Route::get('permissions','index')->middleware('module.permission:roles,view');
+                        Route::get('create-permission','create')->middleware('module.permission:roles,view,create,modify,delete');
+                        Route::post('store-permission','store')->middleware('module.permission:roles,create,modify,delete');
+                        Route::delete('/delete-permission/{id}','destroy')->middleware('module.permission:permissions,delete');
+                })->middleware('module.permission:roles,view,create,modify,delete');
+                });
+
 
                 Route::get('records', function () {
                 return view('records');
@@ -251,4 +261,3 @@ Route::get('/', function () {
                 Route::view('settings', 'settings.index')
                 ->middleware('module.permission:settings,view,create,modify,delete');
 
-        });

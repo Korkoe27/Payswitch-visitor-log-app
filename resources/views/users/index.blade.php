@@ -2,19 +2,13 @@
 
     <x-slot:heading>
         
-                <div class="flex items-center space-x-3">
-                    <div class="p-2 bg-blue-50 rounded-lg">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
-                    </div>All Users
-                </div>
+                Users
     </x-slot:heading>
 
 
 
     
-    <div class="min-h-screen bg-gray-50">
+    <div class="h-[calc(100vh-5rem)] bg-gray-50">
         <main class="max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
             {{-- Header Section --}}
             <div class="mb-8 flex justify-end items-center">
@@ -52,8 +46,8 @@
                                     {{ $user?->role?->name }}
                                 </td>
                                 @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'keys', 'delete'))
-                                    @if($user?->role?->name !== 'admin')
-                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                            @if($user?->role?->name !== 'admin')
                                             <div class="flex justify-end space-x-3">
                                                 <a
                                                     href="{{ url('update/'.$user->id) }}"
@@ -77,8 +71,8 @@
                                                     Delete User
                                                 </button>
                                             </div>
+                                            @endif
                                         </td>
-                                    @endif
                                 @endif
                             </tr>
                         @endforeach

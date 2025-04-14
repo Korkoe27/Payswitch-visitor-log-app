@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Activities;
-use App\Models\Department;
-use App\Models\Employee;
+use App\Models\{Activities,Department, Employee};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 

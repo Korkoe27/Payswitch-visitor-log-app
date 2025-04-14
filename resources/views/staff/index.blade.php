@@ -14,7 +14,7 @@
   @endif
     <div class=" overflow-x-auto sm:rounded-lg p-10">
         <table class="w-full text-left text-gray-500" id="staff">
-            <thead class="text-xs text-black uppercase bg-gray-50">
+            <thead class="text-black uppercase bg-gray-50">
                 <tr>
                     <th scope="col" class="px-6 text-lg lg:text-xl py-3">
                     Name
@@ -26,7 +26,7 @@
                         Role
                     </th>
 
-                    <th className="px-6 py-6 text-lg lg:text-xl">
+                    <th scope="col" class="px-6 text-lg lg:text-xl py-3">
                       Action
                     </th>
                 </tr>

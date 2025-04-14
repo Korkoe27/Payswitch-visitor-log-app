@@ -5,15 +5,15 @@
     </x-slot:heading>
 
 
-    @if(session('success'))
+    {{-- @if(session('success')) --}}
 
     @php
         $imageUrl = asset('PS-logo.png');
     @endphp
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            let title = 'Success!';
-            let text = 'The operation completed successfully.';
+            // let title = 'Success!';
+            // let text = 'The operation completed successfully.';
             let imageUrl = `{{ $imageUrl }}`;
             
             @if(session('success_type') == 'visitor_departure')
@@ -45,7 +45,7 @@
             });
         });
     </script>
-    @endif
+    {{-- @endif --}}
 
     
 
@@ -115,7 +115,7 @@
                 </h1>
                 <div class="flex justify-between">
                     @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'visits', 'create'))
-                    <a href="{{ url('pick-key') }}" class="bg-gradient-to-b lg:px-10 lg:text-xl text-lg rounded-lg lg:py-2 py-1 text-white from-[#247EFC] to-[#0C66E4]">Log Key</a>
+                    <a href="{{ url('pick-key') }}" class="bg-gradient-to-b lg:px-10 lg:text-xl text-lg rounded-lg lg:py-2 py-1 px-3 text-white from-[#247EFC] to-[#0C66E4]">Log Key</a>
                     @endif
                     <a href="{{ url('keys') }}" class="flex items-center text-green-700 font-bold text-xl">Keys
 
@@ -285,17 +285,17 @@
             }
 
             // Check for session flash messages
-            @if(session('success'))
-                showToast('success', 'Success!', "{{ session('success') }}");
-            @endif
+            // @if(session('success'))
+            //     showToast('success', 'Success!', "{{ session('success') }}");
+            // @endif
 
-            @if(session('error'))
-                showToast('error', 'Error!', "{{ session('error') }}");
-            @endif
+            // @if(session('error'))
+            //     showToast('error', 'Error!', "{{ session('error') }}");
+            // @endif
 
-            @if($errors->any())
-                showToast('error', 'Error!', "{{ $errors->first() }}");
-            @endif
+            // @if($errors->any())
+            //     showToast('error', 'Error!', "{{ $errors->first() }}");
+            // @endif
         // });
 
     

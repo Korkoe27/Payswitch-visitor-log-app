@@ -4,9 +4,9 @@
         Update Details
     </x-slot:heading>
 
-    <div class="h-full bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-    <main class="max-w-lg">
-        <section class="bg-white shadow-lg rounded-2xl p-8">
+    <div class="h-[calc(100vh-5rem)] grid place-items-center w-full bg-gray-50 py-16 px-8 sm:px-10 lg:px-10">
+    <main class="lg:w-1/4 w-1/2">
+        <section class="bg-white shadow-lg  rounded-2xl p-16">
             <div class="flex items-center justify-center mb-8">
                 {{-- <div class=""> --}}
 
@@ -16,7 +16,7 @@
             <form action="{{ url('user/'.$user->id) }}" class="space-y-6" method="POST">
             @csrf
             @method('PATCH')
-            <div class="space-y-4">
+            <div class="space-y-10">
                 <div class="relative">
                 <select name="role" class="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white shadow-sm transition-colors duration-200 appearance-none text-gray-900 pr-10" id="">
                     <option value="uppercase text-lg lg:text-xl text-black" selected disabled class="">Choose a role</option>
@@ -31,8 +31,8 @@
                     </svg>
                   </div>
                 </div>
-                  <div class="flex justify-end">
-                    <button id="update-role-btn" class="bg-gradient-to-b lg:px-10 px-3 lg:text-xl text-lg rounded-lg lg:py-2 py-1 text-white from-[#247EFC] to-[#0C66E4]" type="button">Update role</button>
+                  <div class="flex justify-center">
+                    <button id="update-role-btn" class="bg-gradient-to-b lg:px-10 px-6 lg:text-xl text-lg rounded-lg lg:py-2 py-3 text-white from-[#247EFC] to-[#0C66E4]" type="button">Update role</button>
                   </div>
             </div>
 

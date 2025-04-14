@@ -74,13 +74,27 @@ class VisitorController extends Controller
             ]);
             
             $phone = request()->phone_number;
+
+
             
             $formattedPhone = preg_replace('/^0/','233',$phone);
             
             
             // $checkVisitor = Visitor::where('phone_number', request()->phone)->first();
 
-            $checkVisitor = DB::table('visits')->where('phone_number', '=', request()->phone_number)->count();
+            $activeVisit = Visitor::where('phone_number',$formattedPhone)
+            ->where('status','ongoing')
+            ->whereNull('departed_at')
+            ->first();
+
+            if($activeVisit){
+                return response()->json([
+                    'success'=>false,
+                    'message'=> 'Visitor has already signed in'
+                ]);
+            }
+
+            $checkVisitor = DB::table('visits')->where('phone_number', '=', $formattedPhone)->count();
 
             Log::debug($checkVisitor);
 
@@ -180,8 +194,8 @@ class VisitorController extends Controller
         );
 
     return redirect('/')->with([
-        'success'=>true,
-        'success_type'=>"visitor_arrival"
+        'success',
+        'We are happy to have you. Enjoy your visit'
     ]);
 
         }   catch(Exception $e){
@@ -260,9 +274,8 @@ Activities::log(
 );
 
 return redirect('/')->with([
-    'success' => 'Visitor record updated successfully!', 
-    'thank_visitor' => true,
-    'sucess_type'=>'visitor_departure'
+    'success',
+    'Visitor record updated successfully!'
 ]);
     }
 
@@ -330,8 +343,8 @@ return redirect('/')->with([
             );
 
             return redirect('/')->with([
-                'success'=>true,
-                'success_type'=>"visitor_departure"
+                'success',
+                'Visitor successfully departed.'
             ]);
 
 
@@ -367,6 +380,26 @@ return redirect('/')->with([
             
                 Log::debug("Phone Number: ". $request->phone_number);
                 
+                $phone = $request->phone_number;
+
+
+            
+                $formattedPhone = preg_replace('/^0/','233',$phone);
+                
+                
+                
+            $activeVisit = Visitor::where('phone_number',$formattedPhone)
+            ->where('status','ongoing')
+            ->whereNull('departed_at')
+            ->first();
+
+            if($activeVisit){
+                return response()->json([
+                    'success'=>false,
+                    'message'=> 'Visitor has already signed in'
+                ]);
+            }
+
                 $visitor = Visitor::where('phone_number', $request->phone_number)->first();
                 
                 if ($visitor) {
@@ -442,10 +475,13 @@ return redirect('/')->with([
                 if (!$phone_number || !$otpKey) {
                     return response()->json(['success' => false, 'message' => 'Session expired. Try again.'], 400);
                 }
+
+                
             
                 try {
                         $credentials = base64_encode(config('otp.username') . ':' . config('otp.password'));
                     
+                        
                         $data_request = [
                             'phonenumber' => $phone_number,
                             'code' => $request->otp,

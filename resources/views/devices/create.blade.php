@@ -6,7 +6,7 @@
 
 
     <section class="p-10">
-        <form action="{{url('log-device')}}" class="lg:w-1/4 w-1/2 flex flex-col space-y-10" method="POST">
+        <form action="{{url('log-device')}}" class="lg:w-1/3 w-1/2 flex flex-col space-y-10" method="POST">
             @csrf
 
 

@@ -7,7 +7,7 @@
 
 
     <main class="max-w-7xl p-10">
-        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-10">
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-10">
 
             <div class="bg-white rounded-xl shadow-sm border space-y-5 border-blue-100 p-10 hover:shadow-md transition-shadow">
                 <div class="flex flex-col items-center text-center space-y-5">
@@ -98,6 +98,25 @@
                 </a>
             </div>
                 
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border space-y-5 border-blue-100 p-10 hover:shadow-md transition-shadow">
+                <div class="flex flex-col items-center text-center space-y-4">
+                    <div class="p-3 bg-blue-50 rounded-full">
+                        <img src="{{ asset('lock.svg') }}" alt="" class="h-8 w-8">
+                    </div>
+                    <h3 class="text-xl lg:text-xl font-medium text-gray-900">Manage Permissions</h3>
+                </div>
+                <div class="flex flex-col w-full space-y-3">
+                    <a href="{{ url('permissions') }}" 
+                       class="inline-flex justify-center items-center px-4 py-2 bg-gradient-to-b from-indigo-500 to-indigo-600 text-white rounded-lg hover:from-indigo-600 hover:to-indigo-700 transition-colors">
+                        All Permissions
+                    </a>
+                    <a href="{{ url('create-permission') }}" 
+                       class="inline-flex justify-center items-center px-4 py-2 border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition-colors">
+                        New Permission
+                    </a>
+                </div>
             </div>
         </section>
 

@@ -6,8 +6,7 @@ use App\Models\{Activities, Employee, Key, KeyEvent};
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\{Http,Log};
 
 class KeyEventController extends Controller
 {
