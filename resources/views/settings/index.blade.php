@@ -6,8 +6,8 @@
 
 
 
-    <main class="max-w-7xl p-10">
-        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-10">
+    <main class="lg:h-[calc(100vh-5rem)] h-[calc(100vh-6.5rem)] overflow-auto scrollbar-hidden max-w-7xl p-10">
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-10">
 
             <div class="bg-white rounded-xl shadow-sm border space-y-5 border-blue-100 p-10 hover:shadow-md transition-shadow">
                 <div class="flex flex-col items-center text-center space-y-5">
@@ -89,7 +89,7 @@
                 </div>
                 <div class="flex flex-col w-full space-y-3">
                     <a href="{{ url('roles') }}" 
-                   class="inline-flex justify-center items-center px-4 py-2 bg-gradient-to-b from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 transition-colors">
+                   class="inline-flex justify-center items-center px-4 py-2 bg-gradient-to-b from-red-300 to-red-500 text-white rounded-lg hover:from-red-600 hover:to-red-700 transition-colors">
                     Roles
                 </a>
                 <a href="{{ url('create-role') }}" 

@@ -20,6 +20,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== TRUE) {
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="">
     <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
     @vite('resources/css/app.css')
@@ -28,7 +29,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== TRUE) {
 
 <body class="flex w-full">
 
-
+    @if(\App\Models\Roles::hasPermission(auth()->user()->role_id !== 5, 'visits', 'create'))
 
 
     <nav class="flex flex-col bg-[#0F51AE] min-h-screen lg:w-1/6">
@@ -50,8 +51,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== TRUE) {
                         <span class="hidden lg:flex">Dashboard</span>
                     </x-nav-link>
                 </li>
-                @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'visits', 'view'))
-                <li ctrue   {{-- <li class="text-[#529AFF] font-semibold pt-4 text-lg">Tables</li> --}}
+                @if(\App\Models\Roles::hasPermission(auth()->user()->role_id !== 5, 'visits', 'create'))
                 <li>
                 <x-nav-link href="{{ url('visits') }}" :active="request()->is('visits')">
                     <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg" class="size-9 lg:size-6">
@@ -75,7 +75,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== TRUE) {
                 </li>
 
                 <li class="">
-                    <x-nav-link href="{{ url('device-logs') }}" :active="request()->is('device-logs')">
+                    <x-nav-link href="{{ url('devices') }}" :active="request()->is('devices')">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-9 lg:size-6">
                             <path d="M18 8V6C18 5.46957 17.7893 4.96086 17.4142 4.58579C17.0391 4.21071 16.5304 4 16 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V13C2 13.5304 2.21071 14.0391 2.58579 14.4142C2.96086 14.7893 3.46957 15 4 15H12M10 19V15.04V18.19M7 19H12M18 12H20C21.1046 12 22 12.8954 22 14V20C22 21.1046 21.1046 22 20 22H18C16.8954 22 16 21.1046 16 20V14C16 12.8954 16.8954 12 18 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
@@ -191,12 +191,23 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== TRUE) {
         </div>
     </nav>
 
+    @endif
+
+
+    
+
     <main class="w-full  min-h-screen flex flex-col">
         <!-- Top Section -->
         <header class="flex justify-between items-center w-full border-b border-[#C8DFFF] px-10 py-5">
+            @if(\App\Models\Roles::hasPermission(auth()->user()->role_id !== 5, 'visits', 'create'))
                 <h1 class=" text-[#0F51AE] lg:text-2xl  text-xl font-bold">{{ $heading }}</h1>
+            @endif
 
-                <div class="lg:text-2xl text-xl gap-10 flex justify-end items-center lg:w-fit text-[#0F51AE] rounded-3xl font-medium">
+            @if(\App\Models\Roles::hasPermission(auth()->user()->role_id == 5, 'visits', 'create'))
+            <a href="/" class="w-1/6 lg:w-1/12">
+            <img src="{{ asset('PS-logo.png') }}" class="" alt=""></a>
+            @endif
+                <div class="lg:text-2xl w-full text-xl gap-10 flex justify-end items-center lg:w-fit text-[#0F51AE] rounded-3xl font-medium">
                     <span class="lg:text-2xl lg:w-fit text-[#0F51AE] rounded-3xl font-medium" id="date"></span>
                     <span class="lg:text-3xl lg:w-fit  text-[#0F51AE] rounded-3xl font-semibold" id="clock"></span>
                 </div>
@@ -208,6 +219,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== TRUE) {
               {{ $slot }}
             </div>
         </div>
+       
     </main>
     
 
@@ -241,7 +253,6 @@ updateClock();
 
 // Update clock every second
 setInterval(updateClock, 1000);
-
 
 
 document.addEventListener('DOMContentLoaded', function() {

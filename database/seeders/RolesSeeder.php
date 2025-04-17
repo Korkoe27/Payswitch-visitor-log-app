@@ -29,5 +29,9 @@ class RolesSeeder extends Seeder
             'name' => 'support',
             'description'=> 'has access to logs and reports'
         ]);
+        Roles::create([
+            'name' => 'visitor',
+            'description'=> 'can log visit and exits'
+        ]);
     }
 }

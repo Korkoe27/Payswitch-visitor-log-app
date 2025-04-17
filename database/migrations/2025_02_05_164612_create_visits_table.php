@@ -26,7 +26,6 @@ return new class extends Migration
             $table->boolean('marketing_consent')->default(false)->nullable();
             $table->longText('visitor_experience')->nullable();
             $table->enum('status', ['ongoing', 'departed'])->default('ongoing');
-            $table->enum('visitorStatus',['newVisitor','oldVisitor']);
             $table->json('devices')->nullable();//done
             $table->json('companions')->nullable();
 

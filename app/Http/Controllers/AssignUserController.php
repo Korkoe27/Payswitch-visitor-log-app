@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Mail\AssignUser;
+use App\Mail\UpdateRole;
 use App\Models\{Activities, Employee, Roles, User};
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -266,9 +267,15 @@ class AssignUserController extends Controller
     $user->update([
         'role_id' => $validated['role'],
     ]);
+
+    $roleName = $user->role->name;
+
+
+    Mail::to($user->email)->send(new UpdateRole($user,$roleName));
+
+    Log::debug("Mail sent");
     
     // Get the updated role name (after update)
-    $roleName = $user->role->name;
     
     // Log the activity
     Activities::log(

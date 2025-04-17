@@ -3,9 +3,18 @@
         Visit Details
     </x-slot:heading>
 
-    <div class="p-10 w-1/2 text-[#44546F] text-xl font-bold bg-white rounded-lg">
-        <div class="border-b border-gray-200 rounded-t-lg bg-[#F1F1F1] p-3">
+    <div class="p-10 lg:w-1/2 w-full  text-[#44546F] text-xl font-bold bg-white rounded-lg">
+        <div class="border-b border-gray-200 rounded-t-lg flex justify-between bg-[#F1F1F1] p-3">
             <h2 class="lg:text-2xl text-xl font-semibold text-[#172B4D]">Visitor Information</h2>
+
+
+            @if(\App\Models\Roles::hasPermission(auth()->user()->role_id == 5, 'visits', 'create'))
+            <a href="{{ route('visitor.departure', ['visitor' => $visitor->id]) }}" class="bg-gradient-to-b px-10 text-2xl w-fit rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4]" type="submit">
+                Continue to sign out
+            </a>
+            
+
+            @endif
         </div>
 
         <div class="flex justify-between border-b border-gray-100 p-3">
@@ -35,7 +44,7 @@
         </div>
     </div>
 
-    <div class="p-10 w-1/2 text-[#44546F] text-xl font-bold bg-white rounded-lg">
+    <div class="p-10 lg:w-1/2 w-full text-[#44546F] text-xl font-bold bg-white rounded-lg">
         <div class="border-b border-gray-200 rounded-t-lg bg-[#F1F1F1] p-3">
             <h2 class="lg:text-2xl text-xl font-semibold text-[#172B4D]">Visit Details</h2>
         </div>
@@ -63,7 +72,7 @@
         </div>
     </div>
 
-    <div class="p-10 w-1/2 text-[#44546F] text-xl font-bold bg-white rounded-lg">
+    <div class="p-10 lg:w-1/2 w-full text-[#44546F] text-xl font-bold bg-white rounded-lg">
         <div class="border-b border-gray-200 rounded-t-lg bg-[#F1F1F1] p-3">
             <h2 class="lg:text-2xl text-xl font-semibold text-[#172B4D]">Devices</h2>
         </div>
@@ -85,7 +94,7 @@
     
     </div>
 
-    <div class="p-10 w-1/2 text-[#44546F] text-xl font-bold bg-white rounded-lg">
+    <div class="p-10 lg:w-1/2 w-full text-[#44546F] text-xl font-bold bg-white rounded-lg">
         <div class="border-b border-gray-200 rounded-t-lg bg-[#F1F1F1] p-3">
             <h2 class="lg:text-2xl text-xl font-semibold text-[#172B4D]">Companions</h2>
         </div>
@@ -110,7 +119,7 @@
     
     </div>
 
-    <div class="p-10 w-1/2 text-[#44546F] text-xl font-bold bg-white rounded-lg">
+    <div class="p-10 lg:w-1/2 w-full text-[#44546F] text-xl font-bold bg-white rounded-lg">
         <div class="border-b border-gray-200 rounded-t-lg bg-[#F1F1F1] p-3">
             <h2 class="lg:text-2xl text-xl font-semibold text-[#172B4D]">Access Cards</h2>
         </div>

@@ -94,15 +94,15 @@ class VisitorController extends Controller
                 ]);
             }
 
-            $checkVisitor = DB::table('visits')->where('phone_number', '=', $formattedPhone)->count();
+            // $checkVisitor = DB::table('visits')->where('phone_number', '=', $formattedPhone)->count();
 
-            Log::debug($checkVisitor);
+            // Log::debug($checkVisitor);
 
-            if($checkVisitor > 0){
-                $visitorStatus = 'oldVisitor';
-            } else{
-                $visitorStatus = 'newVisitor';
-            }
+            // if($checkVisitor > 0){
+            //     $visitorStatus = 'oldVisitor';
+            // } else{
+            //     $visitorStatus = 'newVisitor';
+            // }
 
     $devicesJson = request()->has('devices') ? ($validatedData['devices']) : null;
 
@@ -133,7 +133,7 @@ class VisitorController extends Controller
         'purpose' => $validatedData['purpose'],
         'devices' => $devicesJson,
         'status' => 'ongoing',
-        'visitorStatus' => $visitorStatus,
+        // 'visitorStatus' => $visitorStatus,
         'companions' => $companionJson,
     ]);
 
@@ -204,6 +204,39 @@ class VisitorController extends Controller
         }
     }
 
+
+    public function checkExit(){
+        return view('visitor.check-exit');
+    }
+
+    public function confirmExit(Request $request){
+        $request->validate([
+            'phone_number'=>'required'
+        ]);
+
+        // dd($request->phone_number);
+
+        $phone = $request->phone_number;
+        Log::debug("Phone Number: ". $phone);
+
+        $checkVisitor = Visitor::where('phone_number',$phone)
+        ->where('status','ongoing')
+        ->first();
+        if($checkVisitor){
+            return response()->json([
+                'success'=>true,
+                'message'=> 'Signed',
+                'redirect' => route('showVisitor', ['visitor' => $checkVisitor->id])
+            ]);
+        }else{
+            return redirect()->back()->withErrors([
+                'error' => 'Visitor not signed in. Please sign in!'
+            ])->withInput([
+                'phone_number' => $request->phone_number
+            ]);
+        }
+    }
+
     public function show(Visitor $visitor)
     {
         $access_cards = DB::table('access_cards')
@@ -215,90 +248,47 @@ class VisitorController extends Controller
     }
 
 
-    public function departure(Request $request, Visitor $visitor){
+    public function departure( Visitor $visitor){
 
-        Log::debug("visitor: " . base64_decode($request->visitor));
+        // Log::debug("visitor: " . base64_decode($request->visitor));
 
-        $decodedId = base64_decode($request->visitor);
-        $visitor = Visitor::findOrFail(base64_decode($request->visitor));
+        // $decodedId = base64_decode($request->visitor);
+        $visitor = Visitor::findOrFail($visitor->id);
 
         // Log::debug("visitor: " . $visitor);
-        if($visitor->visitorStatus == 'newVisitor'){
-            // Log::debug("new visitor");
+        // if($visitor->visitorStatus == 'newVisitor'){
+            Log::debug("new visitor");
             return view('visitor.exit', ['visitor' => $visitor]);
-        }else{
+        // }else{
 
-            Log::debug("old visitor");
-            return $this->exitOldVisitor($visitor);
+            // Log::debug("old visitor");
+            // return $this->exitOldVisitor($visitor);
         }
-    }
+    
 
-    public function exitOldVisitor($visitor){
-        
-        // Log::debug($visitor);
-        // $visitor_id = base64_decode($visitor);
-
-        // $oldVisitor = Visitor::findOrFail($visitor_id);
-
-        // Log::debug($oldVisitor);
-
-
-        $visitor->update([
-            'departed_at' => Carbon::now(),
-            'status' => 'departed'
-        ]);
-
-        
-                
-
-        $access_cards = DB::table('access_cards')
-        ->where('visitor_id', $visitor->id)
-        ->get();
-
-    if($access_cards->count()>0){
-        foreach($access_cards as $card){
-            $card_number = $card->card_number;
-            if($card_number != NULL){
-                DB::table('visitor_access_cards')
-                    ->where('card_number', $card_number)
-                    ->update(['status'=>'available']);
-            }
-        }
-    }
-
-
-
-Activities::log(
-    action: ' Visitor Departed',
-    description: $visitor->first_name . ' ' . $visitor->last_name . ' departed.'
-);
-
-return redirect('/')->with([
-    'success',
-    'Visitor record updated successfully!'
-]);
-    }
 
 
 
     //exit 
-            public function exit(Visitor $visitor){
+
+
+    public function exit(Visitor $visitor){
 
 
 
                 
-                $visitor_id = base64_decode(request('masked_id'));
-                $visitor = Visitor::findOrFail(id: $visitor_id);
+                // $visitor_id = base64_decode(request('masked_id'));
+                $visitor = Visitor::findOrFail(id: $visitor->id);
                 
                 Log::debug("got here");
 
 
-                if($visitor->visitorStatus == 'newVisitor'){
-                request()->validate([
-                    'rating'=> '',
-                    'visitor_experience' => '',
-                    'marketing_consent' => '',  
-                ]);
+                // if($visitor->visitorStatus == 'newVisitor'){
+                // request()->validate([
+                //     'rating'=> '',
+                //     'visitor_experience' => '',
+                //     'marketing_consent' => '',  
+                // ]);
 
 
             $visitor->update([
@@ -307,21 +297,21 @@ return redirect('/')->with([
                 'marketing_consent' => request('marketing_consent'),
                 'departed_at' =>Carbon::now(),
                 'status' => 'departed',
-                'visitorStatus' => 'oldVisitor'
+                // 'visitorStatus' => 'oldVisitor'
             ]);
 
-                }   else{
-                    $visitor->update([
-                        'departed_at' => Carbon::now(),
-                        'status' => 'departed'
-                    ]);
-                }
+                // }   else{
+                //     $visitor->update([
+                //         'departed_at' => Carbon::now(),
+                //         'status' => 'departed'
+                //     ]);
+                // }
 
 
                 
 
                 $access_cards = DB::table('access_cards')
-                    ->where('visitor_id', $visitor_id)
+                    ->where('visitor_id', $visitor->id)
                     ->get();
 
                 if($access_cards->count()>0){

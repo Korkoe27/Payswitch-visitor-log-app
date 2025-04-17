@@ -30,8 +30,19 @@
      {{-- <form action="{{ url('exit/'.$visitor['id'])}}" method="POST" class="flex flex-col gap-y-10 h-full gap-4 m-auto justify-center items-center w-full"> --}}
         @csrf
         @method('PATCH')
+
+
+        @php
+
+            // dd($visitor->full_name);
+            $fullName = explode(' ',$visitor->full_name);
+            // $firstName = $fullName[1];
+            // dd($fullName[0]);
+        @endphp
         
-        <p class="font-semibold text-xl lg:text-2xl">How was your experience visiting us? <span class="text-gray-400">(optional)</span></p>
+        <p class="font-semibold text-xl lg:text-2xl">
+            <span class="">{{ $fullName[0] }},</span>
+            how was your experience visiting us? <span class="text-gray-400">(optional)</span></p>
 
         <input type="hidden" name="masked_id" value="{{ request()->query('visitor')}}">
         
@@ -84,7 +95,7 @@
             </label>
         </div>
 
-        <button class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4] flex items-center" type="submit">Sign Out</button>
+        <button class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4] flex items-center" type="submit">Skip and Sign Out</button>
     </form>
 </main>
 
@@ -140,17 +151,17 @@
         });
 
         // Form validation
-        form.addEventListener('submit', function(event) {
-            const selectedRating = document.querySelector('input[name="rating"]:checked');
+        // form.addEventListener('submit', function(event) {
+        //     const selectedRating = document.querySelector('input[name="rating"]:checked');
             
-            if (!selectedRating) {
-                event.preventDefault();
-                alert('Please select a rating before submitting.');
-                return;
-            }
+        //     if (!selectedRating) {
+        //         event.preventDefault();
+        //         alert('Please select a rating before submitting.');
+        //         return;
+        //     }
 
-            // Optional: Add more validation for textarea or other fields if needed
-        });
+        //     // Optional: Add more validation for textarea or other fields if needed
+        // });
     });
     </script>
 

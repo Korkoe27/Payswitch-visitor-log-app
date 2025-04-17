@@ -38,12 +38,16 @@
                             @if ($device->action === 'bringDevice')
                                 <button type="button" 
                                     class="signOutDeviceBtn font-medium text-blue-500 p-[5px] rounded-lg border border-blue-400"
+                                    data-device-name="{{ $device->employee?->first_name }} {{ $device->employee?->last_name }}"
+                                    data-device-serial="{{ $device->serial_number }}"
                                     data-device-id="{{ $device->id }}">
                                     Sign Out
                                 </button>
                             @elseif ($device->action === 'takeDeviceHome')
                                 <button type="button" 
                                     class="returnDeviceBtn font-medium text-green-500 p-[5px] rounded-lg border border-green-400"
+                                    data-device-name="{{ $device->employee?->first_name }} {{ $device->employee?->last_name }}"
+                                    data-device-serial="{{ $device->serial_number }}"
                                     data-device-id="{{ $device->id }}">
                                     Return Device
                                 </button>
@@ -73,18 +77,21 @@
                 button.addEventListener('click', async function(e) {
                     e.preventDefault();
                     
+
+                    const employeeName = this.getAttribute('data-device-name');
+                    const deviceSerial = this.getAttribute('data-device-serial');
                     const deviceId = this.getAttribute('data-device-id');
                     const isReturn = this.classList.contains('returnDeviceBtn');
                     const actionText = isReturn ? 'return' : 'sign out';
                     
                     const result = await Swal.fire({
                         title: `Confirm ${actionText}?`,
-                        text: `Are you sure you want to ${actionText} this device?`,
+                        text: `${employeeName}, are you sure you want to ${actionText} this device with serial number ${deviceSerial}?`,
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: `Yes, ${actionText} it!`
+                        confirmButtonText: `Yes, ${actionText}!`
                     });
                     
                     if (result.isConfirmed) {

@@ -38,5 +38,11 @@ class UserSeeder extends Seeder
             'email' => 'support@payswitch.com.gh',
             'password' => Hash::make('123212321'),
         ]);
+        User::create([
+            'name' => 'Visitor',
+            'role_id'=>5,
+            'username' => 'visit',
+            'password' => Hash::make('visit'),
+        ]);
     }
 }

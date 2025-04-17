@@ -22,6 +22,7 @@ class PermissionsSeeder extends Seeder
         $hr = $roles[1];
         $security = $roles[2];
         $support = $roles[3];
+        $visitor = $roles[4];
 
         $staff = $modules[0];
         $keys = $modules[1];
@@ -441,6 +442,110 @@ class PermissionsSeeder extends Seeder
             'role_id'=>$support->id,
             'module_id'=>$departments->id,
             'can_view'=>1,
+            'can_create'=>0,
+            'can_modify'=>0,
+            'can_delete'=>0
+        ]);
+
+
+        //permissions for visitors
+
+
+        //1
+
+        Permission::create([
+            'role_id'=>$visitor->id,
+            'module_id'=>$staff->id,
+            'can_view'=>0,
+            'can_create'=>0,
+            'can_modify'=>0,
+            'can_delete'=>0
+        ]);
+
+        //2
+
+        Permission::create([
+            'role_id'=>$visitor->id,
+            'module_id'=>$keys->id,
+            'can_view'=>0,
+            'can_create'=>0,
+            'can_modify'=>0,
+            'can_delete'=>0,
+        ]);
+
+        //3
+
+        Permission::create([
+            'role_id'=>$visitor->id,
+            'module_id'=>$settings->id,
+            'can_view'=>0,
+            'can_create'=>0,
+            'can_modify'=>0,
+            'can_delete'=>0
+        ]);
+
+
+        //4
+        Permission::create([
+            'role_id'=>$visitor->id,
+            'module_id'=>$logs->id,
+            'can_view'=>0,
+            'can_create'=>1,
+            'can_modify'=>0,
+            'can_delete'=>0
+        ]);
+
+        //5
+
+        Permission::create([
+            'role_id'=>$visitor->id,
+            'module_id'=>$visits->id,
+            'can_view'=>1,
+            'can_create'=>0,
+            'can_modify'=>0,
+            'can_delete'=>0
+        ]);
+
+
+        //6
+        Permission::create([
+            'role_id'=>$visitor->id,
+            'module_id'=>$user_roles->id,
+            'can_view'=>0,
+            'can_create'=>0,
+            'can_modify'=>0,
+            'can_delete'=>0
+        ]);
+
+
+        //7
+        Permission::create([
+            'role_id'=>$visitor->id,
+            'module_id'=>$user->id,
+            'can_view'=>0,
+            'can_create'=>0,
+            'can_modify'=>0,
+            'can_delete'=>0
+        ]);
+
+
+        //8
+
+        Permission::create([
+            'role_id'=>$visitor->id,
+            'module_id'=>$reports->id,
+            'can_view'=>0,
+            'can_create'=>0,
+            'can_modify'=>0,
+            'can_delete'=>0
+        ]);
+
+
+        //9
+        Permission::create([
+            'role_id'=>$visitor->id,
+            'module_id'=>$departments->id,
+            'can_view'=>0,
             'can_create'=>0,
             'can_modify'=>0,
             'can_delete'=>0

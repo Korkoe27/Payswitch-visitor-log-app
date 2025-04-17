@@ -41,6 +41,7 @@
                 $request->validate([
                     'serial_number' => 'required',
                     'device_brand' => 'required',
+                    'is_personal'=>'required',
                     'employee_id' => 'required|exists:employees,id',
                     'action' => 'required',
                 ]);
@@ -61,6 +62,7 @@
                     'serial_number' => $request->serial_number,
                     'employee_id' => $staff->id,
                     'action' => $request->action,
+                    'is_personal'=>$request->is_personal,
                     'status' => $status,
                     'logged_at' => Carbon::now(),
                 ]);

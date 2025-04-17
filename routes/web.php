@@ -104,7 +104,7 @@ Route::get('/', function () {
 
                         Route::get('visits', 'index');
                         
-                        Route::get('departure',  'departure')->name('departure');
+                        Route::get('/departure/{visitor}',  'departure')->name('visitor.departure');
                         
                         Route::get('create-visit',  'create')->name('create-visit');
 
@@ -112,10 +112,14 @@ Route::get('/', function () {
                         
                         Route::get('old-visitor/{visitor}',  'oldVisitorSignIn')->name('old-visitor');
                         
-                        Route::get('check-visitor',  'checkVisitor');
+                        Route::get('check-visitor',  'checkVisitor')->name('check-visitor');
+
+                        Route::get('check-exit', 'checkExit');
+
+                        Route::post('confirmExit', 'confirmExit')->name('confirmExit');
                         
                         
-                        Route::get('visit/{visitor}',  'show');
+                        Route::get('visit/{visitor}',  'show')->name('showVisitor');
 
                         Route::post('verify-otp', 'verifyOtp')->name('verify-otp');
 
@@ -169,7 +173,7 @@ Route::get('/', function () {
 
                 Route::controller(DeviceController::class)->group(function(){
 
-                        Route::get('device-logs', 'index');
+                        Route::get('devices', 'index')->name('devices');
 
                         Route::get('log',  'create');
 

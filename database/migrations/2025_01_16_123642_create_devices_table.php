@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string(column: 'device_brand');
             $table->string(column: 'serial_number');
             $table->foreignIdFor(Employee::class, 'employee_id')->constrained('employees');
+            $table->boolean('is_personal');
             $table->string(column: 'action');
             $table->string('status');
             $table->timestamp('logged_at');

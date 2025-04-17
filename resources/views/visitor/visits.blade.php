@@ -55,7 +55,7 @@
                             <a href="{{ url('visit/' . $person->id) }}" class="font-medium text-blue-600 text-lg hover:underline">View</a>
 
                             @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'visits', 'create') && $person->status === 'ongoing')
-                                <a href="departure?visitor={{base64_encode($person->id)}}" class="font-medium underline-offset-4 text-red-500 rounded-lg underline">Sign Out</a>
+                                <a href="{{ route('visitor.departure', ['visitor' => $visitor->id]) }}" class="font-medium underline-offset-4 text-red-500 rounded-lg underline">Sign Out</a>
                             @else
                                 &nbsp;
                             @endif

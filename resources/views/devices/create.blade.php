@@ -1,69 +1,163 @@
 <x-layout>
-
     <x-slot:heading>
         Log your Device
     </x-slot:heading>
 
 
-    <section class="p-10">
-        <form action="{{url('log-device')}}" class="lg:w-1/3 w-1/2 flex flex-col space-y-10" method="POST">
-            @csrf
+    <div class="lg:h-[calc(100vh-5rem)] scrollbar-hidden h-[calc(100vh-6.5rem)] bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl h-full flex-col flex justify-center m-auto">
+            {{-- Header --}}
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold text-gray-900">Log your Device</h1>
+                <p class="mt-2 text-lg text-gray-600">Please fill in the details below to log your device</p>
+            </div>
 
+            <form action="{{ url('log-device') }}" method="POST" class="bg-white shadow-sm rounded-xl border border-gray-200 p-8">
+                @csrf
+                <div class="space-y-8">
+                    {{-- Serial Number --}}
+                    <div class="space-y-2">
+                        <label for="serial_number" class="block text-lg font-medium text-gray-700">
+                            Serial Number <span class="text-red-500 ml-1">*</span>
+                        </label>
+                        <input
+                            type="text"
+                            name="serial_number"
+                            id="serial_number"
+                            placeholder="e.g., 5ECHOE44EKND"
+                            value="{{ old('serial_number') }}"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors @error('serial_number') border-red-500 @enderror"
+                            required
+                        >
+                        @error('serial_number')
+                            <p class="mt-1 text-lg text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
 
-            <div class="space-y-4">
-                <label for="serial_number" class="font-semibold text-gray-900 text-base">Serial Number <span class="text-red-400">*</span></label>
-                <div class="mt-1">
-                    <input type="text" name="serial_number" id="serial_number" placeholder="5ECHOE44EKND" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-blue-500 active:border-blue-500" required>
+                    {{-- Brand --}}
+                    <div class="space-y-2">
+                        <label for="brand" class="block text-lg font-medium text-gray-700">
+                            Brand <span class="text-red-500 ml-1">*</span>
+                        </label>
+                        <input
+                            type="text"
+                            name="device_brand"
+                            id="brand"
+                            placeholder="e.g., MacBook"
+                            value="{{ old('device_brand') }}"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors @error('device_brand') border-red-500 @enderror"
+                            required
+                        >
+                        @error('device_brand')
+                            <p class="mt-1 text-lg text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Employee Selection --}}
+                    <div class="space-y-2">
+                        <label for="employee_id" class="block text-lg font-medium text-gray-700">
+                            Who are you? <span class="text-red-500 ml-1">*</span>
+                        </label>
+                        <select
+                            name="employee_id"
+                            id="employee_id"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-colors @error('employee_id') border-red-500 @enderror"
+                            required
+                        >
+                            <option value="w-1/2" disabled {{ old('employee_id') ? '' : 'selected' }}>Select Staff Member</option>
+                            @foreach($employees as $employee)
+                                <option class="w-1/2" value="{{ $employee->id }}" {{ old('employee_id') == $employee->id ? 'selected' : '' }}>
+                                    {{ $employee->first_name }} {{ $employee->last_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('employee_id')
+                            <p class="mt-1 text-lg text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Personal Device Checkbox --}}
+                    <div class="space-y-2">
+                        <label for="brand" class="block text-lg font-medium text-gray-700">
+                            Is this your personal machine? <span class="text-red-500 ml-1">*</span>
+                        </label>
+                        <div class="gap-10 flex">
+                            <label for="" class="flex gap-1">
+                            <input
+                            type="radio"
+                            name="is_personal"
+                            id="is_personal"
+                            placeholder="e.g., MacBook"
+                            value="1"
+                            class=""
+                            required
+                            >
+                            Yes
+                            </label>
+                            <label for="" class="flex gap-1">
+                            <input
+                            type="radio"
+                            name="is_personal"
+                            id="is_personal"
+                            placeholder="e.g., MacBook"
+                            value="0"
+                            class=""
+                            >
+                            No
+                            </label>
+                        </div>
+                        @error('is_personal')
+                            <p class="mt-1 text-lg text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Action Selection --}}
+                    <div class="space-y-4">
+                        <label class="block text-lg font-medium text-gray-700">
+                            What are you doing? <span class="text-red-500">*</span>
+                        </label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <label class="relative">
+                                <input
+                                    type="radio"
+                                    name="action"
+                                    value="takeDeviceHome"
+                                    {{ old('action') == 'takeDeviceHome' ? 'checked' : '' }}
+                                    class="sr-only peer"
+                                    required
+                                >
+                                <div class="w-full p-4 text-center border rounded-lg cursor-pointer transition-all peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-700 border-gray-300 hover:bg-gray-50 text-gray-700">
+                                    Taking device home
+                                </div>
+                            </label>
+                            <label class="relative">
+                                <input
+                                    type="radio"
+                                    name="action"
+                                    value="bringDevice"
+                                    {{ old('action') == 'bringDevice' ? 'checked' : '' }}
+                                    class="sr-only peer"
+                                    required
+                                >
+                                <div class="w-full p-4 text-center border rounded-lg cursor-pointer transition-all peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-700 border-gray-300 hover:bg-gray-50 text-gray-700">
+                                    Bringing device to work
+                                </div>
+                            </label>
+                        </div>
+                        @error('action')
+                            <p class="mt-1 text-lg text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Submit Button --}}
+                    <button
+                        type="submit"
+                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200"
+                    >
+                        Log Device
+                    </button>
                 </div>
-            </div>
-            <div class="space-y-4">
-                <label for="brand" class="font-semibold text-gray-900 text-base">Brand <span class="text-red-400">*</span></label>
-                <div class="mt-1">
-                    <input type="text" name="device_brand" placeholder="MacBook" id="brand" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-blue-500 active:border-blue-500" required>
-                </div>
-            </div>
-            <div class="space-y-4">
-                <label for="employee_id" class="font-semibold text-gray-900 text-base">Who are you? <span class="text-red-400">*</span></label>
-                <div class="mt-1">
-                <select name="employee_id" id="" class="w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-blue-500 active:border-blue-500" required>
-                    <option value="" selected disabled class="">Staff</option>
-                    @foreach ($employees as $employee)
-                    <option value="{{$employee->id}}" class="dark:bg-dark-2">{{$employee->first_name}} {{$employee->last_name}}</option>
-                   @endforeach
-                </select>
-                </div>
-            </div>
-
-              
-<h3 class="text-xl font-medium text-gray-900">What are you doing? <span class="text-red-400">*</span></h3>
-<ul class="grid w-full gap-6 md:grid-cols-2">
-    <li>
-        <input type="radio" id="hosting-small" name="action" value="takeDeviceHome" class="hidden peer" required />
-        <label for="hosting-small" class="inline-flex items-center justify-between w-full px-5 py-6 text-black bg-white border border-gray-400 rounded-lg cursor-pointer   peer-checked:border-blue-600  peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 ">                           
-            <div class="block">
-                {{-- <div class="w-full text-lg font-semibold">0-50 MB</div> --}}
-                <div class="w-full">Taking a device home.</div>
-            </div>
-        </label>
-    </li>
-    <li>
-        <input type="radio" id="hosting-big" name="action" value="bringDevice" class="hidden peer">
-        <label for="hosting-big" class="inline-flex items-center justify-between w-full px-5 py-6 text-black bg-white border border-gray-400 rounded-lg cursor-pointer  peer-checked:border-blue-600  peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 ">
-            <div class="block">
-                {{-- <div class="w-full text-lg font-semibold">500-1000 MB</div> --}}
-                <div class="w-full">Bringing your device to work.</div>
-            </div>
-        </label>
-    </li>
-</ul>
-
-
-            <button type="submit" class="bg-gradient-to-b lg:px-10 px-3 lg:text-xl text-lg rounded-lg lg:py-2 py-1 text-white from-[#247EFC] to-[#0C66E4] w-fit">Log Device</button>
-
-
-        </form>
-    </section>
-
-
-
+            </form>
+        </div>
+    </div>
 </x-layout>
