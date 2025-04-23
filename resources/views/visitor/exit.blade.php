@@ -24,7 +24,7 @@
 </script>
 @endif
 
-<main class="flex-col flex justify-center items-center py-64 m-auto">
+<main class="flex-col lg:h-[calc(100vh-10rem)] h-[calc(100vh-6.5rem)] overflow-auto scrollbar-hidden flex justify-center items-center py-64 m-auto">
 
      <form action="{{ url('exit/'.$visitor['id'])}}" method="POST" class="w-full flex-col flex m-auto justify-center items-center gap-10">
      {{-- <form action="{{ url('exit/'.$visitor['id'])}}" method="POST" class="flex flex-col gap-y-10 h-full gap-4 m-auto justify-center items-center w-full"> --}}

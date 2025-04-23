@@ -6,7 +6,7 @@ use App\Models\{Activities, Employee, Key, KeyEvent};
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\{Http,Log};
+use Illuminate\Support\Facades\{Auth, Http,Log};
 
 class KeyEventController extends Controller
 {
@@ -73,6 +73,11 @@ class KeyEventController extends Controller
                 'picked_at' => Carbon::now(),
                 'status' => 'picked'
             ]);
+
+            Activities::log(
+                action: 'Updated user role',
+                description: $employeeName . " picked the " . $key_name . " key."
+            );
         
             return response()->json([
                 'success'=>true,

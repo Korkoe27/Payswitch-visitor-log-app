@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 
 use App\Models\{AccessCards, Visitor,Employee, VisitorAccessCard, Activities};
+use App\Models\UserSessions;
 use Carbon\Carbon;
 use Exception;
-use Illuminate\Support\Facades\{DB,Log,Http};
+use Illuminate\Support\Facades\{Auth, DB,Log,Http};
 use Illuminate\Http\Request;
 
 class VisitorController extends Controller
@@ -188,10 +189,25 @@ class VisitorController extends Controller
         ]);
 
     }
-        Activities::log(
-            action: 'Logged Visitor',
-            description: $countVisitors . " person(s) logged."
-        );
+    $activeSecurity = UserSessions::with('user')
+    ?->whereNull('logged_out_at')
+    ?->whereHas('user', fn($query) => $query->where('role_id', 3))
+    ?->latest('last_activity') // pick the most recent one
+    ?->first();
+
+// Log::debug("Active Guard: ". $activeSecurity);
+
+if ($activeSecurity) {
+    Activities::log(
+        action: 'Visitor Departed',
+        description: "{$visitor->full_name} Arrived. Security on duty: " . $activeSecurity->user->name
+    );
+} else {
+    Activities::log(
+        action: 'Visitor Departed',
+        description: "{$visitor->full_name} Arrived. No security user was logged in."
+    );
+}
 
     return redirect('/')->with([
         'success',
@@ -274,8 +290,6 @@ class VisitorController extends Controller
 
     public function exit(Visitor $visitor){
 
-
-
                 
                 // $visitor_id = base64_decode(request('masked_id'));
                 $visitor = Visitor::findOrFail(id: $visitor->id);
@@ -326,11 +340,25 @@ class VisitorController extends Controller
                 }
 
 
+                $activeSecurity = UserSessions::with('user')
+                    ?->whereNull('logged_out_at')
+                    ?->whereHas('user', fn($query) => $query->where('role_id', 3))
+                    ?->latest('last_activity') // pick the most recent one
+                    ?->first();
 
-            Activities::log(
-                action: ' Visitor Departed',
-                description: $visitor->first_name . ' ' . $visitor->last_name . ' departed.'
-            );
+                Log::debug("Active Guard: ". $activeSecurity);
+
+                if ($activeSecurity) {
+                    Activities::log(
+                        action: 'Visitor Departed',
+                        description: "{$visitor->full_name} departed. Security on duty: " . $activeSecurity->user->name
+                    );
+                } else {
+                    Activities::log(
+                        action: 'Visitor Departed',
+                        description: "{$visitor->full_name} departed. No security user was logged in."
+                    );
+                }
 
             return redirect('/')->with([
                 'success',
@@ -386,7 +414,7 @@ class VisitorController extends Controller
             if($activeVisit){
                 return response()->json([
                     'success'=>false,
-                    'message'=> 'Visitor has already signed in'
+                    'message'=> 'Visitor is already signed in. Please Sign out.'
                 ]);
             }
 

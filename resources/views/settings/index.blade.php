@@ -5,7 +5,6 @@
     </x-slot:heading>
 
 
-
     <main class="lg:h-[calc(100vh-5rem)] h-[calc(100vh-6.5rem)] overflow-auto scrollbar-hidden max-w-7xl p-10">
         <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-10">
 
@@ -100,7 +99,7 @@
                 
             </div>
 
-            <div class="bg-white rounded-xl shadow-sm border space-y-5 border-blue-100 p-10 hover:shadow-md transition-shadow">
+            {{-- <div class="bg-white rounded-xl shadow-sm border space-y-5 border-blue-100 p-10 hover:shadow-md transition-shadow">
                 <div class="flex flex-col items-center text-center space-y-4">
                     <div class="p-3 bg-blue-50 rounded-full">
                         <img src="{{ asset('lock.svg') }}" alt="" class="h-8 w-8">
@@ -117,7 +116,7 @@
                         New Permission
                     </a>
                 </div>
-            </div>
+            </div> --}}
         </section>
 
 

@@ -6,7 +6,7 @@
 
 
 
-    <main class="p-10">
+    <main class="lg:h-[calc(100vh-5rem)] h-[calc(100vh-6.5rem)] flex flex-col   w-full bg-gray-50 p-10 overflow-auto">
         <table class="w-full text-sm text-left text-gray-500" id="logs">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
@@ -32,10 +32,12 @@
                 @endforeach
             </tbody>
 
-        
-        
-        </table>
 
+        </table>
+        {{-- <div class="">
+            {{ $logs->links() }}
+        </div>
+         --}}
 
     </main>
 

@@ -1,327 +1,236 @@
 <x-layout>
+   <x-slot:heading>Sign In</x-slot:heading>
 
-    <x-slot:heading>
-        Sign In
-    </x-slot:heading>
-
-    <main class="p-10  lg:w-1/2">
-        <form action="{{ url('visit') }}" class="flex-col flex gap-10" method="post">
-
-            @csrf
-
-      
-
-      <div class="hidden">
-            <input type="hidden" name="full_name"value="{{ $visitor->full_name}}">
-            <input type="hidden" name="company_name" value="{{ $visitor->company_name }}">
-            <input type="hidden" name="email" value="{{ $visitor->email }}">
-            <input type="hidden" name="phone_number" value="{{ $visitor->phone_number }}">
-      </div>
-
-      
-      <div class="bg-[#F2F8FF] rounded-xl p-5 justify-between flex">
-         {{-- <div class="flex"> --}}
-            <div class="w-3/4 flex-col gap-5 justify-between flex lg:p-5">
-                <h4 class="lg:text-4xl font-bold text-blue-800">{{ $visitor->full_name}}</h4>
-
-
-               <span class="">
-                  <span class="lg:text-xl">Company</span>
-                <h4 class="lg:text-2xl text-blue-800">{{ $visitor->company_name }}</h4> 
-               </span>
-
-               <span class="">
-                  <span class="lg:text-xl">Email</span>
-                <h4 class="lg:text-2xl text-blue-800">{{ $visitor->email }}</h4>
-
-               </span> 
-            <span class="">
-               <span class=" font-medium text-gray-600 lg:text-lg">
-                  Phone Number
-               </span>
-                <h4 class="lg:text-2xl text-blue-800">{{ $visitor->phone_number }}</h4>
-
-            </span>
-            </div>
-            {{-- <div class="w-1/4 flex-col flex gap-4"> --}}
-
-            <img src="{{ asset('profile.svg') }}" alt="" class="w-1/4">
-
-
-            {{-- </div> --}}
-        {{-- </div> --}}
-        </div>
-
-
-
-    <div class="w-full">
-        <div class="">
-           <label for="employee" class=" block lg:text-xl font-medium text-black">
-           Who are you visiting?
-           </label>
-           <select name="employee" id="employee" class="p-5 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-full"  required >
-            <option value="" selected disabled class="">Visitee</option>
-            @foreach ($employees as $employee)
-             <option value="{{$employee->id}}" class="dark:bg-dark-2">{{$employee->first_name}} {{$employee->last_name}}</option>
-            @endforeach
-           </select>
-        </div>
-        @error('employee')
-        <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
-        @enderror
-     </div>
-
-
-     <div class="w-full">
-        <div class="">
-           <label for="purpose" class=" block lg:text-xl font-medium text-black">
-           Purpose of Visit <span class="text-red-400">*</span>
-           </label>
-           <div class="">
-              <select  name="purpose" id="purpose" class='p-5 focus:border-blue-300 rounded-md outline-none text-slate-500 border border-gray-400 w-full' required>
-                 <option value="" selected disabled class="dark:bg-dark-2">Purpose</option>
-                 <option value="official" class="">Official</option>
-                 <option value="interview" class="">Interview</option>
-                 <option value="personal" class="">Personal</option>
-                 <option value="other" class="">Other</option>
-              </select>
-              <span class="absolute right-4 top-1/2 z-10 mt-[-2px] h-[10px] w-[10px] -translate-y-1/2 rotate-45 border-r-2 border-b-2 border-body-color">
-              </span>
-           </div>
-        </div>
-
-        @error('purpose')
-        <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
-        @enderror
-     </div>
-
-
-     <div class="w-full flex flex-col gap-1">
-
-        <label for="hasDevice" class="block lg:text-xl font-medium text-black">Do you have an electronic Device?</label>
-           <div class="flex items-center gap-4 py-4" >
-
-              <label for="default-radio-1" class="flex items-center gap-2 text-xl font-medium text-gray-900">
-                 <input id="device-radio-1" type="radio" value="yes" required name="hasDevice" class="relative size-4 appearance-none rounded-full border border-gray-400 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white checked:border-blue-400 checked:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden">
-                 Yes
-              </label>
-
-
-              <label for="device-radio-2" class="flex items-center gap-2 text-xl font-medium text-gray-900">
-                 <input id="default-radio-2" type="radio" value="no" name="hasDevice" class="relative size-4 appearance-none rounded-full border border-gray-400 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white checked:border-blue-400 checked:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden">
-                 No
-              </label>
+   <main class="lg:h-[calc(100vh-5rem)] py-10 h-[calc(100vh-6.5rem)] overflow-auto scrollbar-hidden w-fit mx-auto">
+       <div>
+           <!-- Visitor Info Card -->
+           <div class="bg-white rounded-xl shadow-sm mb-8 overflow-hidden">
+               <div class="bg-gray-100 p-1">
+                   <div class="p-6 sm:p-8">
+                       <div class="flex items-start justify-between">
+                           <div class="space-y-6 flex-1">
+                               <h2 class="text-3xl font-bold text-blue-900">{{ $visitor->full_name }}</h2>
+                               <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                   <div>
+                                       <p class="text-sm text-gray-500">Company</p>
+                                       <p class="text-xl font-medium text-blue-900">{{ $visitor->company_name }}</p>
+                                   </div>
+                                   <div>
+                                       <p class="text-sm text-gray-500">Email</p>
+                                       <p class="text-xl font-medium text-blue-900">{{ $visitor->email }}</p>
+                                   </div>
+                                   <div>
+                                       <p class="text-sm text-gray-500">Phone Number</p>
+                                       <p class="text-xl font-medium text-blue-900">{{ $visitor->phone_number }}</p>
+                                   </div>
+                               </div>
+                           </div>
+                           <img src="{{ asset('profile.svg') }}" alt="" class="w-24 h-24 sm:w-32 sm:h-32 object-cover">
+                       </div>
+                   </div>
+               </div>
            </div>
 
+           <form action="{{ url('visit') }}" method="post" class="space-y-8">
+               @csrf
+               <!-- Hidden Fields -->
+               <div class="hidden">
+                   <input type="hidden" name="full_name" value="{{ $visitor->full_name }}">
+                   <input type="hidden" name="company_name" value="{{ $visitor->company_name }}">
+                   <input type="hidden" name="email" value="{{ $visitor->email }}">
+                   <input type="hidden" name="phone_number" value="{{ $visitor->phone_number }}">
+               </div>
+
+               <!-- Visitee Selection -->
+               <div class="bg-white rounded-lg">
+                   <label for="employee" class="block text-xl font-medium text-gray-900 mb-3">Who are you visiting?</label>
+                   <select name="employee" id="employee" class="w-full rounded-lg border-gray-300 shadow-md p-4 text-lg focus:border-blue-500 focus:ring-blue-500" required>
+                       <option value="" selected disabled>Select visitee</option>
+                       @foreach ($employees as $employee)
+                           <option value="{{ $employee->id }}">{{ $employee->first_name }} {{ $employee->last_name }}</option>
+                       @endforeach
+                   </select>
+                   @error('employee')
+                       <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                   @enderror
+               </div>
+
+               <!-- Purpose Selection -->
+               <div class="bg-white rounded-lg">
+                   <label for="purpose" class="block text-xl font-medium text-gray-900 mb-3">Purpose of Visit <span class="text-red-500">*</span></label>
+                   <select name="purpose" id="purpose" class="w-full rounded-lg border-gray-300 shadow-md p-4 text-lg focus:border-blue-500 focus:ring-blue-500" required>
+                       <option value="" selected disabled>Select purpose</option>
+                       <option value="official">Official</option>
+                       <option value="interview">Interview</option>
+                       <option value="personal">Personal</option>
+                       <option value="other">Other</option>
+                   </select>
+                   @error('purpose')
+                       <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                   @enderror
+               </div>
+
+               <!-- Devices Section -->
+               <div class="bg-white rounded-lg shadow-md">
+                   <div class="mb-4">
+                       <label class="block text-xl font-medium text-gray-900 mb-3">Do you have any electronic devices?</label>
+                       <div class="flex gap-6 p-4">
+                           <label class="inline-flex items-center">
+                               <input type="radio" name="hasDevice" value="yes" class="form-radio text-blue-600" required>
+                               <span class="ml-2 text-gray-700">Yes</span>
+                           </label>
+                           <label class="inline-flex items-center">
+                               <input type="radio" name="hasDevice" value="no" class="form-radio text-blue-600">
+                               <span class="ml-2 text-gray-700">No</span>
+                           </label>
+                       </div>
+                   </div>
+                   <div id="deviceInputsSection" class="hidden space-y-4">
+                       <div id="deviceInputsContainer">
+                           <div class="device-block grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg relative">
+                               <div>
+                                   <label class="block text-lg font-medium text-gray-700 mb-1">Device Name</label>
+                                   <input type="text" name="devices[0][name]" placeholder="e.g., HP Elitebook" id="devices" class="devices w-full rounded-md border-gray-300 shadow-md p-4 focus:border-blue-500 focus:ring-blue-500">
+                               </div>
+                               <div>
+                                   <label class="block text-lg font-medium text-gray detall-700 mb-1">Serial Number</label>
+                                   <input type="text" name="devices[0][serial]" placeholder="e.g., SN123456" id="devices" class="devices w-full rounded-md border-gray-300 shadow-md p-4 focus:border-blue-500 focus:ring-blue-500">
+                               </div>
+                               <button type="button" class="remove-device-button absolute -top-2 -right-1 w-6 h-6 rounded-full bg-red-100 text-red-600 hover:bg-red-200 flex items-center justify-center">×</button>
+                           </div>
+                       </div>
+                       <button type="button" id="addDeviceButton" class="inline-flex items-center text-lg text-blue-600 hover:text-blue-700"><span class="mr-1">+</span> Add another device</button>
+                   </div>
+                   @error('devices')
+                       <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                   @enderror
+               </div>
+
+               <!-- Companions Section -->
+               <div class="bg-white rounded-lg shadow-md">
+                   <div class="mb-4">
+                       <label class="block text-xl font-medium text-gray-900 mb-3">Did you come with companions?</label>
+                       <div class="flex gap-6 p-4">
+                           <label class="inline-flex items-center">
+                               <input type="radio" name="hasCompany" value="yes" class="form-radio text-blue-600" required>
+                               <span class="ml-2 text-gray-700">Yes</span>
+                           </label>
+                           <label class="inline-flex items-center">
+                               <input type="radio" name="hasCompany" value="no" class="form-radio text-blue-600">
+                               <span class="ml-2 text-gray-700">No</span>
+                           </label>
+                       </div>
+                   </div>
+                   <div id="companionsInputsSection" class="hidden space-y-4">
+                       <div id="companionsInputsContainer">
+                           <div class="companion-block grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg relative">
+                               <div>
+                                   <label class="block text-lg font-medium text-gray-700 mb-1">Full Name</label>
+                                   <input type="text" name="companions[0][name]" placeholder="e.g., John Doe" id="companions" class="w-full companions rounded-md border-gray-300 shadow-md p-4 focus:border-blue-500 focus:ring-blue-500">
+                               </div>
+                               <div>
+                                   <label class="block text-lg font-medium text-gray-700 mb-1">Phone Number</label>
+                                   <input type="text" name="companions[0][phone_number]" placeholder="e.g., 0201234567" id="companions" class="w-full companions rounded-md border-gray-300 shadow-md p-4 focus:border-blue-500 focus:ring-blue-500">
+                               </div>
+                               <button type="button" class="remove-companion-button absolute -top-2 -right-1 w-6 h-6 rounded-full bg-red-100 text-red-600 hover:bg-red-200 flex items-center justify-center">×</button>
+                           </div>
+                       </div>
+                       <button type="button" id="addPersonButton" class="inline-flex items-center text-lg text-blue-600 hover:text-blue-700"><span class="mr-1">+</span> Add another person</button>
+                   </div>
+                   @error('companions')
+                       <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                   @enderror
+               </div>
+
+               <!-- Submit Button -->
+               <div class="flex justify-end">
+                   <button type="submit" class="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium rounded-lg shadow-sm hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all">Complete Sign In</button>
+               </div>
+           </form>
        </div>
+   </main>
 
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script>
+       $(document).ready(function() {
+           let lastRemovedDeviceBlock = null;
+           let lastRemovedCompanionBlock = null;
 
+           function updateDeviceIndices() {
+               $('#deviceInputsContainer .device-block').each(function(index) {
+                   $(this).find('input').each(function() {
+                       const name = $(this).attr('name');
+                       if (name) {
+                           const updatedName = name.replace(/devices\[\d+\]/, `devices[${index}]`);
+                           $(this).attr('name', updatedName);
+                       }
+                   });
+               });
+           }
 
-       <div id="deviceInputsSection" class="w-full" style="display: none;">
-          <div id="deviceInputsContainer" class="">
+           function updateCompanionIndices() {
+               $('#companionsInputsContainer .companion-block').each(function(index) {
+                   $(this).find('input').each(function() {
+                       const name = $(this).attr('name');
+                       if (name) {
+                           const companionName = name.replace(/companions\[\d+\]/, `companions[${index}]`);
+                           $(this).attr('name', companionName);
+                       }
+                   });
+               });
+           }
 
-             <div class="device-block flex gap-2">
+           $('input[type=radio][name=hasDevice]').change(function() {
+               if (this.value == 'yes') {
+                   $('#deviceInputsSection').show();
+                   $('#addDeviceButton').off('click').on('click', function() {
+                       const newDeviceBlock = $('#deviceInputsContainer .device-block').first().clone();
+                       newDeviceBlock.find('input').val('');
+                       $('#deviceInputsContainer').append(newDeviceBlock);
+                       updateDeviceIndices();
+                   });
+               } else {
+                   $('#deviceInputsSection').hide();
+                   $('#deviceInputsContainer .device-block:gt(0)').remove();
+                   $('#deviceInputsContainer .device-block input').val('');
+                   updateDeviceIndices();
+               }
+           });
 
-              <div class="flex flex-col gap-2">
-                 <label for="deviceName" class="text-lg">Device Name</label>
-             <input type="text" placeholder="Hp" id="devices" name="devices[0][name]" class="devices w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+           $('input[type=radio][name=hasCompany]').change(function() {
+               if (this.value == 'yes') {
+                   $('#companionsInputsSection').show();
+                   $('#addPersonButton').off('click').on('click', function() {
+                       const newCompanionBlock = $('#companionsInputsContainer .companion-block').first().clone();
+                       newCompanionBlock.find('input').val('');
+                       $('#companionsInputsContainer').append(newCompanionBlock);
+                       updateCompanionIndices();
+                   });
+               } else {
+                   $('#companionsInputsSection').hide();
+                   $('#companionsInputsContainer .companion-block:gt(0)').remove();
+                   $('#companionsInputsContainer .companion-block input').val('');
+                   updateCompanionIndices();
+               }
+           });
 
-              </div>
-              <div class="flex flex-col gap-2">
-                 <label for="deviceSerialNumber" class="">Serial Number</label>
-             <input type="text" placeholder="8RUIO4283U" id="devices" name="devices[0][serial]" class="devices w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
+           $('#deviceInputsContainer').on('click', '.remove-device-button', function() {
+               if ($('#deviceInputsContainer .device-block').length > 1) {
+                   const blockToRemove = $(this).closest('.device-block');
+                   lastRemovedDeviceBlock = blockToRemove.clone();
+                   blockToRemove.remove();
+                   updateDeviceIndices();
+               }
+           });
 
-              </div>
-              <button type="button" class="remove-device-button text-red-500">Remove</button>
-
-             </div>
-
-          </div>
-          <button id="addDeviceButton"  class="text-blue-400"  type="button"><span class="text-xl">+</span> Add another device</button>
-          @error('devices')
-          <div class="text-red-500 italic font-normal text-sm">{{ $message }}</div>
-          @enderror
-       </div>
-
-       <div class="w-full flex flex-col gap-1">
-
-        <label for="hasDevice" class="block text-xl font-medium text-black">Did you come with companions</label>
-           <div class="flex items-center gap-4 py-4" >
-
-              <label for="companions-radio-1" class="flex items-center gap-2 text-base font-medium text-gray-900">
-                 <input id="companions-radio-1" type="radio" value="yes" required name="hasCompany" class="relative size-4 appearance-none rounded-full border border-gray-400 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white checked:border-blue-400 checked:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden">
-                 Yes
-              </label>
-
-
-              <label for="companions-radio-2" class="flex items-center gap-2 text-base font-medium text-gray-900">
-                 <input id="companions-radio-2" type="radio" value="no" name="hasCompany" class="relative size-4 appearance-none rounded-full border border-gray-400 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white checked:border-blue-400 checked:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden">
-                 No
-              </label>
-           </div>
-
-       </div>
-
-       <div id="companionsInputsSection" style="display: none;" class="w-full">
-        <div id="companionsInputsContainer">
-
-
-           <div class="companion-block flex gap-2">
-           <div class="flex flex-col gap-2">
-              <label for="companions" class="">Full Name</label>
-          <input type="text" placeholder="Kweku Amos" id="companions" name="companions[0][name]" class="companions w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
-
-           </div>
-           <div class="flex flex-col gap-2">
-              <label for="deviceSerialNumber" class="">Phone Number</label>
-          <input type="text" placeholder="0250987654" id="companions" name="companions[0][phone_number]" class="companions w-full bg-transparent rounded-md border border-slate-400 py-5 px-5 text-slate-600 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" />
-
-           </div>
-
-           <button type="button" class="remove-companion-button text-red-500">Remove</button>
-           </div>
-
-
-          </div>
-
-          <button id="addPersonButton" class="text-blue-400" type="button"><span class="text-xl">+</span> Add another person</button>
-       </div>
-          @error('companions')
-          <div class="text-red-500 italic font-normal text-sm">{{ $message }}                    
-           </div>
-              @enderror  
-
-              <div class="w-full">
-                <button type="submit"
-                    class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4]">
-                    Submit
-                </button>
-            </div>
-        </form>
-    </main>
+           $('#companionsInputsContainer').on('click', '.remove-companion-button', function() {
+               if ($('#companionsInputsContainer .companion-block').length > 1) {
+                   const blockToRemove = $(this).closest('.companion-block');
+                   lastRemovedCompanionBlock = blockToRemove.clone();
+                   blockToRemove.remove();
+                   updateCompanionIndices();
+               }
+           });
+       });
+   </script>
 </x-layout>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script>
-
-   
-    $(document).ready(function() {
-  
-  let lastRemovedDeviceBlock = null;
-  let lastRemovedCompanionBlock = null;
-  
-  function updateDeviceIndices() {
-     $('#deviceInputsContainer .device-block').each(function(index) {
-        // console.log( $(this).find('input'));
-        $(this).find('input').each(function() {
-           const name = $(this).attr('name');
-           
-           console.log(name);
-           if (name) {
-              const updatedName = name.replace(/devices\[\d+\]/, `devices[${index}]`);
-              $(this).attr('name', updatedName);
-           }
-        });
-     });
-  }
-  
-  function updateCompanionIndices() {
-  
-  // console.log($('#companionsInputsContainer .companion-block'));
-     $('#companionsInputsContainer .companion-block').each(function(index) {
-  
-           // console.log( $(this).find('input'));
-        $(this).find('input').each(function() {
-           const name = $(this).attr('name');
-           console.log(name);
-  
-           if (name) {
-              // const newVar = "companions[0][name]";
-              // const updatedVar = newVar.replace(/companions\[\d+\]/, `companions[${index}]`);
-  
-              // console.log("Arr" , updatedVar);
-  
-              console.log('name before: ', name)
-  
-              const companionName = name.replace(/companions\[\d+\]/, `companions[${index}]`);
-  
-              console.log('uodated name: ', companionName);
-              $(this).attr('name', companionName);
-  
-  
-           }
-        });
-     });
-  }
-  
-  $('input[type=radio][name=hasDevice]').change(function() {
-     if (this.value == 'yes') {
-        $('#deviceInputsSection').show();
-  
-        $('#addDeviceButton').off('click').on('click', function() {
-           const newDeviceBlock = $('#deviceInputsContainer .device-block').first().clone(); 
-           newDeviceBlock.find('input').val(''); 
-           $('#deviceInputsContainer').append(newDeviceBlock);
-           updateDeviceIndices(); // Update indices after adding a new block
-        });
-     } else {
-        $('#deviceInputsSection').hide();
-        $('#deviceInputsContainer .device-block:gt(0)').remove(); // Remove all but the first block
-        $('#deviceInputsContainer .device-block input').val('');
-        updateDeviceIndices(); // Update indices after resetting blocks
-     }
-  });
-  
-  $('input[type=radio][name=hasCompany]').change(function() {
-     if (this.value == 'yes') {
-        $('#companionsInputsSection').show();
-  
-        $('#addPersonButton').off('click').on('click', function() {
-           const newCompanionBlock = $('#companionsInputsContainer .companion-block').first().clone();
-           newCompanionBlock.find('input').val('');
-           $('#companionsInputsContainer').append(newCompanionBlock);
-           updateCompanionIndices(); // Update indices after adding a new block
-        });
-     } else {
-        $('#companionsInputsSection').hide();
-        $('#companionsInputsContainer .companion-block:gt(0)').remove();
-        $('#companionsInputsContainer .companion-block input').val(''); 
-        updateCompanionIndices(); // Update indices after resetting blocks
-     }
-  });
-  
-  $('#deviceInputsContainer').on('click', '.remove-device-button', function () {
-     const blockToRemove = $(this).closest('.device-block'); 
-     lastRemovedDeviceBlock = blockToRemove.clone();
-     blockToRemove.remove();
-     updateDeviceIndices(); // Update indices after removing a block
-  });
-  
-  $('#companionsInputsContainer').on('click', '.remove-companion-button', function () {
-     const blockToRemove = $(this).closest('.companion-block'); // Find the closest block to remove
-     lastRemovedCompanionBlock = blockToRemove.clone();
-     blockToRemove.remove();
-     updateCompanionIndices(); // Update indices after removing a block
-  });
-  });
-  
-</script>  

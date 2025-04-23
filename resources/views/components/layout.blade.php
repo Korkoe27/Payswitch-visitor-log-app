@@ -200,7 +200,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== TRUE) {
         <!-- Top Section -->
         <header class="flex justify-between items-center w-full border-b border-[#C8DFFF] px-10 py-5">
             @if(\App\Models\Roles::hasPermission(auth()->user()->role_id !== 5, 'visits', 'create'))
-                <h1 class=" text-[#0F51AE] lg:text-2xl  text-xl font-bold">{{ $heading }}</h1>
+                <h1 class=" lg:text-3xl font-bold text-xl text-gray-800 ">{{ $heading }}</h1>
             @endif
 
             @if(\App\Models\Roles::hasPermission(auth()->user()->role_id == 5, 'visits', 'create'))

@@ -5,7 +5,7 @@
 
     <div id="visitors-table" class="rounded-lg">
         <div class="flex bg-gray-50 p-10  justify-end">
-            @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'staff', 'create'))
+            @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'visits', 'create'))
                 <a href="{{ url('check-visitor') }}" class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4]">Log Visitor</a>
             @endif
         </div>
@@ -55,7 +55,7 @@
                             <a href="{{ url('visit/' . $person->id) }}" class="font-medium text-blue-600 text-lg hover:underline">View</a>
 
                             @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'visits', 'create') && $person->status === 'ongoing')
-                                <a href="{{ route('visitor.departure', ['visitor' => $visitor->id]) }}" class="font-medium underline-offset-4 text-red-500 rounded-lg underline">Sign Out</a>
+                                <a href="{{ route('visitor.departure', ['visitor' => $person->id]) }}" class="font-medium underline-offset-4 text-red-500 rounded-lg underline">Sign Out</a>
                             @else
                                 &nbsp;
                             @endif

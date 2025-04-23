@@ -1,9 +1,9 @@
 <x-layout>
     <x-slot:heading>
-       New Role
+       Permissions Mgt
     </x-slot:heading>
 
-    <main class="lg:w-fit w-full p-10">
+    <main class="lg:h-[calc(100vh-5rem)] h-[calc(100vh-6.5rem)] flex flex-col justify-center  w-full bg-gray-50 py-8 overflow-auto">
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
             <div class="flex items-center space-x-3 mb-8">
                 <h1 class="text-2xl font-semibold text-gray-900">Add Permissions</h1>

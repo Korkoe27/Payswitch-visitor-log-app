@@ -25,8 +25,6 @@
 
 
     <script>
-    
-
     document.getElementById('find-visitor').addEventListener('submit', async function (e) {
     e.preventDefault();
 
@@ -63,66 +61,201 @@
         Swal.close();
 
         if (data.success) {
-            const { value: otp } = await Swal.fire({
-                icon: "info",
-                title: "Enter OTP",
-                input: "text",
-                inputLabel: "A code has been sent to your phone",
-                text: data.message, // Display the message from the server
-                showCancelButton: true,
-                confirmButtonText: "Verify",
-                preConfirm: async (otp) => {
-                    // Show loading spinner during OTP verification
-                    Swal.showLoading();
-                    try {
-                        console.log("trying OTP");
-                        let verifyResponse = await axios.post("{{ route('verify-otp') }}", {
-                            otp: otp
-                        }, {
-                            headers: {
-                                "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value
+            // Function to show OTP input dialog with resend button
+            async function showOTPDialog() {
+                let countdown = 60;
+                let countdownInterval;
+                
+                return Swal.fire({
+                    icon: "info",
+                    title: "Enter OTP",
+                    html: `
+                        <div>
+                            <p>A code has been sent to your phone</p>
+                            <input id="swal-input-otp" class="swal2-input" placeholder="Enter your OTP">
+                            <div class="mt-3">
+                                <button id="resendOtpBtn" class="swal2-confirm swal2-styled" disabled style="background-color: #6c757d; margin-top: 10px;">
+                                    Resend OTP (60s)
+                                </button>
+                            </div>
+                        </div>
+                    `,
+                    showCancelButton: true,
+                    confirmButtonText: "Verify",
+                    cancelButtonText: "Cancel",
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        const resendBtn = document.getElementById('resendOtpBtn');
+                        
+                        countdownInterval = setInterval(() => {
+                            countdown--;
+                            if (countdown <= 0) {
+                                resendBtn.disabled = false;
+                                resendBtn.style.backgroundColor = '#3085d6';
+                                resendBtn.textContent = 'Resend OTP';
+                                clearInterval(countdownInterval);
+                            } else {
+                                resendBtn.textContent = `Resend OTP (${countdown}s)`;
                             }
+                        }, 1000);
+                        
+                        resendBtn.addEventListener('click', async () => {
+                            if (!resendBtn.disabled) {
+                                // Clear the interval
+                                clearInterval(countdownInterval);
+                                
+                                // Request new OTP
+                                try {
+                                    // Show loading spinner during OTP resend
+                                    Swal.fire({
+                                        title: 'Sending OTP...',
+                                        showConfirmButton: false,
+                                        allowOutsideClick: false,
+                                        didOpen: () => {
+                                            Swal.showLoading();
+                                        }
+                                    });
+                                    
+                                    // Resend OTP request
+                                    let resendResponse = await axios.post("{{ route('find-visitor') }}", {
+                                        phone_number: phone_number
+                                    }, {
+                                        headers: {
+                                            "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value
+                                        }
+                                    });
+                                    
+                                    Swal.close();
+                                    
+                                    if (resendResponse.data.success) {
+                                        await Swal.fire({
+                                            title: 'OTP Resent',
+                                            text: 'A new OTP has been sent to your phone',
+                                            icon: 'success',
+                                            confirmButtonText: 'OK'
+                                        });
+                                        
+                                        // Restart dialog with new countdown
+                                        // Swal.close();
+                                        showOTPDialog();
+                                    } else {
+                                        await Swal.fire({
+                                            title: 'Error',
+                                            text: resendResponse.data.message || 'Failed to resend OTP',
+                                            icon: 'error',
+                                            confirmButtonText: 'OK'
+                                        });
+                                        
+                                        // Restart dialog with new countdown
+                                        Swal.close();
+                                        showOTPDialog();
+                                    }
+                                } catch (error) {
+                                    console.error("Error:", error);
+                                    
+                                    await Swal.fire({
+                                        title: 'Error',
+                                        text: error.response?.data?.message || 'An unexpected error occurred',
+                                        icon: 'error',
+                                        confirmButtonText: 'OK'
+                                    });
+                                    
+                                    // Restart dialog with new countdown
+                                    Swal.close();
+                                    showOTPDialog();
+                                }
+                            }
+                            return false;
                         });
-
-                        let result = verifyResponse.data;
-
-                        if (!result.success) {
-                            Swal.hideLoading();
-                            Swal.showValidationMessage(result.message);
+                    },
+                    willClose: () => {
+                        clearInterval(countdownInterval);
+                    },
+                    preConfirm: () => {
+                        const otp = document.getElementById('swal-input-otp').value;
+                        if (!otp) {
+                            Swal.showValidationMessage("Please enter the OTP");
+                            return false;
                         }
-                        return result;
-                    } catch (error) {
-                        Swal.hideLoading();
-                        Swal.showValidationMessage(
-                            error.response?.data?.message || 
-                            "An error occurred. Please try again."
-                        );
+                        return otp;
                     }
-                }
-            });
+                });
+            }
 
-            if (otp && otp.success) {
-                Swal.fire({
-                    icon: "success",
-                    title: "OTP Verified",
-                    text: otp.message,
-                    timer: 2000, // Auto close after 2 seconds
-                    showConfirmButton: false
-                }).then(() => {
+            // Function to verify OTP
+            async function verifyOTP(otp) {
+                // Show loading spinner during OTP verification
+                Swal.showLoading();
+                
+                try {
+                    let verifyResponse = await axios.post("{{ route('verify-otp') }}", {
+                        otp: otp
+                    }, {
+                        headers: {
+                            "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value
+                        }
+                    });
+
+                    let result = verifyResponse.data;
+                    
+                    if (!result.success) {
+                        Swal.hideLoading();
+                        return { success: false, message: result.message };
+                    }
+                    
+                    return { success: true, message: result.message, redirect: result.redirect };
+                } catch (error) {
+                    Swal.hideLoading();
+                    return {
+                        success: false,
+                        message: error.response?.data?.message || "An error occurred. Please try again."
+                    };
+                }
+            }
+
+            // Main OTP verification loop
+            let otpVerified = false;
+            while (!otpVerified) {
+                const otpDialog = await showOTPDialog();
+                
+                // User cancelled
+                if (otpDialog.isDismissed) {
+                    break;
+                }
+                
+                // Verify the OTP that was entered
+                const verifyResult = await verifyOTP(otpDialog.value);
+                
+                if (verifyResult.success) {
+                    otpVerified = true;
+                    
+                    await Swal.fire({
+                        icon: "success",
+                        title: "OTP Verified",
+                        text: verifyResult.message,
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                    
                     // Show spinner during redirect
                     Swal.fire({
                         title: 'Redirecting...',
-                        // html: '<div class="flex justify-center"><div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"></div></div>',
                         showConfirmButton: false,
                         allowOutsideClick: false,
                         didOpen: () => {
                             Swal.showLoading();
-                            window.location.href = otp.redirect;
+                            window.location.href = verifyResult.redirect;
                         }
                     });
-                });
+                } else {
+                    await Swal.fire({
+                        icon: "error",
+                        title: "Verification Failed",
+                        text: verifyResult.message,
+                        confirmButtonText: "Try Again"
+                    });
+                }
             }
-
         } else if (data.redirect) {
             // Handle first-time visitor scenario
             Swal.fire({

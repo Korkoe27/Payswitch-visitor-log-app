@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\{Activities,User};
+use App\Models\{Activities,User, UserSessions};
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\{Auth,Log,Session};
 use Illuminate\Validation\ValidationException;
 
 class UserAuthController extends Controller
@@ -60,6 +60,15 @@ class UserAuthController extends Controller
         
         // Regenerate session
         $request->session()->regenerate();
+
+        UserSessions::create([
+            'user_id' => $user->id,
+            'guard' => Auth::getDefaultDriver(),
+            'session_id' => Session::getId(),
+            'last_activity' => Carbon::now()
+        ]);
+
+        Log::info('user Logged in,'. $user->name);
         
         // Log the activity
         Activities::log(
@@ -78,10 +87,13 @@ class UserAuthController extends Controller
     {
         // Log the logout activity if user is authenticated
         if (Auth::check()) {
-            Activities::log(
-                action: 'logout',
-                description: Auth::user()->name . ' logged out'
-            );
+            $user = Auth::user();
+
+            // Update session logout time
+            UserSessions::where('session_id', Session::getId())
+                ->update(['logged_out_at' => Carbon::now()]);
+
+            Activities::log('logout', $user->name . ' logged out');
         }
         
         Auth::logout();
