@@ -16,12 +16,19 @@ class VisitorAccessCardFactory extends Factory
      * Define the model's default state.
      *
      * @return array<string, mixed>
-     */
+     */    
     public function definition(): array
     {
+        $active = $this->faker->randomElement(['enabled', 'disabled']);
+        
+        // If card is disabled, status must be unavailable
+        // If card is enabled, status must be available
+        $status = $active === 'disabled' ? 'unavailable' : 'available';
+
         return [
-            'card_number'=>fake()->unique()->numerify('PS-VS-####'),
-            'status'=>'available',
+            'card_number' => $this->faker->unique()->numerify('PS-VS-####'),
+            'status' => $status,
+            'active' => $active,
         ];
     }
 }

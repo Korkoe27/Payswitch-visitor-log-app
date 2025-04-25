@@ -50,13 +50,21 @@
                         </td>
             
                         <!-- View Link -->
-                        <td class="px-6 py-4">
+                        <td class="px-6 flex gap-20 items-center py-4">
                             <a
                                 class="font-medium text-blue-600 text-lg hover:underline"
                                 href="{{ url('staff/' . $staff->id) }}"
                             >
                                 View
                             </a>
+                            @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'staff', 'modify'))
+                            <a
+                                class="text-lg font-medium hover:underline rounded-lg text-red-600 "
+                                href="{{ url('edit-staff/' . $staff->id) }}"
+                            >
+                                Edit
+                            </a>
+                            @endif
                         </td>
                         {{-- @if(\App\Models\User::hasPermission(auth()->id(), 'staff', 'create'))
                         <!-- Assign Role -->

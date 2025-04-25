@@ -93,6 +93,9 @@ Route::get('/', function () {
                         Route::post('store-staff',  'store')->middleware('module.permission:staff,create,modify,delete');
 
                         Route::get('create-staff',  'create')->middleware('module.permission:staff,create,modify,delete');
+
+                        Route::get('edit-staff/{employee}','edit')->middleware('module.permission:staff,modify');
+                        Route::patch('update/{employee}','update')->middleware('module.permission:staff,modify');
                 });
 
 
@@ -162,7 +165,10 @@ Route::get('/', function () {
 
                         Route::post('store-key', [KeyController::class, 'store']);
 
-                        Route::delete('/all_keys/{id}', [KeyController::class, 'destroy']);
+                        
+                        Route::patch('/activate-key/{id}', [KeyController::class, 'activate']);
+                        
+                        Route::patch('/deactivate-key/{id}', [KeyController::class, 'deactivate']);
 
                 })->middleware('module.permission:keys,view,create,modify,delete');
 
@@ -223,6 +229,10 @@ Route::get('/', function () {
                         Route::post('store-access-card',  'store')->middleware('module.permission:settings,create,modify,delete');
 
                         Route::get('access-cards','index')->middleware('module.permission:reports,view');
+
+                        Route::patch('disable-access-card/{visitorAccessCard}',  'disable')->middleware('module.permission:settings,delete');
+
+                        Route::patch('enable-access-card/{visitorAccessCard}',  'enable')->middleware('module.permission:settings,delete');
                 });
 
 

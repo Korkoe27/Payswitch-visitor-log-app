@@ -5,44 +5,81 @@
     </x-slot:heading>
 
 
-
-    <main class="p-5">
-        @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'roles', 'create'))
-        <div class="flex justify-end p-5 items-center">
-            <a href="{{ url('create-key') }}" class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4] flex items-center">Create New Role</a>
-        </div>
-
+    <main class="lg:h-[calc(100vh-5rem)] h-[calc(100vh-6.5rem)] bg-gray-50 p-10 w-full m-auto">
+        <section class="max-w-5xl m-auto h-full">
+            @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'roles', 'create'))
+            <div class="flex justify-end mb-6">
+                <a href="{{ url('create-key') }}" 
+                   class="bg-gradient-to-b from-[#247EFC] to-[#0C66E4] px-6 py-2.5 text-white rounded-lg 
+                          flex items-center gap-2 hover:opacity-90 transition-opacity text-lg font-medium">
+                    Create New Role
+                </a>
+            </div>
         @endif
-        <table class="w-full text-sm text-left text-gray-500">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                <tr>
-                    <th scope="col" class="px-6 text-lg py-3">Role</th>
-                    <th scope="col" class="px-6 text-lg py-3">Description</th>
-                    {{-- <th scope="col" class="px-6 py-3">Time In</th> --}}
-                    <th class="px-6 py-6" scope="col"></th>
-                </tr>
-            </thead>
-
-            <tbody class="text-base">
-                @foreach ($roles as $role)
-                    <tr class="odd:bg-white even:bg-gray-50 border-b">
-                        <th scope="row" class="px-6 py-4 text-base  font-medium text-gray-900 whitespace-nowrap">{{ $role->name }}</th>
-                        <th scope="row" class="px-6 py-4 text-base font-medium text-gray-900 whitespace-nowrap">{{ $role->description }} </th>
+    
+        <div class="overflow-x-auto rounded-lg border border-gray-200">
+            <table class="w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th scope="col" 
+                            class="px-6 py-4 text-left text-lg font-semibold text-gray-900">
+                            Role
+                        </th>
+                        <th scope="col" 
+                            class="px-6 py-4 text-left text-lg font-semibold text-gray-900">
+                            Description
+                        </th>
                         @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'roles', 'create'))
-                        <td class="px-3 py-4">
-                            <button type="button" data-role-id="{{ $role->id }}" data-role-name="{{ $role->name }}"  class="delete-btn font-medium text-lg text-white p-3 rounded-lg bg-red-400">Delete Role</button>
-                        </td>
+                            <th scope="col" class="px-6 py-4 text-right">
+                                <span class="sr-only">Actions</span>
+                            </th>
                         @endif
                     </tr>
-                @endforeach
-            </tbody>
-
-        
-        
-        </table>
-
-
+                </thead>
+    
+                <tbody class="divide-y divide-gray-200 bg-white">
+                    @foreach ($roles as $role)
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="whitespace-nowrap px-6 py-4">
+                                <div class="text-lg uppercase font-medium text-gray-900">
+                                    {{ $role->name }}
+                                </div>
+                            </td>
+                            <td class="whitespace-nowrap px-6 py-4">
+                                <div class="text-lg capitalize text-gray-700">
+                                    {{ $role->description }}
+                                </div>
+                            </td>
+                            @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'roles', 'create'))
+                                <td class="whitespace-nowrap px-6 py-4 text-right">
+                                    @if ($role->name!=='admin')
+                                    <button type="button" 
+                                            data-role-id="{{ $role->id }}" 
+                                            data-role-name="{{ $role->name }}"
+                                            class="delete-btn inline-flex items-center justify-center rounded-md 
+                                                   bg-red-50 px-3 py-2 text-lg font-semibold text-red-600 
+                                                   hover:bg-red-100 transition-colors">
+                                        Delete Role
+                                    </button>
+                                        
+                                    @endif
+                                </td>
+                            @endif
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+    
+            @if(count($roles) === 0)
+                <div class="text-center py-12">
+                    <p class="text-lg text-gray-500">No roles found</p>
+                </div>
+            @endif
+        </div>
+        </section>
+      
     </main>
+    
     <script>
         
         document.addEventListener("DOMContentLoaded", function(){

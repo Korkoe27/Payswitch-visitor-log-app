@@ -1,13 +1,10 @@
 <x-layout>
-
     <x-slot:heading>
         All Keys   
     </x-slot:heading>
 
-
-
     <main class="lg:h-[calc(100vh-5rem)] h-[calc(100vh-6.5rem)] bg-gray-50 py-8">
-        <div class="max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="w-full px-4 sm:px-6 lg:px-8">
             {{-- Header Section --}}
             <div class="mb-8">
                 <div class="flex justify-between items-center">
@@ -29,7 +26,7 @@
             {{-- Table Section --}}
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                 <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
+                    <table id="keys" class="w-full p-4 divide-y divide-gray-200">
                         <thead>
                             <tr class="bg-gray-50">
                                 <th scope="col" class="px-6 py-4 text-left text-lg font-medium text-gray-500 uppercase tracking-wider">
@@ -38,23 +35,19 @@
                                 <th scope="col" class="px-6 py-4 text-left text-lg font-medium text-gray-500 uppercase tracking-wider">
                                     Key Name
                                 </th>
+                                <th scope="col" class="px-6 py-4 text-left text-lg font-medium text-gray-500 uppercase tracking-wider">
+                                    Status
+                                </th>
                                 <th scope="col" class="px-6 py-4 text-right text-lg font-medium text-gray-500 uppercase tracking-wider">
                                     Actions
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-200 bg-white">
+                        <tbody class="divide-y p-4 divide-gray-200 bg-white">
                             @foreach ($keys as $key)
                                 <tr class="hover:bg-gray-50 transition-colors duration-150">
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
-                                            <div class="flex-shrink-0 h-8 w-8">
-                                                <div class="h-8 w-8 rounded-lg bg-blue-100 flex items-center justify-center">
-                                                    <span class="text-xl font-medium text-blue-700">
-                                                        #{{ substr($key->key_number, -2) }}
-                                                    </span>
-                                                </div>
-                                            </div>
                                             <div class="ml-4">
                                                 <div class="text-xl font-medium text-gray-900">{{ $key->key_number }}</div>
                                             </div>
@@ -63,14 +56,39 @@
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-xl text-gray-900">{{ $key->key_name }}</div>
                                     </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        @if($key->status === 'active')
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-base font-medium bg-green-100 text-green-800">
+                                                Active
+                                            </span>
+                                        @else
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-base font-medium bg-gray-100 text-gray-800">
+                                                Inactive
+                                            </span>
+                                        @endif
+                                    </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-xl font-medium">
-                                        <button
-                                            type="button"
-                                            onclick="confirmDelete({{ $key->id }}, '{{ $key->key_name }}')"
-                                            class="inline-flex items-center px-3 py-2 border border-red-200 text-xl font-medium rounded-lg text-red-700 bg-red-50 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-200"
-                                        >
-                                            Delete Key
-                                        </button>
+                                        @if($key->status === 'active')
+                                            <button
+                                                type="button"
+                                                data-key-id="{{ $key->id }}"
+                                                data-key-name="{{ $key->key_name }}"
+                                                data-action="deactivate"
+                                                class="toggle-key-status inline-flex items-center px-3 py-2 border border-yellow-200 text-xl font-medium rounded-lg text-yellow-700 bg-yellow-50 hover:bg-yellow-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-all duration-200"
+                                            >
+                                                Deactivate
+                                            </button>
+                                        @else
+                                            <button
+                                                type="button"
+                                                data-key-id="{{ $key->id }}"
+                                                data-key-name="{{ $key->key_name }}"
+                                                data-action="activate"
+                                                class="toggle-key-status inline-flex items-center px-3 py-2 border border-green-200 text-xl font-medium rounded-lg text-green-700 bg-green-50 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all duration-200"
+                                            >
+                                                Activate
+                                            </button>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -92,72 +110,112 @@
         </div>
     </main>
 
+    <!-- Hidden forms for PATCH requests -->
+    <form id="activate-form" method="POST" style="display: none;">
+        @csrf
+        @method('PATCH')
+    </form>
+
+    <form id="deactivate-form" method="POST" style="display: none;">
+        @csrf
+        @method('PATCH')
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-
-$(document).ready( function () {
-    $('#keys').DataTable();
-} );
-
-        document.addEventListener("DOMContentLoaded", function(){
-            document.querySelectorAll(".delete-btn").forEach(button => {
-                button.addEventListener("click", function(){
-                    const keyId = this.getAttribute("data-key-id");
-                    const keyName = this.getAttribute("data-key-name");
-                    console.log(keyId, keyName);
-                    confirmDelete(keyId, keyName);
+        $(document).ready(function() {
+            $('#keys').DataTable();
+            
+            // Check for success message in session
+            @if(session('success'))
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: "{{ session('success') }}",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
                 });
+            @endif
+            
+            // Handle toggle key status buttons
+            $(document).on('click', '.toggle-key-status', function() {
+                const keyId = $(this).data('key-id');
+                const keyName = $(this).data('key-name');
+                const action = $(this).data('action');
+                
+                toggleKeyStatus(keyId, keyName, action);
             });
         });
 
-        function confirmDelete(keyId, keyName){
+        function toggleKeyStatus(keyId, keyName, action) {
+            // Set up the SweetAlert configuration
+            const isActivate = action === 'activate';
+            const title = isActivate ? 'Activate Key?' : 'Deactivate Key?';
+            const html = `Are you sure you want to <strong>${isActivate ? 'activate' : 'deactivate'}</strong> the key: <strong>${keyName}</strong>?`;
+            const icon = isActivate ? 'question' : 'warning';
+            const confirmButtonText = isActivate ? 'Yes, activate it!' : 'Yes, deactivate it!';
+            const confirmButtonColor = isActivate ? '#10B981' : '#FBBF24';
+            
             Swal.fire({
-                title: "Delete Key?",
-                text: `Are you sure you want to delete the "${keyName}" key?`,
-                icon: "warning",
-                showCancelButton:true,
-                confirmButtonColor: "#d33",
-                cancelButtonColor: "#3085D6",
-                confirmButtonText: "Yes, delete it!"
-
-            }).then((result)=>{
-
-                if(result.isConfirmed){
-                deleteKey(keyId, keyName);
+                title: title,
+                html: html,
+                icon: icon,
+                showCancelButton: true,
+                confirmButtonColor: confirmButtonColor,
+                cancelButtonColor: '#6B7280',
+                confirmButtonText: confirmButtonText,
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Show processing state
+                    Swal.fire({
+                        title: 'Processing...',
+                        html: `${isActivate ? 'Activating' : 'Deactivating'} key ${keyName}`,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                            processKeyStatus(keyId, action);
+                        }
+                    });
                 }
-            })
-        }
-
-
-
-async function deleteKey(keyId, keyName) {
-    try {
-        const response = await axios.delete(`/all_keys/${keyId}`);
-        // console.log(JSON.stringify(response, null, 2));
-        // console.log(response.data.success);
-
-        if (response.data.success === true) {
-            await Swal.fire({
-                title: "Deleted!",
-                text: `The "${keyName}" key has been deleted.`,
-                icon: "success",
-                confirmButtonText: "OK"
             });
-
-            // Redirect only after the user clicks "OK"
-            window.location.href = '/all_keys';
         }
-    } catch (error) {
-        console.log(error);
-        let errorMessage = "Something went wrong.";
-        if (error.response && error.response.data && error.response.data.error) {
-            errorMessage = error.response.data.error;
+        
+        async function processKeyStatus(keyId, action) {
+            try {
+                const url = action === 'activate' 
+                    ? `/activate-key/${keyId}` 
+                    : `/deactivate-key/${keyId}`;
+                    
+                const response = await axios.patch(url);
+                
+                if (response.data.success) {
+                    // Reload the page to show updated status
+                    window.location.reload();
+                } else {
+                    throw new Error('Operation failed');
+                }
+            } catch (error) {
+                console.error(error);
+                let errorMessage = "Something went wrong.";
+                if (error.response && error.response.data && error.response.data.error) {
+                    errorMessage = error.response.data.error;
+                }
+                
+                Swal.fire({
+                    title: "Error!",
+                    text: errorMessage,
+                    icon: "error",
+                    confirmButtonText: "OK"
+                });
+            }
         }
-        await Swal.fire("Error!", errorMessage, "error");
-    }
-}
-
     </script>
-
-
-
 </x-layout>

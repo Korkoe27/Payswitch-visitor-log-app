@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('key_number')->unique();
             $table->string('key_name')->unique();
+            $table->enum('status', ['active','inactive'])->default('active');
             $table->timestamps();
         });
     }

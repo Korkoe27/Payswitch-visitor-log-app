@@ -19,11 +19,14 @@ class KeyFactory extends Factory
      */
     public function definition(): array
     {
-        $keys = ['Office', 'Store', 'Main Door', 'Audit', 'Data Center', 'Business', 'Sales', 'Marketing'];
+        $keys = ['Office', 'Store', 'Main Door', 'Audit', 'Data Center', 'Business', 'Sales', 'Marketing','Tech','Finance', 'HR', 'Admin', 'Support', 'Security', 'IT', 'Operations', 'Legal', 'Compliance', 'Research', 'Development'];
+
+
 
         return [
             'key_number' => $this->faker->unique()->numerify('ICUU#######'),
             'key_name' => $this->faker->unique()->randomElement($keys),
+            'status' => $this->faker->randomElement(['active', 'inactive']),
         ];
     }
 }

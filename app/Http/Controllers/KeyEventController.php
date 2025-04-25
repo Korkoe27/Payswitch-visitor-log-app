@@ -14,7 +14,9 @@ class KeyEventController extends Controller
 
 
     public function pickedKeys(){
-        $keys = KeyEvent::with(['key', 'employee'])->orderBy('status')->get();
+        $keys = KeyEvent::with(['key', 'employee'])
+        ->latest()
+        ->get();
 
 
         return view('keys.keys',compact('keys'));
@@ -23,8 +25,8 @@ class KeyEventController extends Controller
     
     public function pickKey(){
         
-        $employees = Employee::get();
-        $keys = Key::get();
+        $employees = Employee::whereNot('status','inactive')->get();
+        $keys = Key::where('status', 'active')->get();
         return view('keys.create',compact('employees','keys'));
         }
     
@@ -95,7 +97,7 @@ class KeyEventController extends Controller
 
 
         public function submitKey(KeyEvent $keyEvent){
-            $employees = Employee::all();
+            $employees = Employee::whereNot('status','inactive')->get();
 
             // dd($keyEvent->key()->first()->key_name);
             return view('keys.submit-key',[

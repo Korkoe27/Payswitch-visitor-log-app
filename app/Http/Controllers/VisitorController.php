@@ -28,7 +28,7 @@ class VisitorController extends Controller
 
     
     public function create(Request $request){
-        $employees = Employee::get();
+        $employees = Employee::whereNot('employment_status','inactive')->get();
         $phone_number = $request->query('phone_number');
         // dd($phone_number);
         return view('visitor.entry', compact('employees','phone_number'));
@@ -39,7 +39,9 @@ class VisitorController extends Controller
     public function store(){
         
 
-        $availableCards = VisitorAccessCard::where('status', 'available')->get();
+        $availableCards = VisitorAccessCard::where('status', 'available')
+        ->where('active','enabled')
+        ->get();
         
         
         // dd($availableCards);
@@ -123,6 +125,16 @@ class VisitorController extends Controller
 
     $countVisitors = $countCompanions + 1;
 
+
+    $visitee = Employee::where('id', $validatedData['employee'])->first();
+
+    // dd($visitee);
+    if ($visitee->employment_status !== 'active') {
+        return redirect()->back()->with([
+            'notice' => "{$visitee->first_name} {$visitee->last_name} is currently unavailable. Please contact the front desk for further assistance."
+        ]);
+    }
+    
 
 
     $visitor = Visitor::create([

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('card_number')->unique();        
             $table->enum('status', ['available', 'unavailable'])->default('available');
+            $table->enum('active', ['enabled', 'disabled'])->default('enabled');
             $table->timestamps();
         });
     }

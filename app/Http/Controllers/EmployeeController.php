@@ -12,7 +12,7 @@ class EmployeeController extends Controller
 
         public function index(){
             return view('staff.index', [
-                'employees' => Employee::with('department')->get()
+                'employees' => Employee::whereNot('employment_status','inactive')->with('department')->get()
             ]);
         }
         public function create(){
@@ -76,6 +76,54 @@ class EmployeeController extends Controller
         public function show(Employee $staff){
             
         return view('staff.show', ['employees' => $staff]);
+        }
+
+
+        public function edit(Employee $employee){
+            $departments = Department::get();
+
+            // $employee = Employee::find($staff);
+            // dd($employee);
+            
+        return view('staff.edit', [
+            'employee' => $employee,
+            'departments' => $departments
+        ]);
+        }
+
+
+        public function update(Request $request, Employee $employee){
+            $request->validate([
+                'first_name'=>'required',
+                'other_name'=>'',
+                'last_name'=>'required',
+                'email'=>'email|required|unique:employees,email,'.$employee->id,
+                'phone_number'=>'required',
+                'department_id'=>'required|exists:departments,id',
+                'job_title'=>'required',
+                'employment_status'=>'required|in:active,inactive,on_leave',
+                'access_card_number'=>'',
+                'gender'=>'required',
+                'employee_number'=>''
+
+            ]);
+
+            $employee->update([
+                'first_name'=>$request->first_name,
+                'other_name'=>$request->other_name,
+                'last_name'=>$request->last_name,
+                'email'=>$request->email,
+                'phone_number'=>$request->phone_number,
+                'department_id'=>$request->department_id,
+                'job_title'=>$request->job_title,
+                'employment_status'=>$request->employment_status,
+                'access_card_number'=>$request->access_card_number,
+                'gender'=>$request->gender,
+                'employee_number'=>$request->employee_number
+            ]);
+
+            return redirect('staff')->with('success','Staff Updated Successfully');
+
         }
 
 

@@ -196,7 +196,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== TRUE) {
 
     
 
-    <main class="w-full  min-h-screen flex flex-col">
+    <main class="w-full  lg:h-[calc(100vh-5rem)] h-[calc(100vh-6.5rem)] overflow-auto scrollbar-hidden  flex flex-col">
         <!-- Top Section -->
         <header class="flex justify-between items-center w-full border-b border-[#C8DFFF] px-10 py-5">
             @if(\App\Models\Roles::hasPermission(auth()->user()->role_id !== 5, 'visits', 'create'))

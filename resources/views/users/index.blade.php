@@ -5,8 +5,8 @@
                 Users
     </x-slot:heading>
 
-        <div class="lg:h-[calc(100vh-5rem)] h-[calc(100vh-6.5rem)] bg-gray-50 py-8">
-            <div class="max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="lg:h-[calc(100vh-10rem)] h-[calc(100vh-6.5rem)] bg-gray-50">
+            <div class="max-w-7xl p-10">
                 {{-- Header Section --}}
                 <div class="mb-8">
                     <div class="flex justify-between items-center">
@@ -52,13 +52,6 @@
                                     <tr class="hover:bg-gray-50 transition-colors duration-150">
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center">
-                                                <div class="flex-shrink-0 h-10 w-10">
-                                                    <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
-                                                        <span class="text-lg font-medium text-gray-600">
-                                                            {{ strtoupper(substr($user->name, 0, 1)) }}
-                                                        </span>
-                                                    </div>
-                                                </div>
                                                 <div class="ml-4">
                                                     <div class="text-xl font-medium text-gray-900">{{ $user->name }}</div>
                                                     <div class="text-xl text-gray-500">{{ $user->email ?? 'No email provided' }}</div>

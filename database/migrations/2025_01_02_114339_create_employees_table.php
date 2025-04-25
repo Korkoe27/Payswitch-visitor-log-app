@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->string(column: 'employee_number')->unique();
+            $table->string(column: 'employee_number')->unique()->nullable();
             $table->boolean('is_user')->default(false);
             $table->string(column: 'first_name');
             $table->string(column: 'other_name')->nullable();
@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string(column: 'email')->nullable();
             $table->string(column: 'phone_number');
             $table->foreignIdFor(Department::class, column: 'department_id');
+            $table->enum('employment_status', ['active', 'inactive', 'on_leave'])->default('active');
             $table->string(column: 'job_title');
             $table->string(column: 'access_card_number')->nullable();
             $table->string(column: 'gender');

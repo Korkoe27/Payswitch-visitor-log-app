@@ -4,14 +4,14 @@
 
         Visitor Management
     </x-slot:heading>
-    <div class="lg:h-[calc(100vh-10rem)] h-[calc(100vh-6.5rem)] overflow-auto scrollbar-hidden m-auto max-w-7xl p-10">
+    <div class="lg:h-[calc(100vh-10rem)] h-[calc(100vh-6.5rem)] overflow-auto scrollbar-hidden m-auto w-full p-10">
 
         <div class="w-full m-auto max-w-4xl h-full space-y-6 mb-10">
             <div class="flex flex-col items-start w-full">
                 <div class="flex flex-col sm:flex-row sm:items-center w-full justify-between mb-4">
                     <h2 class="text-2xl font-semibold text-gray-800 mb-2 sm:mb-0">Visit Details</h2>
                     
-                    @if(\App\Models\Roles::hasPermission(auth()->user()->role_id == 5, 'visits', 'create'))
+                    @if(\App\Models\Roles::hasPermission(auth()->user()->role_id , 'visits', 'create'))
                         <a 
                             href="{{ route('visitor.departure', ['visitor' => $visitor->id]) }}"
                             class="flex items-center gap-2 bg-gradient-to-b from-blue-500 to-blue-600 px-4 py-2 rounded-lg text-white font-medium hover:from-blue-600 hover:to-blue-700 transition-all shadow-md hover:shadow-lg"
@@ -144,6 +144,12 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="flex justify-end gap-4">
+                <a href="{{ url()->previous() }}" 
+                   class="px-4 py-2 text-base font-medium text-blue-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+                    Back
+                </a>
             </div>
         </div>
     </div>
