@@ -221,10 +221,17 @@ if ($activeSecurity) {
     );
 }
 
-    return redirect('/')->with([
-        'success',
-        'We are happy to have you. Enjoy your visit'
-    ]);
+    // return redirect('/')->with([
+    //     'success',
+    //     'We are happy to have you. Enjoy your visit'
+    // ]);
+
+    return redirect('/')->with('success', 'Welcome to PaySwitch! You will be given an access card, please keep it with you at all times.');
+
+    // return response()->json([
+    //     'success'=>true,
+    //     'message'=>'Welcome back! You will be given an access card, please keep it with you at all times.'
+    // ]);
 
         }   catch(Exception $e){
             return redirect()->back()->withErrors(['error' => 'An error occurred while creating the visitor record.']);
@@ -253,7 +260,7 @@ if ($activeSecurity) {
         if($checkVisitor){
             return response()->json([
                 'success'=>true,
-                'message'=> 'Signed',
+                'message'=> 'Confirmed',
                 'redirect' => route('showVisitor', ['visitor' => $checkVisitor->id])
             ]);
         }else{
@@ -372,10 +379,12 @@ if ($activeSecurity) {
                     );
                 }
 
-            return redirect('/')->with([
-                'success',
-                'Visitor successfully departed.'
-            ]);
+            // return redirect('/')->with([
+            //     'success',
+            //     'Visitor successfully departed.'
+            // ]);
+
+            return redirect('/')->with('success', 'Thank you for visiting us. Kindly return your access card at the front gate. We hope to see you again soon!');
 
 
             }
@@ -467,7 +476,7 @@ if ($activeSecurity) {
             
                         return response()->json([
                             'success' => false, 
-                            'message' => $responseData['message'] ?? 'Failed to send code.',
+                            'message' => 'Failed to send code.',
                             'error' => $responseData
                         ], 400);
             
@@ -537,14 +546,14 @@ if ($activeSecurity) {
                         return response()->json([
                             'success' => true,
                             'redirect' => route('old-visitor', $visitor->id),
-                            'message' => 'OTP verified successfully!',
+                            'message' => $visitor->full_name . ', Welcome back! You will be given an access card, please keep it with you at all times.' ,
                             'data' => $response
                         ]);
                     }
             
                     return response()->json([
                         'success' => false, 
-                        'message' => $response['message'] ?? 'Invalid OTP. Please try again.',
+                        'message' => 'Invalid OTP. Please try again.',
                         'error' => $response
                     ], 400);
             

@@ -490,7 +490,7 @@ class PermissionsSeeder extends Seeder
             'role_id'=>$visitor->id,
             'module_id'=>$logs->id,
             'can_view'=>0,
-            'can_create'=>1,
+            'can_create'=>0,
             'can_modify'=>0,
             'can_delete'=>0
         ]);
@@ -501,7 +501,7 @@ class PermissionsSeeder extends Seeder
             'role_id'=>$visitor->id,
             'module_id'=>$visits->id,
             'can_view'=>1,
-            'can_create'=>0,
+            'can_create'=>1,
             'can_modify'=>0,
             'can_delete'=>0
         ]);

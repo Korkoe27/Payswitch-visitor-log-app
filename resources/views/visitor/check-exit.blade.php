@@ -126,7 +126,7 @@
         if (data.success) {
             Swal.fire({
                 icon: "info",
-                title: "Welcome!",
+                title: "Siging out!",
                 text: data.message,
                 timer: 2000, // Auto close after 2 seconds
                 showConfirmButton: false

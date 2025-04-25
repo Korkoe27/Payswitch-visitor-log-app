@@ -69,7 +69,7 @@
 </div>
     
     {{-- @if(true) --}}
-    @if(\App\Models\Roles::hasPermission(auth()->user()->role_id, 'visits', 'create'))
+    @if(\App\Models\Roles::hasPermission(auth()->user()->role_id !== 5, 'visits', 'create'))
     <main class="flex-col flex">
 
     

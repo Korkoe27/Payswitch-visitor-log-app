@@ -25,7 +25,7 @@ class KeyEventController extends Controller
     
     public function pickKey(){
         
-        $employees = Employee::whereNot('status','inactive')->get();
+        $employees = Employee::whereNot('employment_status','inactive')->get();
         $keys = Key::where('status', 'active')->get();
         return view('keys.create',compact('employees','keys'));
         }
@@ -97,7 +97,7 @@ class KeyEventController extends Controller
 
 
         public function submitKey(KeyEvent $keyEvent){
-            $employees = Employee::whereNot('status','inactive')->get();
+            $employees = Employee::whereNot('employment_status','inactive')->get();
 
             // dd($keyEvent->key()->first()->key_name);
             return view('keys.submit-key',[
@@ -146,7 +146,7 @@ class KeyEventController extends Controller
                 
                 return response()->json([
                     'success' => false, 
-                    'message' => $responseData['message'] ?? 'Failed to send code.',
+                    'message' => 'Failed to send code.',
                     'error' => $responseData
                 ], 400);
             } catch (\Exception $e) {
@@ -244,7 +244,7 @@ class KeyEventController extends Controller
                         session()->forget(['phonenumber', 'otp_key', 'key_event_id', 'returned_by']);
                         return response()->json([
                             'success'=> true,
-                            'message'=> "The key '{$key->key_name}' has been returned."
+                            'message'=> $employeeName . " returned the '{$key->key_name}' key."
                         ]);
         
         
@@ -312,7 +312,7 @@ class KeyEventController extends Controller
                 session()->forget(['phonenumber', 'otp_key', 'key_event_id', 'returned_by']);
                 return response()->json([
                     'success'=> true,
-                    'message'=> "The key '{$key->key_name}' has been returned."
+                    'message'=> $returnedBy->first_name . ' ' . $returnedBy->last_name . " returned the '{$key->key_name}' key."
                 ]);
 
 

@@ -88,14 +88,14 @@
             <textarea name="visitor_experience" class="border h-40 p-4 resize-none w-full" placeholder="Tell Us More" id="visitor-experience"></textarea>
         </div>
 
-        <div class="">
+        {{-- <div class="">
             <label for="marketing_consent" class="text-lg flex gap-2 lg:text-lg">
                 <input type="checkbox" value="1" name="marketing_consent" id="marketing-consent">
                 Select this box to receive updates and marketing from Payswitch.
             </label>
-        </div>
+        </div> --}}
 
-        <button class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4] flex items-center" type="submit">Skip and Sign Out</button>
+        <button class="bg-gradient-to-b px-10 text-xl rounded-lg py-2 text-white from-[#247EFC] to-[#0C66E4] flex items-center" type="submit">Skip to Sign Out</button>
     </form>
 </main>
 

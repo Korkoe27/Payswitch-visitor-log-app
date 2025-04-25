@@ -1,7 +1,7 @@
 <x-layout>
    <x-slot:heading>Sign In</x-slot:heading>
 
-   <main class="lg:h-[calc(100vh-5rem)] py-10 h-[calc(100vh-6.5rem)] overflow-auto scrollbar-hidden w-fit mx-auto">
+   <main class="lg:h-[calc(100vh-5rem)] 3xl:h-full py-10 h-[calc(100vh-6.5rem)] overflow-auto scrollbar-hidden w-fit m-auto">
        <div>
            <!-- Visitor Info Card -->
            <div class="bg-white rounded-xl shadow-sm mb-8 overflow-hidden">

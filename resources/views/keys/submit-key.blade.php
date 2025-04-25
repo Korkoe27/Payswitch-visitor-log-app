@@ -107,7 +107,7 @@
 
     // Function to show OTP input dialog
     async function showOTPDialog() {
-        let countdown = 10;
+        let countdown = 120;
         let countdownInterval;
         
         return Swal.fire({
@@ -118,7 +118,7 @@
                     <input id="swal-input1" class="swal2-input" placeholder="Enter your OTP">
                     <div class="mt-3">
                         <button id="resendBtn" class="swal2-confirm swal2-styled" disabled style="background-color: #6c757d; margin-top: 10px;">
-                            Resend OTP (60s)
+                            Resend OTP (2min)
                         </button>
                     </div>
                 </div>
